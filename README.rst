@@ -4,5 +4,8 @@
   - Couchpotato
   - Sickbeard
   - Sabnzbd 
+  - Btsync
+  - Ansible-base (base image to be able to provision via Ansible)
+  - Rdiff-backup
 
 * MIT License

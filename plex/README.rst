@@ -20,7 +20,7 @@ ___
 
 Running the container (without LXC networking fix)::
 
-	docker run -d -h <plex_host_name> --volumes-from sabnzbd_data --volumes-from plex_config -p 32400:32400 --name plex_run plex
+	docker run -d -h <plex_host_name> --networking=False --volumes-from sabnzbd_data --volumes-from plex_config -p 32400:32400 --name plex_run plex
 
 Discovery by the Roku app doesn't work unless run on a separate bridged IP on the same network as the Roku (at least as far as I can tell). The IP must have the CIDR. Use pipework to create the appropriate network. Note: br0 is existing network bridge on my system::
 

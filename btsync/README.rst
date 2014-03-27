@@ -1,7 +1,7 @@
 Docker Btsync
 =============
 
-This is a Dockerfile to set up Bittorrent Sync. Add a customized btsync.conf if desired and uncomment the ``ADD btsync.conf`` line. Make sure the listening port in btsync.conf matches the <PORT> value when running the container. If you don't want to use the web interface, you can remove port 8888 from the ``docker run`` statement.
+This is a Dockerfile to set up Bittorrent Sync. If you want a custom btsync.conf, add it to the root directory before building and edit the Dockerfile and start.sh. Otherwise, just edit the values from the webui.
 
 We'll assume that the data directories to by sync'd will all live under one directory that can be mounted via ``-v <host_dir>:/data``. The config/logging directory will live in a data-only volume.
 
@@ -10,17 +10,13 @@ A static IP will be assigned via the pipework script so that Upnp/NAT port forwa
 Build
 -----
 
-Add your own btsync.conf into the private/ directory or::
+Create config volume::
 
-    # btsync --dump-sample-config > private/btsync.conf
+    # docker run -v /.sync --name btsync_config busybox /bin/true
 
 Then::
 
     # docker build -t btsync .
-
-Create config volume::
-
-    # docker run -v /config --name btsync_config busybox /bin/true
 
 Run
 ---
@@ -29,5 +25,5 @@ If pipework/bridged network is used, then the ports don't need to be exposed. Ot
 
 ::
 
-    # docker run -d -v /mnt/btsync:/data --volumes-from btsync_config -p 8888:8888 -p <PORT>:<PORT> --name btsync_run btsync
+    # docker run -d --networking=False -v /mnt/btsync:/data --volumes-from btsync_config --name btsync_run btsync
     # pipework br0 docker_run 192.168.0.242/24@192.168.0.1

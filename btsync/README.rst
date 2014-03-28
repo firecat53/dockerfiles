@@ -5,7 +5,7 @@ This is a Dockerfile to set up Bittorrent Sync. If you want a custom btsync.conf
 
 We'll assume that the data directories to by sync'd will all live under one directory that can be mounted via ``-v <host_dir>:/data``. The config/logging directory will live in a data-only volume.
 
-A static IP will be assigned via the pipework script so that Upnp/NAT port forwarding can be used with the router. If a static port is forwarded and assigned in btsync.conf, then this may not be necessary.
+A static IP will be assigned via the pipework script so that Upnp/NAT port forwarding can be used with the router. If a static port is forwarded and assigned in btsync.conf, then this may not be necessary. Note: UPnP doesn't work...NAP-PMP must be enabled on the router.
 
 Build
 -----

@@ -1,0 +1,232 @@
+#!/usr/bin/env python
+import ast
+import fileinput
+import os
+import shlex
+import signal
+import sys
+from collections import namedtuple
+from os.path import expanduser, join
+from subprocess import Popen, PIPE
+from threading import Thread
+from time import sleep
+try:
+    import configparser as configparser
+except ImportError:
+    import ConfigParser as configparser
+try:
+    from urllib.request import urlopen, Request
+except ImportError:
+    from urllib2 import urlopen, Request
+try:
+    from urllib.error import URLError
+except ImportError:
+    from urllib2 import URLError
+try:
+    from urllib.parse import urlencode
+except ImportError:
+    from urllib import urlencode
+
+
+def get_config():
+    """Parse config.ini. Return namedtuple of
+    (user, pw, client_id, pia_url, transmission_rc, tun_dev,
+     transmission_daemon, openvpn_server, openvpn_gateway, sudo)
+
+    user:           PIA username
+    pw:             PIA password
+    client_id:      PIA generated client_id (see port forwarding forum post)
+    pia_url:        PIA port forwarding API URL
+    transmission_rc file path to transmission-daemon settings.json
+    tun_dev:        name of tun/tap device (tun0)
+    openvpn_gateway: name of openvpn configuration file to use
+    netrc:          Location of netrc file
+
+    """
+    conf = configparser.ConfigParser()
+    conf.read('config.ini')
+    with open(expanduser(conf.get('File_Paths', 'pia_credentials'))) as f:
+        user, pw = filter(None, (line.rstrip() for line in f))
+    with open(expanduser(conf.get('File_Paths', 'pia_client_id'))) as f:
+        client_id = filter(None, (line.rstrip() for line in f))
+    c_nt = namedtuple("c_nt", ["user",
+                               "pw",
+                               "client_id",
+                               "pia_url",
+                               "transmission_rc",
+                               "tun_dev",
+                               "netrc",
+                               "openvpn_gateway",
+                               "transmission_command",
+                               "openvpn_command"])
+    return c_nt(user,
+                pw,
+                client_id,
+                conf.get('PIA', 'url'),
+                expanduser(conf.get('File_Paths', 'transmission_rc')),
+                conf.get('Server', 'tun_device'),
+                expanduser(conf.get('File_Paths', 'netrc')),
+                conf.get('Server', 'openvpn_gateway'),
+                conf.get('Server', 'transmission_command'),
+                conf.get('Server', 'openvpn_command'))
+
+
+def ip_check(conf):
+    """Check IP of tun device and restart VPN until tun0 is available. Return
+    the IP address.
+
+    """
+    while True:
+        try:
+            ip = Popen(["ip", "addr", "show", conf.tun_dev],
+                       stdout=PIPE).communicate()[0].decode()
+            ip = ip.split('inet')[1].split()[0]
+            break
+        except IndexError:
+            # If tun0 doesn't exist
+            return False
+    return ip
+
+
+def port_check(conf):
+    """Submit a request to PIA port forwarding API. The call should return
+    something like: {"port": 12345}. The function returns False or an integer
+    port number.
+
+    """
+    ip = ip_check(conf)
+    if ip is False:
+        return False
+    data = {"user": conf.user, "pass": conf.pw, "client_id": conf.client_id,
+            "local_ip": ip}
+    data = urlencode(data)
+    req = Request(conf.pia_url, data.encode())
+    out = urlopen(req).read().decode()
+    port = ast.literal_eval(out)["port"]
+    return port
+
+
+def service_start_stop(name, status):
+    """Stop, start or restart any 'service' files with the syntax:
+        [sudo] service <servicename> start|stop|restart
+
+        If sudo is used, make sure appropriate NOPASSWD permissions are given
+        with visudo
+
+    """
+    if status not in ("start", "stop"):
+        raise Exception("Invalid service status")
+    cmd = shlex.split(name)
+    if status == "start":
+        process = Popen(cmd, stdout=PIPE)
+    elif status == "stop":
+        process = Popen(["pkill", "-f", cmd[0]], stdout=PIPE)
+	process.wait()
+
+
+def restart_vpn(conf):
+    """Restarts openvpn and transmission. Updates the transmission bind address
+    after openvpn restarts.
+
+    """
+    service_start_stop(conf.transmission_command, "stop")
+    control = False
+    while control is False:
+        # Continue restarting openvpn until we have a good IP address
+        service_start_stop(conf.openvpn_command, "stop")
+        service_start_stop(conf.openvpn_command, "start")
+        sleep(10)
+        control = bind_addr_update(conf)
+        if control is True:
+            service_start_stop(conf.transmission_command, "start")
+
+
+def port_update(conf):
+    """Update the port number in transmission.
+
+    """
+    port = port_check(conf)
+    if port is False:
+        return False
+    # Update the port and make sure port forwarding is set. Authentication from
+    # netrc file
+    args = shlex.split("transmission-remote -p {} "
+                       "--netrc {} -m".format(port, conf.netrc))
+    Popen(args, stdout=PIPE).communicate()
+
+
+def bind_addr_update(conf):
+    """Update the bind address in transmission when it changes. Daemon must not
+    be running.
+
+    """
+    ip = ip_check(conf)
+    if ip is False:
+        return False
+    if str(ip) not in open(conf.transmission_rc).read():
+        for line in fileinput.input(conf.transmission_rc, inplace=1):
+            if "bind-address-ipv4" in line:
+                line = '    "bind-address-ipv4": "{}",'.format(ip)
+            sys.stdout.write(line)
+    return True
+
+
+def daily():
+    """Thread to count one day
+
+    """
+    sleep(86400)
+
+
+def hourly():
+    """Thread to count one hour
+
+       Sleep 58 min. The call to the PIA API should be once per hour.
+
+    """
+    sleep(3480)
+
+
+def check_running(conf):
+    """Check the processes *_command from the config file to see if they are
+    running.
+
+    """
+    procs = [shlex.split(i[1])[0] for i in conf.items('Server') if
+             i[0].endswith("_command")]
+    for proc in procs:
+        res = Popen(["pgrep", "-f", proc], stdout=PIPE).communicate()[0]
+        print(res)
+        if not res:
+            return False
+    return True
+
+
+def run():
+    conf = get_config()
+    day = Thread(target=daily)
+    hour = Thread(target=hourly)
+    while True:
+        if not day.isAlive():
+            # Restart the VPN once per day
+            restart_vpn(conf)
+            day = Thread(target=daily)
+            day.start()
+        if not hour.isAlive():
+            # do port_update hourly, unless connection problems, then try every
+            # 30 seconds.
+            try:
+                port_update(conf)
+            except URLError:
+                restart_vpn(conf)
+                sleep(30)
+            else:
+                hour = Thread(target=hourly)
+                hour.start()
+        sleep(10)
+        if not check_running(conf):
+            restart_vpn(conf)
+
+
+if __name__ == "__main__":
+    run()

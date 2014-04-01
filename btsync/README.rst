@@ -26,4 +26,4 @@ If pipework/bridged network is used, then the ports don't need to be exposed. Ot
 ::
 
     # docker run -d --networking=False -v /mnt/btsync:/data --volumes-from btsync_config --name btsync_run btsync
-    # pipework br0 docker_run 192.168.0.242/24@192.168.0.1
+    # pipework br0 btsync_run 192.168.0.242/24@192.168.0.1

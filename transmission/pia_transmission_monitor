@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import ast
 import fileinput
 import os
@@ -6,6 +6,7 @@ import shlex
 import signal
 import sys
 from collections import namedtuple
+from datetime import datetime
 from os.path import expanduser, join
 from subprocess import Popen, PIPE
 from threading import Thread
@@ -72,20 +73,23 @@ def get_config():
 
 
 def ip_check(conf):
-    """Check IP of tun device and restart VPN until tun0 is available. Return
-    the IP address.
+    """Check IP of tun device. Check 5 times until the IP exists then return
+    it or return false.
 
     """
-    while True:
+    count = 5
+    while count:
         try:
             ip = Popen(["ip", "addr", "show", conf.tun_dev],
                        stdout=PIPE).communicate()[0].decode()
             ip = ip.split('inet')[1].split()[0]
-            break
+            return ip
         except IndexError:
             # If tun0 doesn't exist
-            return False
-    return ip
+            print("IP for tun0 not available at {}".format(datetime.now()))
+            sleep(5)
+            count -= 1
+    return False
 
 
 def port_check(conf):
@@ -100,10 +104,20 @@ def port_check(conf):
     data = {"user": conf.user, "pass": conf.pw, "client_id": conf.client_id,
             "local_ip": ip}
     data = urlencode(data)
-    req = Request(conf.pia_url, data.encode())
-    out = urlopen(req).read().decode()
-    port = ast.literal_eval(out)["port"]
-    return port
+    count = 5
+    while count:
+        req = Request(conf.pia_url, data.encode())
+        out = urlopen(req).read().decode()
+        try:
+            port = ast.literal_eval(out)["port"]
+        except KeyError:
+            port = False
+        finally:
+            if port:
+                return port
+            sleep(5)
+            count -= 1
+    return False
 
 
 def service_start_stop(name, status):
@@ -119,9 +133,11 @@ def service_start_stop(name, status):
     cmd = shlex.split(name)
     if status == "start":
         process = Popen(cmd, stdout=PIPE)
+        print("Started {} at {}".format(name, datetime.now()))
     elif status == "stop":
         process = Popen(["pkill", "-f", cmd[0]], stdout=PIPE)
-	process.wait()
+        print("Stopped {} at {}".format(name, datetime.now()))
+    process.wait()
 
 
 def restart_vpn(conf):
@@ -130,15 +146,18 @@ def restart_vpn(conf):
 
     """
     service_start_stop(conf.transmission_command, "stop")
+    sleep(5)
     control = False
     while control is False:
         # Continue restarting openvpn until we have a good IP address
         service_start_stop(conf.openvpn_command, "stop")
+        sleep(5)
         service_start_stop(conf.openvpn_command, "start")
         sleep(10)
         control = bind_addr_update(conf)
         if control is True:
             service_start_stop(conf.transmission_command, "start")
+            sleep(5)
 
 
 def port_update(conf):
@@ -153,6 +172,7 @@ def port_update(conf):
     args = shlex.split("transmission-remote -p {} "
                        "--netrc {} -m".format(port, conf.netrc))
     Popen(args, stdout=PIPE).communicate()
+    print("Updated port to {} at {}".format(port, datetime.now()))
 
 
 def bind_addr_update(conf):
@@ -168,6 +188,7 @@ def bind_addr_update(conf):
             if "bind-address-ipv4" in line:
                 line = '    "bind-address-ipv4": "{}",'.format(ip)
             sys.stdout.write(line)
+    print("Updated bind IP to {} at {}".format(ip, datetime.now()))
     return True
 
 
@@ -179,12 +200,12 @@ def daily():
 
 
 def hourly():
-    """Thread to count one hour
+    """Thread to count 10 min
 
-       Sleep 58 min. The call to the PIA API should be once per hour.
+       Sleep 10 min. The call to the PIA API should be at least once per hour.
 
     """
-    sleep(3480)
+    sleep(600)
 
 
 def check_running(conf):
@@ -209,15 +230,18 @@ def run():
     while True:
         if not day.isAlive():
             # Restart the VPN once per day
+            print("Daily restart of VPN at {}".format(datetime.now()))
             restart_vpn(conf)
             day = Thread(target=daily)
             day.start()
         if not hour.isAlive():
-            # do port_update hourly, unless connection problems, then try every
+            # do port_update every 10 min, unless connection problems, then try every
             # 30 seconds.
             try:
                 port_update(conf)
             except URLError:
+                print("Port update failed: restarting "
+                      "VPN at {}".format(datetime.now()))
                 restart_vpn(conf)
                 sleep(30)
             else:

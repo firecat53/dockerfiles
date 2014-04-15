@@ -5,7 +5,7 @@ This is a Dockerfile to set up Bittorrent Sync. If you want a custom btsync.conf
 
 We'll assume that the data directories to by sync'd will all live under one directory that can be mounted via ``-v <host_dir>:/data``. The config/logging directory will live in a data-only volume.
 
-Note: UPnP doesn't work...NAP-PMP must be enabled on the router.
+Note: UPnP doesn't work...NAP-PMP must be enabled on the router, or forward the ports manually.
 
 Build
 -----
@@ -20,6 +20,8 @@ Then::
 
 Run
 ---
+
+Systemd service file available.
 
 ::
 

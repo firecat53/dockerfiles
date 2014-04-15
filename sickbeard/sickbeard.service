@@ -1,0 +1,11 @@
+[Unit]
+Description=Sickbeard container
+After=docker.service
+
+[Service]
+Restart=always
+ExecStart=/bin/bash -c '/usr/bin/docker start -a sickbeard_run || /usr/bin/docker run --volumes-from sickbeard_config -p 8081:8081 --name sickbeard_run sickbeard'
+ExecStop=/usr/bin/docker stop sickbeard_run
+
+[Install]
+WantedBy=multi-user.target

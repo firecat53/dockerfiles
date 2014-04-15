@@ -13,18 +13,20 @@ Build
 If using data-only volumes is desired::
 
     # docker run -v /config --name sabnzbd_config busybox /bin/true
-    # docker run -v /data --name sabnzbd_data busybox /bin/true
+    # docker run -v /data --name media_data busybox /bin/true
 
 Run
 ---
 
 For regular filesystem storage::
 
-    # docker run -d -v <path/to/config-file>:/config -v <path/to/downloads>:/data -p 8080:8080 -p 563:563 sabnzbd
+    # docker run -d -v <path/to/config-file>:/config -v <path/to/downloads>:/data -p 8080:8080 sabnzbd
 
 For data-only volume storage::
 
-    # docker run -d --volumes-from sabnzbd_config --volumes-from sabnzbd_data -p 8080:8080 -p 563:563 --name sabnzbd sabnzbd
+    # docker run -d --volumes-from sabnzbd_config --volumes-from sabnzbd_data -p 8080:8080 --name sabnzbd sabnzbd
+
+If you enable SSL, make sure to change your port numbers when running the container (9090 typically). Systemd service file is available.
 
 Manage
 ------

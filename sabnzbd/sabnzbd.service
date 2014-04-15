@@ -1,0 +1,11 @@
+[Unit]
+Description=Sabnzbd container
+After=docker.service
+
+[Service]
+Restart=always
+ExecStart=/bin/bash -c '/usr/bin/docker start -a sabnzbd_run || /usr/bin/docker run --volumes-from sabnzbd_config --volumes-from media_data -p 9090:9090 --name sabnzbd_run sabnzbd'
+ExecStop=/usr/bin/docker stop sabnzbd_run
+
+[Install]
+WantedBy=multi-user.target

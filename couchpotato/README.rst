@@ -17,6 +17,8 @@ Create data volume::
 Run
 ---
 
+Systemd service file available.
+
 ::
 
     # docker run -d --volumes-from couchpotato_data -p 5050:5050 --name couchpotato couchpotato

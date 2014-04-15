@@ -17,6 +17,8 @@ Then::
 Run
 ---
 
+Systemd service file available.
+
 ::
 
     # docker run -d --volumes-from lazylibrarian_config --volumes-from sabnzbd_data -p 5299:5299 --name lazylibrarian_run lazylibrarian

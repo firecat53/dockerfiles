@@ -1,0 +1,11 @@
+[Unit]
+Description=Couchpotato container
+After=docker.service
+
+[Service]
+Restart=always
+ExecStart=/bin/bash -c '/usr/bin/docker start -a couchpotato_run || /usr/bin/docker run --volumes-from couchpotato_data -p 5050:5050 --name couchpotato_run couchpotato'
+ExecStop=/usr/bin/docker stop couchpotato_run
+
+[Install]
+WantedBy=multi-user.target

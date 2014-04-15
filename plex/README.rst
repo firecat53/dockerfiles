@@ -1,7 +1,7 @@
 Docker Plex
 ===========
 
-This is a Dockerfile to set up (https://plex.tv/ "Plex Media Server") - (https://plex.tv/)
+This is a Dockerfile to set up `Plex Media Server`_.
 
 Build
 -----
@@ -18,13 +18,9 @@ Create data-only volumes::
 Run
 ___
 
-Running the container (without LXC networking fix)::
+The ports to open come from the info here_::
 
-	docker run -d -h <plex_host_name> --networking=False --volumes-from sabnzbd_data --volumes-from plex_config -p 32400:32400 --name plex_run plex
-
-Discovery by the Roku app doesn't work unless run on a separate bridged IP on the same network as the Roku (at least as far as I can tell). The IP must have the CIDR. Use pipework to create the appropriate network. Note: br0 is existing network bridge on my system::
-
-    # pipework br0 <plex container ID> 192.168.0.240/24
+    docker run -h <plex_host_name> -d --volumes-from plex_config --volumes-from media_data -p 32400:32400 -p 32443:32443 -p 1900:1900/udp -p 32463:32463 -p 5353:5353/udp -p 32410:32410/udp -p 32412:32412/udp -p 32413:32413/udp -p 32414:32414/udp --name plex_run plex
 
 Manage
 ------
@@ -32,3 +28,6 @@ Manage
 To manage downloaded media (access the sanbnzbd_data volume)::
 
     # docker run -i -t --volumes-from sabnzbd_data ubuntu /bin/bash
+
+.. _Plex Media Server: https://plex.tv
+.. _here: https://plexapp.zendesk.com/hc/en-us/articles/201543147-What-network-ports-do-I-need-to-allow-through-my-firewall-

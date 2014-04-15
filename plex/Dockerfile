@@ -3,13 +3,10 @@ FROM ubuntu:precise
 # Because the plexpass version has to be downloaded from the forums while logged in.
 MAINTAINER Scott Hansen <firecat4153@gmail.com>
 
-RUN apt-get -q update && apt-get install -qy --force-yes unzip avahi-daemon avahi-utils
+RUN apt-get -q update && apt-get install -qy --force-yes avahi-daemon avahi-utils
 ADD plexmediaserver_0.9.9.10.458-008ea34_amd64.deb /plexmediaserver.deb
 RUN dpkg -i /plexmediaserver.deb
 RUN rm /plexmediaserver.deb
-
-ADD https://github.com/jpetazzo/pipework/archive/master.zip /pipework.zip
-RUN unzip pipework.zip && rm pipework.zip && cp pipework-master/pipework /usr/bin/pipework && chmod u+x /usr/bin/pipework
 
 # Fixes a problem where avahi won't start inside the container
 RUN sed -i "s/rlimit-nproc=3/#rlimit-nproc=3/" /etc/avahi/avahi-daemon.conf
@@ -19,5 +16,6 @@ VOLUME /config
 ADD ./start.sh /start.sh
 RUN chmod u+x  /start.sh
 
-CMD ["/start.sh"]
+EXPOSE 32400:32400 32443:32443 1900:1900/udp 32463:32463 5353:5353/udp 32410:32410/udp 32412:32412/udp 32413:32413/udp 32414:32414/udp
 
+CMD ["/start.sh"]

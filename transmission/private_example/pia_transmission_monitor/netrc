@@ -1,0 +1,3 @@
+machine localhost
+ login <transmission_rpc_username>
+ password <transmission_rpc_password>

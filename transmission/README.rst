@@ -3,7 +3,10 @@ Docker Transmission-Daemon
 
 This is a Dockerfile to set up transmission-daemon with an OpenVPN client attached through PrivateInternetAccess.com_ and managed with pia_transmission_monitor_
 
-Build from Dockerfile::
+Build
+-----
+
+First edit the files in private_example and rename private_example to private. Then build from Dockerfile::
 
 	docker build -rm -t transmission . 
 

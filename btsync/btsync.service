@@ -4,7 +4,7 @@ After=docker.service
 
 [Service]
 Restart=always
-ExecStart=/bin/bash -c '/usr/bin/docker start -a btsync_run || /usr/bin/docker run -v /mnt/media:/mnt/media -v /home/firecat53:/home/firecat53 --volumes-from btsync_config -p 30000:30000 -p 8888:8888 --name btsync_run btsync'
+ExecStart=/bin/bash -c '/usr/bin/docker start -a btsync_run || /usr/bin/docker run -v /mnt/media:/mnt/media -v /home/firecat53:/home/firecat53 --volumes-from media_data --volumes-from btsync_config -p 30000:30000 -p 8888:8888 --name btsync_run btsync'
 ExecStop=/usr/bin/docker stop btsync_run
 
 [Install]

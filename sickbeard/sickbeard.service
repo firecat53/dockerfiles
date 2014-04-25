@@ -4,7 +4,8 @@ After=docker.service
 
 [Service]
 Restart=always
-ExecStart=/bin/bash -c '/usr/bin/docker start -a sickbeard_run || /usr/bin/docker run --volumes-from sickbeard_config -p 8081:8081 --name sickbeard_run sickbeard'
+ExecStartPre=-/usr/bin/docker rm sickbeard_run
+ExecStart=/usr/bin/docker run --volumes-from sickbeard_config -p 8081:8081 --name sickbeard_run sickbeard
 ExecStop=/usr/bin/docker stop sickbeard_run
 
 [Install]

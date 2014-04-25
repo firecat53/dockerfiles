@@ -4,7 +4,8 @@ After=docker.service
 
 [Service]
 Restart=always
-ExecStart=/bin/bash -c '/usr/bin/docker start -a lazylibrarian_run || /usr/bin/docker run --volumes-from lazylibrarian_config --volumes-from media_data -p 5299:5299 --name lazylibrarian_run lazylibrarian'
+ExecStart=-/usr/bin/docker rm lazylibrarian_run
+ExecStart=/usr/bin/docker run --volumes-from lazylibrarian_config --volumes-from media_data -p 5299:5299 --name lazylibrarian_run lazylibrarian
 ExecStop=/usr/bin/docker stop lazylibrarian_run
 
 [Install]

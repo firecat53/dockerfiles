@@ -1,8 +1,8 @@
-FROM ubuntu:precise
+FROM ubuntu:trusty
 
 MAINTAINER Scott Hansen <firecat4153@gmail.com>
 
-RUN apt-get update && apt-get install -qy unzip
+RUN apt-get update && apt-get install -qy unzip python
 ADD https://github.com/itsmegb/LazyLibrarian/archive/master.zip /master.zip
 RUN unzip master.zip && rm master.zip
 

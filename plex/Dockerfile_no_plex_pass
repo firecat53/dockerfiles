@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:trusty
 #Thanks to https://github.com/bydavy/docker-plex/blob/master/Dockerfile and https://github.com/aostanin/docker-plex/blob/master/Dockerfile. Adapted from https://github.com/timhaak/docker-plex
 # Installs the non-plexpass version from the the PPA
 MAINTAINER Scott Hansen <firecat4153@gmail.com>

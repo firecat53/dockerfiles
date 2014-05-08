@@ -1,11 +1,8 @@
-FROM ubuntu:saucy
+FROM ubuntu:trusty
 
 MAINTAINER Scott Hansen <firecat4153@gmail.com>
 
-RUN apt-get -q update && apt-get install -qy --force-yes unzip openvpn software-properties-common
-
-RUN add-apt-repository ppa:transmissionbt/ppa
-RUN apt-get -q update && apt-get install -qy --force-yes transmission-daemon
+RUN apt-get -q update && apt-get install -qy --force-yes unzip openvpn software-properties-common transmission-daemon
 
 ADD https://github.com/jpetazzo/pipework/archive/master.zip /pipework.zip
 RUN unzip pipework.zip && rm pipework.zip && cp pipework-master/pipework /usr/bin/pipework && chmod u+x /usr/bin/pipework

@@ -1,4 +1,4 @@
-FROM ubuntu:precise
+FROM ubuntu:trusty
 # Installs the plexmediaserver (plexpass version) from the .deb downloaded to the build directory
 # Because the plexpass version has to be downloaded from the forums while logged in.
 MAINTAINER Scott Hansen <firecat4153@gmail.com>

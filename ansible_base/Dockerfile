@@ -1,10 +1,8 @@
-# Base docker _image_ for all my server containers
 # Adds and configures:
 #  openssh-server - configures passwordless key access and allows SSH access from host machine only
 #  Add deployment user 'ansible'. 
-#  
   
-FROM ubuntu:precise
+FROM ubuntu:trusty
 
 MAINTAINER Scott Hansen firecat4153@gmail.com
 
@@ -14,6 +12,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get -qy install openssh-server sudo python python-apt aptitude
 
 # Create deployment user
+RUN groupadd wheel
 RUN adduser --disabled-login --ingroup wheel ansible
 RUN echo "ansible:ansible-master" | chpasswd
 ADD docker_rsa.pub /home/ansible/.ssh/authorized_keys

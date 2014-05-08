@@ -1,4 +1,4 @@
-FROM ubuntu:precise
+FROM ubuntu:trusty
 
 MAINTAINER Scott Hansen <firecat4153@gmail.com>
 

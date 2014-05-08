@@ -1,4 +1,4 @@
-FROM ubuntu:saucy
+FROM ubuntu:trusty
 # Crashplan is actually installed to a data-only container. You must run
 # crashplan-install.sh before running this container.
 

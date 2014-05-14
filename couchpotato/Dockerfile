@@ -4,7 +4,7 @@ MAINTAINER Scott Hansen <firecat4153@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get -q update && apt-get install -qy git-core
+RUN apt-get -q update && apt-get install -qy git-core python
 
 RUN git clone https://github.com/RuudBurger/CouchPotatoServer.git
 

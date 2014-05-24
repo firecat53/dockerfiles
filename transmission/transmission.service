@@ -4,7 +4,7 @@ After=docker.service
 
 [Service]
 ExecStartPre=-/usr/bin/docker rm transmission_run
-ExecStart=/usr/bin/docker run --privileged --networking=False --volumes-from transmission_config --volumes-from media_data --name transmission_run transmission
+ExecStart=/usr/bin/docker run --privileged --net=none --volumes-from transmission_config --volumes-from media_data --name transmission_run transmission
 ExecStartPost=/usr/bin/sleep 3 ; /usr/local/bin/pipework br0 transmission_run 192.168.0.123/24@192.168.0.1
 ExecStop=/usr/bin/docker stop transmission_run
 

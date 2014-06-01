@@ -19,6 +19,8 @@ Update Syncthing version to latest values in the Dockerfile, then::
 Run Syncthing once inside the container to generate the configuration files::
 
     # docker run --rm -it --volumes-from syncthing_config syncthing /bin/bash
+    root@851f9e42ac1c:/# ./syncthing -home /config
+    root@851f9e42ac1c:/# vi /config/config.xml
 
 Edit /config/config.xml to change::
 

@@ -8,6 +8,7 @@
   - Rdiff-backup
   - Sabnzbd
   - Sickbeard
+  - Syncthing
   - Transmission (with OpenVPN client and privateinternetaccess.com script)
 
 * MIT License

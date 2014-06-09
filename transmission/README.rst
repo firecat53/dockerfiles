@@ -14,7 +14,7 @@ Create data-only volume::
 
     docker run -v /config --name transmission_config busybox /bin/true
 
-Install pipework_ on the host. With the `libcontainer patch`_ (still not merged as of 2014/04/24) if you are using Docker >= 0.9 (or whenever libcontainer became the default instead of LXC)
+Install pipework_ on the host.
 
 Running the container
 ---------------------
@@ -32,4 +32,3 @@ Systemd service file is also available.
 .. _PrivateInternetAccess.com: http://privateinternetaccess.com
 .. _pia_transmission_monitor: https://github.com/firecat53/pia_transmission_monitor 
 .. _pipework: https://github.com/jpetazzo/pipework
-.. _libcontainer patch: https://github.com/jpetazzo/pipework/pull/41

@@ -21,7 +21,7 @@ Running the container
 
 The --privileged flag has to be used so that the tun device can be created. ::
 
-    docker run -d --privileged --networking=False --volumes-from transmission_config --volumes-from media_data --name transmission transmission 
+    docker run -d --privileged --net=False --volumes-from transmission_config --volumes-from media_data --name transmission transmission 
 
 Use pipework to assign a static IP address to the container (Note: br0 is existing bridge on the host system). The IP must have the CIDR and you must specify the gateway::
 

@@ -44,7 +44,7 @@ Systemd service file available.
 
 ::
 
-    # docker run -d -v /mnt/media:/mnt/media --volumes-from syncthing_config -p 22000:22000 -p 8080:8080 --name syncthing_run syncthing
+    # docker run -d -v /mnt/media:/mnt/media --volumes-from syncthing_config -p 22000:22000 -p 8080:8080 -p 21025:21025/udp --name syncthing_run syncthing
 
 TODO
 ----

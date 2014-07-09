@@ -3,7 +3,7 @@ Docker Syncthing
 
 This is a Dockerfile to set up Syncthing.
 
-Mount any desired directories to sync using ``-v <host_dir>:<host_dir>`` when running the container. The config/logging directory will live in a data-only volume (/config). We have to run Syncthing using supervisord to allow Syncthing to restart itself without killing off the container.
+Mount any desired directories to sync using ``-v <host_dir>:<host_dir>`` when running the container. The config/logging directory will live in a data-only volume (/config). We have to either run Syncthing using supervisord to allow Syncthing to restart itself without killing off the container or using an external container manager like systemd to restart the container after Syncthing restarts.
 
 Build
 -----
@@ -11,6 +11,8 @@ Build
 Create config volume::
 
     # docker run -v /config --name syncthing_config busybox /bin/true
+
+Decide which version of the Dockerfile to use and rename it to 'Dockerfile'. Use the .systemd version if you have an external container manager like systemd that will restart the container automatically when Syncthing restarts. Otherwise use the .supervisord version. 
 
 Update Syncthing version to latest values in the Dockerfile, update desired <username> in the Dockerfile and supervisord.conf. 
    

@@ -5,7 +5,7 @@ After=docker.service
 [Service]
 Restart=always
 ExecStartPre=-/usr/bin/docker rm syncthing_run
-ExecStart=/usr/bin/docker run -v /mnt/media:/mnt/media --volumes-from syncthing_config -p 22000:22000 -p 8080:8080 -p 21025:21025 --name syncthing_run syncthing
+ExecStart=/usr/bin/docker run -v /mnt/media:/mnt/media --volumes-from syncthing_config -p 22000:22000 -p 8080:8080 -p 21025:21025/udp --name syncthing_run syncthing
 ExecStop=/usr/bin/docker stop syncthing_run
 
 [Install]

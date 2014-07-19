@@ -4,6 +4,7 @@ After=docker.service
 
 [Service]
 Restart=always
+RestartSec=10
 ExecStart=/usr/bin/bash -c '/usr/bin/docker start -a crashplan_run || /usr/bin/docker run -h %H_crashplan --volumes-from crashplan_data -v /mnt/backup:/mnt/backup -p 4242:4242 -p 4243:4243 --name crashplan_run crashplan'
 ExecStop=/usr/bin/docker stop crashplan_run
 

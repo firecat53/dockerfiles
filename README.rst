@@ -4,6 +4,7 @@
   - Btsync
   - Couchpotato
   - Lazy Librarian
+  - Nginx-ansible (Ansible playbook for semi-automatically setting up Nginx reverse proxy to the containers)
   - Plex
   - Rdiff-backup
   - Sabnzbd

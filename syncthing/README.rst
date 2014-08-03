@@ -12,7 +12,7 @@ Create config volume::
 
     # docker run -v /config --name syncthing_config busybox /bin/true
 
-Decide which version of the Dockerfile to use and rename it to 'Dockerfile'. Use the .systemd version if you have an external container manager like systemd that will restart the container automatically when Syncthing restarts. Otherwise use the .supervisord version. 
+Decide which version of the Dockerfile to use: use the default version if you have an external container manager like systemd that will restart the container automatically when Syncthing restarts. Otherwise use the .supervisord version and rename it to `Dockerfile`.
 
 Update Syncthing version to latest values in the Dockerfile, update desired <username> in the Dockerfile and supervisord.conf. 
    

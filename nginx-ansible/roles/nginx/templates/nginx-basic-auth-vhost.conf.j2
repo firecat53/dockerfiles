@@ -1,0 +1,18 @@
+# SSL setup with basic http auth.
+# Serve files from the root_directory
+server {
+        listen 443;
+        ssl_certificate server.conf.d/.{{ item.certificate }};
+        ssl_certificate_key server.conf.d/.{{ item.key }};
+        include server.conf.d/ssl.conf;
+        root {{ item.root_directory }};
+        index index.html index.html;
+        location ~ /({% for host in item.hostnames %}{{ host }}|{% endfor %}) {
+                auth_basic              "Restricted";
+                auth_basic_user_file    server.conf.d/.htpasswd;
+                try_files $uri $uri/ =404;
+        }       
+        location / {
+                try_files $uri $uri/ =404;
+        }
+}

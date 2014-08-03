@@ -1,0 +1,6 @@
+---
+- hosts: homeserver
+  sudo: yes
+  gather_facts: yes
+  roles:
+    - nginx

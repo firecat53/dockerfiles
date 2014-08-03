@@ -1,0 +1,48 @@
+---
+ssl_certificates:
+  - certificate: homeserver.crt
+    key: homeserver.key
+    location: Sammamish, WA
+    owner: Scott Hansen
+
+basic_auth_sites:
+  - hostnames: { prefire, wwu_alpha, prefire-test, vimwiki }
+    certificate: homeserver.crt
+    key: homeserver.key
+    root_directory: /srv/http
+
+ssl_reverse_proxy_hosts:
+  - hostname: sabnzbd
+    port: 9090
+    certificate: homeserver.crt
+    key: homeserver.key
+    ssl: https
+  - hostname: couchpotato
+    port: 5050
+    certificate: homeserver.crt
+    key: homeserver.key
+    ssl: https
+  - hostname: sickbeard
+    port: 8081
+    certificate: homeserver.crt
+    key: homeserver.key
+    ssl: https
+  - hostname: btsync
+    port: 8888
+    certificate: homeserver.crt
+    key: homeserver.key
+    ssl: http
+  - hostname: lazylibrarian
+    port: 5299
+    certificate: homeserver.crt
+    key: homeserver.key
+    ssl: http
+  - hostname: syncthing
+    port: 8080
+    certificate: homeserver.crt
+    key: homeserver.key
+    ssl: https
+
+docker_nginx_dir: "{{ dockerfile_repo_base }}/nginx-docker/"
+docker_nginx_conf_dir: "{{ dockerfile_repo_base }}/nginx-docker/server.conf.d"
+docker_nginx_sites_dir: "{{ dockerfile_repo_base }}/nginx-docker/sites-enabled"

@@ -1,0 +1,8 @@
+---
+# Create the SSL certificate
+
+- include_vars: secret.yml
+
+- name: create self-signed SSL certs
+  command: openssl req -new -newkey rsa:2048 -nodes -x509 -subj "/C=US/ST=WA/L={{ item.location }}/O={{ item.owner }}/CN={{ ansible_fqdn }}" -days 3650 -keyout {{ docker_nginx_conf_dir }}/.{{ item.key }} -out {{ docker_nginx_conf_dir }}/.{{ item.certificate }} -extensions v3_ca creates={{ docker_nginx_conf_dir }}/.{{ item.certificate }}
+  with_items: ssl_certificates

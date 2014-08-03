@@ -1,0 +1,3 @@
+---
+ansible_ssh_host: scottandchrystie.homeip.net
+ansible_ssh_port: 3000

@@ -24,13 +24,13 @@ For regular filesystem storage::
 
 For data-only volume storage::
 
-    # docker run -d --volumes-from sabnzbd_config --volumes-from sabnzbd_data -p 8080:8080 --name sabnzbd sabnzbd
+    # docker run -d --volumes-from sabnzbd_config --volumes-from media_data -p 8080:8080 --name sabnzbd sabnzbd
 
 If you enable SSL, make sure to change your port numbers when running the container (9090 typically). Systemd service file is available.
 
 Manage
 ------
 
-To manage downloaded media (access the sanbnzbd_data volume)::
+To manage downloaded media (access the media_data volume)::
 
-    # docker run -i -t --volumes-from sabnzbd_data ubuntu /bin/bash
+    # docker run -i -t --volumes-from media_data ubuntu /bin/bash

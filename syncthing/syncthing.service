@@ -11,7 +11,7 @@ ExecStart=/usr/bin/docker run \
 -v /home/firecat53:/home/firecat53 \
 --volumes-from syncthing_config \
 -p 22000:22000 \
--p 8078:8080 \
+-p 8080:8080 \
 -p 21025:21025/udp \
 --name syncthing_run syncthing
 ExecStop=/usr/bin/docker stop syncthing_run

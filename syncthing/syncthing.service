@@ -3,7 +3,6 @@ Description=Syncthing container
 After=docker.service
 
 [Service]
-User=firecat53
 Restart=always
 ExecStartPre=-/usr/bin/docker rm syncthing_run
 ExecStart=/usr/bin/docker run \

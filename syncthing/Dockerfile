@@ -6,6 +6,7 @@ RUN useradd --no-create-home -g users firecat53
 ADD https://github.com/calmh/syncthing/releases/download/v0.9.1/syncthing-linux-amd64-v0.9.1.tar.gz /syncthing.tar.gz
 RUN tar -xzvf syncthing.tar.gz && mv sync*/syncthing /syncthing && rm syncthing.tar.gz
 
+USER firecat53
 EXPOSE 8080 22000 21025/udp
 
 CMD ["/syncthing", "-home=/config"]

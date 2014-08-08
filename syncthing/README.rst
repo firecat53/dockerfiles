@@ -18,7 +18,7 @@ Update Syncthing version to latest values in the Dockerfile, update desired <use
    
    *NOTE*: the userid of the <username> you select will not necessarily match the username on your host if the UID isn't the same. If you need it to match, add the '-uid xxxx' option to the useradd command in the Dockerfile.
   
-If you want to run Syncthing as root, remove the 'user=' line from supervisord.conf and comment out the 'useradd' line in the Dockerfile.
+If you want to run Syncthing as root, remove the 'user=' line from supervisord.conf and comment out the 'useradd' and the 'USER' line in the Dockerfile.
   
    ::
 

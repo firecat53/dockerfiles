@@ -6,7 +6,7 @@ This is a Dockerfile to set up `Plex Media Server`_.
 Build
 -----
 
-Build from Dockerfile. If you have a PlexPass, download the latest version of the .deb installation file from the website to this directory and use the Dockerfile. If not, rename the Dockerfile_no_plex_pass to Dockerfile and build with that instead::
+Build from Dockerfile::
 
 	docker build -rm -t plex . 
 

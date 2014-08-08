@@ -1,10 +1,9 @@
 FROM ubuntu:trusty
-# Installs the plexmediaserver (plexpass version) from the .deb downloaded to the build directory
-# Because the plexpass version has to be downloaded from the forums while logged in.
+# Installs the plexmediaserver (plexpass version) from the .deb downloaded from Plex
 MAINTAINER Scott Hansen <firecat4153@gmail.com>
 
 RUN apt-get -q update && apt-get install -qy --force-yes avahi-daemon avahi-utils
-ADD plexmediaserver_0.9.9.14.531-7eef8c6_amd64.deb /plexmediaserver.deb
+ADD http://downloads.plexapp.com/plex-media-server/0.9.9.14.531-7eef8c6/plexmediaserver_0.9.9.14.531-7eef8c6_amd64.deb /plexmediaserver.deb
 RUN dpkg -i /plexmediaserver.deb
 RUN rm /plexmediaserver.deb
 

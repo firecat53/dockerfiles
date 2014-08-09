@@ -8,7 +8,7 @@ ExecStartPre=-/usr/bin/docker rm syncthing_run
 ExecStart=/usr/bin/docker run \
 -v /mnt/media:/mnt/media \
 -v /srv:/srv \
--v /home/firecat53:/home/firecat53 \
+-v /home/syncthing:/home/syncthing \
 --volumes-from syncthing_config \
 -p 22000:22000 \
 -p 8080:8080 \

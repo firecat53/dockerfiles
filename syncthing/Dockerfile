@@ -3,7 +3,7 @@ FROM ubuntu:trusty
 MAINTAINER Scott Hansen <firecat4153@gmail.com>
 
 RUN useradd --no-create-home -g users -uid 22000 syncthing
-ADD https://github.com/calmh/syncthing/releases/download/v0.9.2/syncthing-linux-amd64-v0.9.2.tar.gz /syncthing.tar.gz
+ADD https://github.com/calmh/syncthing/releases/download/v0.9.4/syncthing-linux-amd64-v0.9.4.tar.gz /syncthing.tar.gz
 RUN tar -xzvf syncthing.tar.gz && mv sync*/syncthing /syncthing && rm syncthing.tar.gz
 
 USER syncthing

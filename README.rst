@@ -5,6 +5,7 @@
   - Couchpotato
   - Lazy Librarian
   - Nginx-ansible (Ansible playbook for semi-automatically setting up Nginx reverse proxy to the containers)
+  - Nsinit-build (compiles nsinit binary without locally installed golang environment)
   - Plex
   - Rdiff-backup
   - Sabnzbd

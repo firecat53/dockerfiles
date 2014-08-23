@@ -16,5 +16,5 @@
 * An additional tool for troubleshooting Docker containers is `docker-enter`_. 
 * MIT License
 
-.. _backing up data-only volumes: https://gist.github.com/firecat53/9674578
-.. _docker-enter: https://github.com/firecat53/docker-enter
+.. _backing up data-only volumes: https://github.com/firecat53/docker-tools
+.. _docker-enter: https://github.com/firecat53/docker-tools

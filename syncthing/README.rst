@@ -24,6 +24,11 @@ If you want to run Syncthing as root, remove the 'user=' line from supervisord.c
 
     # docker build --rm -t syncthing .
 
+To build from the latest source, run the build.sh script to generate the syncthing binary. Then edit the desired Dockerfile to use the generated syncthing binary instead of downloading the prebuilt binary. See the comments in the Dockerfiles for instructions.
+
+Run
+---
+
 Run Syncthing once inside the container to generate the configuration files::
 
     # docker run --rm -it --volumes-from syncthing_config syncthing /bin/bash
@@ -38,9 +43,6 @@ Edit /config/config.xml to change::
 to::
 
     <address>:8080</address>
-
-Run
----
 
 Systemd service file available.
 

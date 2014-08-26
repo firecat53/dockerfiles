@@ -1,3 +1,5 @@
 */private/
 plex/*deb
 ansible-playbook.log
+nsinit-build/nsinit
+syncthing/syncthing

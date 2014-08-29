@@ -1,0 +1,16 @@
+[Unit]
+Description=Private Docker registry
+After=docker.service
+
+[Service]
+Restart=always
+RestartSec=10
+ExecStartPre=-/usr/bin/docker rm registry_run
+ExecStart=/usr/bin/docker run --volumes-from registry_data \
+-p 5000:5000 \
+-e STORAGE_PATH=/registry \
+--name registry_run registry
+ExecStop=/usr/bin/docker stop registry_run
+
+[Install]
+WantedBy=multi-user.target

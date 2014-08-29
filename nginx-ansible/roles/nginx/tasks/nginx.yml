@@ -2,8 +2,6 @@
 # Creates virtual host files and copies to Docker directory for building.
 # Copies other needed files to Docker directory.
 
-- include_vars: secret.yml
-
 - name: Copy nginx server configs
   copy: src=server.conf.d
         dest="{{ docker_nginx_dir}}"

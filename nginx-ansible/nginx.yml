@@ -1,5 +1,5 @@
 ---
-- hosts: homeserver
+- hosts: all
   sudo: yes
   gather_facts: yes
   roles:

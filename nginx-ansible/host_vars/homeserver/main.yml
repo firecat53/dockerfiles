@@ -1,0 +1,4 @@
+---
+docker_nginx_dir: "{{ dockerfile_repo_base }}/nginx-docker/"
+docker_nginx_conf_dir: "{{ dockerfile_repo_base }}/nginx-docker/server.conf.d"
+docker_nginx_sites_dir: "{{ dockerfile_repo_base }}/nginx-docker/sites-enabled"

@@ -10,6 +10,4 @@ RUN tar -xzvf syncthing.tar.gz && mv sync*/syncthing /syncthing && rm syncthing.
 # To use an existing syncthing binary in the root directory, comment out the previous 2 lines and uncomment the next line.
 # ADD syncthing /syncthing
 
-EXPOSE 8080 22000 21025/udp
-
 CMD ["/usr/bin/supervisord"]

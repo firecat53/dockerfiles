@@ -9,6 +9,5 @@ RUN tar -xzvf syncthing.tar.gz && mv sync*/syncthing /syncthing && rm syncthing.
 # ADD syncthing /syncthing
 
 USER syncthing
-EXPOSE 8080 22000 21025/udp
 
 CMD ["/syncthing", "-home=/config"]

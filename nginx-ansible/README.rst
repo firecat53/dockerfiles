@@ -6,7 +6,7 @@ This Ansible playbook creates the files and builds a Docker container for nginx 
 Run
 ---
 
-1. Edit the variables in host_vars/servername/* for the sites you need. There is a template provided for the vault-encrypted file. You only need to add sites that need Basic Auth or Reverse Proxy. Any normal sites should be picked up just fine (except for any php sites needing fcgi or similar...that's not implemented yet.)
+1. Edit the variables in host_vars/servername/* for the sites you need. There are templates provided for the vault-encrypted file. You only need to add sites that need Basic Auth or Reverse Proxy. Any normal sites should be picked up just fine (except for any php sites needing fcgi or similar...that's not implemented yet.)
 
 2. Run the playbook. If you don't have script for producing the vault password, edit ansible.cfg and change 'vault_password_file =...' to 'ask_vault_pass = True'.
 

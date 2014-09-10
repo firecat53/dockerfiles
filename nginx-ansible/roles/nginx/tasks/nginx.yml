@@ -13,31 +13,36 @@
     state: directory
 
 - name: Copy nginx server configs
-  copy: src=conf.d
-        dest="{{ docker_nginx_dir}}"
+  copy:
+    src: conf.d
+    dest: "{{ docker_nginx_dir}}"
 
 - name: Copy nginx site configs
-  copy: src=sites-enabled
-        dest="{{ docker_nginx_dir }}"
+  copy:
+    src: sites-enabled
+    dest: "{{ docker_nginx_dir }}"
 
 - name: Copy Dockerfile
-  copy: src=Dockerfile
-        dest="{{ docker_nginx_dir }}/Dockerfile"
+  copy:
+    src: Dockerfile
+    dest: "{{ docker_nginx_dir }}/Dockerfile"
 
 - name: Add SSL virtual hosts with basic auth
-  template: src=nginx-basic-auth-vhost.conf.j2
-            dest="{{ docker_nginx_sites_dir }}/01-sites.conf"
+  template:
+    src: nginx-basic-auth-vhost.conf.j2
+    dest: "{{ docker_nginx_sites_dir }}/01-sites.conf"
   with_items: basic_auth_sites
 
 - name: Add SSL reverse proxy hosts
-  template: src=nginx-ssl-reverse-proxy.conf.j2
-            dest="{{ docker_nginx_sites_dir }}/02-sites.conf"
+  template:
+    src: nginx-ssl-reverse-proxy.conf.j2
+    dest: "{{ docker_nginx_sites_dir }}/02-sites.conf"
 
 - name: generate htpasswd
-  htpasswd: path="{{ docker_nginx_conf_dir }}/.htpasswd"
-            name="{{ item.name }}"
-            password="{{ item.password }}"
-            state=present
+  htpasswd:
+    path: "{{ docker_nginx_conf_dir }}/.htpasswd"
+    name: "{{ item.name }}"
+    password: "{{ item.password }}"
+    state: present
   with_items: htpasswd_users
   ignore_errors: yes
-

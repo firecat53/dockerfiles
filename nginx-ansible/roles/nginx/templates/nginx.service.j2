@@ -1,11 +1,11 @@
 [Unit]
 Description=Nginx container
 Requires=docker.service
-Wants={% for item in ssl_reverse_proxy_hosts %}{{ item.hostname }}.service {% endfor %}
+Wants={% for item in ssl_reverse_proxy_hosts %}{{ item.subdomain }}.service {% endfor %}
 
-After=docker.service {% for item in ssl_reverse_proxy_hosts %}{{ item.hostname }}.service {% endfor %}
+After=docker.service {% for item in ssl_reverse_proxy_hosts %}{{ item.subdomain }}.service {% endfor %}
 
-PartOf={% for item in ssl_reverse_proxy_hosts %}{{ item.hostname }}.service {% endfor %}
+PartOf={% for item in ssl_reverse_proxy_hosts %}{{ item.subdomain }}.service {% endfor %}
 
 [Service]
 Restart=always
@@ -13,7 +13,7 @@ RestartSec=10
 ExecStartPre=-/usr/bin/docker rm nginx_run
 ExecStart=/usr/bin/docker run -p 80:80 -p 443:443 \
 {% for item in ssl_reverse_proxy_hosts %}
---link {{ item.hostname }}_run:{{ item.hostname }} \
+--link {{ item.subdomain }}_run:{{ item.subdomain }} \
 {% endfor %}
 -v /srv/http:/srv/http \
 --name nginx_run nginx

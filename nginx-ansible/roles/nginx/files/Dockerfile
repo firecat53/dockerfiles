@@ -20,6 +20,9 @@ ADD ./sites-enabled /etc/nginx/sites-enabled
 # Add nginx config files
 ADD ./server.conf.d /etc/nginx/server.conf.d
 
+# Add nginx server config files
+ADD ./conf.d /etc/nginx/conf.d
+
 # Set working directory.
 WORKDIR /etc/nginx
 

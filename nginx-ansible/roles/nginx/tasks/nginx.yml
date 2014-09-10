@@ -2,8 +2,18 @@
 # Creates virtual host files and copies to Docker directory for building.
 # Copies other needed files to Docker directory.
 
+- name: Create nginx-ansible base directory
+  file:
+    path: "{{ docker_nginx_dir }}"
+    state: directory
+
+- name: Create empty server.conf.d directory
+  file:
+    path: "{{ docker_nginx_conf_dir }}"
+    state: directory
+
 - name: Copy nginx server configs
-  copy: src=server.conf.d
+  copy: src=conf.d
         dest="{{ docker_nginx_dir}}"
 
 - name: Copy nginx site configs
@@ -29,4 +39,5 @@
             password="{{ item.password }}"
             state=present
   with_items: htpasswd_users
+  ignore_errors: yes
 

@@ -2,7 +2,7 @@ FROM ubuntu:trusty
 # Dockerfile to run Syncthing. Uses supervisord inside the container to maintain the container running when Syncthing restarts
 MAINTAINER Scott Hansen <firecat4153@gmail.com>
 
-RUN apt-get update && apt-get install -qy supervisor
+RUN apt-get update && apt-get install -qy supervisor ca-certificates
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN useradd --no-create-home -g users --uid 22000 syncthing
 ADD https://github.com/calmh/syncthing/releases/download/v0.9.17/syncthing-linux-amd64-v0.9.17.tar.gz /syncthing.tar.gz

@@ -14,7 +14,7 @@ Create config volume::
 
     # docker run -v /.sync --name btsync_config busybox /bin/true
 
-Then::
+Change the webui listening port in the Dockerfile if necessary (default is 8888), then::
 
     # docker build -t btsync .
 

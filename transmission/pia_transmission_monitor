@@ -136,11 +136,14 @@ def service_start_stop(name, status, conf):
     """
     if status not in ("start", "stop"):
         raise Exception("Invalid service status")
+    if name != 'transmission':
+        uid = gid = 0
+    else:
+        uid = conf.transmission_uid
+        gid = conf.transmission_gid
     cmd = shlex.split(name)
     if status == "start":
-        process = Popen(cmd, preexec_fn=_demote(conf.transmission_uid,
-                                                conf.transmission_gid),
-                        stdout=PIPE)
+        process = Popen(cmd, preexec_fn=_demote(uid, gid), stdout=PIPE)
         print("Started {} at {}".format(name, datetime.now()))
     elif status == "stop":
         process = Popen(["pkill", "-f", cmd[0]], stdout=PIPE)

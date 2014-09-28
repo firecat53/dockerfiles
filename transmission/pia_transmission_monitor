@@ -126,7 +126,7 @@ def port_check(conf):
     return False
 
 
-def service_start_stop(name, status):
+def service_start_stop(name, status, conf):
     """Stop or start a command
 
     Args: name - the full command string to run
@@ -164,18 +164,18 @@ def restart_vpn(conf):
     after openvpn restarts.
 
     """
-    service_start_stop(conf.transmission_command, "stop")
+    service_start_stop(conf.transmission_command, "stop", conf)
     sleep(5)
     control = False
     while control is False:
         # Continue restarting openvpn until we have a good IP address
-        service_start_stop(conf.openvpn_command, "stop")
+        service_start_stop(conf.openvpn_command, "stop", conf)
         sleep(5)
-        service_start_stop(conf.openvpn_command, "start")
+        service_start_stop(conf.openvpn_command, "start", conf)
         sleep(10)
         control = bind_addr_update(conf)
         if control is True:
-            service_start_stop(conf.transmission_command, "start")
+            service_start_stop(conf.transmission_command, "start", conf)
             sleep(5)
 
 

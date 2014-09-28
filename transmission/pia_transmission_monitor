@@ -154,8 +154,8 @@ def _demote(user_uid, user_gid):
 
     """
     def result():
-        os.setgid(user_gid)
-        os.setuid(user_uid)
+        os.setgid(int(user_gid))
+        os.setuid(int(user_uid))
     return result
 
 

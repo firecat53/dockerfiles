@@ -3,11 +3,10 @@ import ast
 import fileinput
 import os
 import shlex
-import signal
 import sys
 from collections import namedtuple
 from datetime import datetime
-from os.path import expanduser, join
+from os.path import expanduser
 from subprocess import Popen, PIPE
 from threading import Thread
 from time import sleep
@@ -31,8 +30,8 @@ except ImportError:
 
 def get_config():
     """Parse config.ini. Return namedtuple of
-    (user, pw, client_id, pia_url, transmission_rc, tun_dev,
-     transmission_daemon, openvpn_server, openvpn_gateway, sudo)
+    (user, pw, client_id, pia_url, transmission_rc, tun_dev, transmission_uid,
+    transmission_gid, transmission_daemon, openvpn_server, openvpn_gateway)
 
     user:           PIA username
     pw:             PIA password
@@ -40,6 +39,9 @@ def get_config():
     pia_url:        PIA port forwarding API URL
     transmission_rc file path to transmission-daemon settings.json
     tun_dev:        name of tun/tap device (tun0)
+    transmission_uid: uid of user to run the transmission daemon
+    transmission_gid: gid of group to run the transmission daemon
+    transmission_daemon: actual transmission command to run
     openvpn_gateway: name of openvpn configuration file to use
     netrc:          Location of netrc file
 
@@ -58,6 +60,8 @@ def get_config():
                                "tun_dev",
                                "netrc",
                                "openvpn_gateway",
+                               "transmission_uid",
+                               "transmission_gid",
                                "transmission_command",
                                "openvpn_command"])
     return c_nt(user,
@@ -68,6 +72,8 @@ def get_config():
                 conf.get('Server', 'tun_device'),
                 expanduser(conf.get('File_Paths', 'netrc')),
                 conf.get('Server', 'openvpn_gateway'),
+                conf.get('Server', 'transmission_uid'),
+                conf.get('Server', 'transmission_gid'),
                 conf.get('Server', 'transmission_command'),
                 conf.get('Server', 'openvpn_command'))
 
@@ -121,23 +127,36 @@ def port_check(conf):
 
 
 def service_start_stop(name, status):
-    """Stop, start or restart any 'service' files with the syntax:
-        [sudo] service <servicename> start|stop|restart
+    """Stop or start a command
 
-        If sudo is used, make sure appropriate NOPASSWD permissions are given
-        with visudo
+    Args: name - the full command string to run
+          status - 'start' or 'stop'
+          conf - configuration namedtuple
 
     """
     if status not in ("start", "stop"):
         raise Exception("Invalid service status")
     cmd = shlex.split(name)
     if status == "start":
-        process = Popen(cmd, stdout=PIPE)
+        process = Popen(cmd, preexec_fn=_demote(conf.transmission_uid,
+                                                conf.transmission_gid),
+                        stdout=PIPE)
         print("Started {} at {}".format(name, datetime.now()))
     elif status == "stop":
         process = Popen(["pkill", "-f", cmd[0]], stdout=PIPE)
         print("Stopped {} at {}".format(name, datetime.now()))
     process.wait()
+
+
+def _demote(user_uid, user_gid):
+    """Local function to call setgid and setuid on a command when passing to
+    Popen's preexec_fn
+
+    """
+    def result():
+        os.setgid(user_gid)
+        os.setuid(user_uid)
+    return result
 
 
 def restart_vpn(conf):
@@ -235,8 +254,8 @@ def run():
             day = Thread(target=daily)
             day.start()
         if not hour.isAlive():
-            # do port_update every 10 min, unless connection problems, then try every
-            # 30 seconds.
+            # do port_update every 10 min, unless connection problems, then try
+            # every 30 seconds.
             try:
                 port_update(conf)
             except URLError:

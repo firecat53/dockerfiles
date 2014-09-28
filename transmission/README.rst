@@ -6,7 +6,7 @@ This is a Dockerfile to set up transmission-daemon with an OpenVPN client attach
 Build
 -----
 
-First edit the files in private_example and rename private_example to private. Then build from Dockerfile::
+First edit the files in private_example and rename private_example to private. Set the user and group in config.ini that the transmission-daemon will run as. Then build from Dockerfile::
 
 	docker build -rm -t transmission .
 

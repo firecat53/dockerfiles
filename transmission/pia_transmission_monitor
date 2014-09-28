@@ -136,7 +136,7 @@ def service_start_stop(name, status, conf):
     """
     if status not in ("start", "stop"):
         raise Exception("Invalid service status")
-    if name != 'transmission':
+    if 'transmission' not in name:
         uid = gid = 0
     else:
         uid = conf.transmission_uid
@@ -205,11 +205,13 @@ def bind_addr_update(conf):
     ip = ip_check(conf)
     if ip is False:
         return False
+    perms = os.stat(conf.transmission_rc)
     if str(ip) not in open(conf.transmission_rc).read():
         for line in fileinput.input(conf.transmission_rc, inplace=1):
             if "bind-address-ipv4" in line:
                 line = '    "bind-address-ipv4": "{}",'.format(ip)
             sys.stdout.write(line)
+    os.chown(conf.transmission_rc, perms.st_uid, perms.st_gid)
     print("Updated bind IP to {} at {}".format(ip, datetime.now()))
     return True
 

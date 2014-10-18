@@ -26,7 +26,7 @@ def get_release():
     res = res.read().decode()
     res = json.loads(res)
     if res[0]['prerelease'] is False:
-        return res[0]['name']
+        return res[0]['name'] or res[0]['tag_name']
     else:
         print("Prerelease found. No changes made")
         return ""

@@ -12,7 +12,7 @@ First edit the files in private_example and rename private_example to private. S
 
 Create data-only volume::
 
-    docker run -v /config --name transmission_config busybox /bin/true
+    docker run -v /config --name transmission_config scratch true &> /dev/null
 
 Install pipework_ on the host.
 

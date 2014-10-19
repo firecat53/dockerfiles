@@ -8,11 +8,10 @@ RUN apt-get -q update && apt-get install -qy git-core python
 
 RUN git clone https://github.com/RuudBurger/CouchPotatoServer.git
 
-VOLUME /data
-
 ADD ./start.sh /start.sh
 RUN chmod u+x /start.sh
 
-EXPOSE 5050
+RUN useradd --no-create-home -g users --uid 22000 couchpotato
+USER couchpotato
 
 CMD ["/start.sh"]

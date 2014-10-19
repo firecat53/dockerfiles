@@ -1,4 +1,4 @@
-Docker sabnzbd
+Docker Sabnzbd
 ==============
 
 This is a Dockerfile to set up Sabnzbd from the jcfp PPA. It creates volume mount points at /config (for saving configuration files) and /data (location for your downloads). Change port if necessary to accomadate SSL. You can use this with Docker data volumes if you desire for storing configuration and downloads.
@@ -12,8 +12,11 @@ Build
 
 If using data-only volumes is desired::
 
-    # docker run -v /config --name sabnzbd_config busybox /bin/true
-    # docker run -v /data --name media_data busybox /bin/true
+    # docker run -v /config --name sabnzbd_config scratch true &> /dev/null
+    # docker run -v /data --name media_data scratch true &> /dev/null
+    # docker run -it --rm --volumes-from media_data --volumes-from sabnzbd_config ubuntu /bin/bash
+    root@xxxxx # chown -R 22000 /config
+    root@xxxxx # chown -R 22000 /data
 
 Run
 ---

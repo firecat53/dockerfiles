@@ -6,9 +6,11 @@ This is a Dockerfile to set up LazyLibrarian_.
 Build
 -----
 
-Create config volume::
+Create config volume and set permissions::
 
-    # docker run -v /config --name lazylibrarian_config busybox /bin/true
+    # docker run -v /config --name lazylibrarian_config scratch true &> /dev/null
+    # docker run -it --rm --volumes-from lazylibrarian_config ubuntu /bin/bash
+    root@xxxxx # chown -R 22000 /config
 
 Then::
 

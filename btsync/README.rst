@@ -10,9 +10,11 @@ Note: UPnP doesn't work...NAP-PMP must be enabled on the router, or forward the 
 Build
 -----
 
-Create config volume::
+Create config volume and set permissions (remember to set permissions on any bind-mounted volumes as well)::
 
-    # docker run -v /.sync --name btsync_config busybox /bin/true
+    # docker run -v /.sync --name btsync_config scratch true &> /dev/null
+    # docker run -it --rm --volumes-from btsync_config ubuntu /bin/bash
+    root@xxxxx # chown -R 22000 /.sync
 
 Change the webui listening port in the Dockerfile if necessary (default is 8888), then::
 

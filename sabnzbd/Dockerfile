@@ -8,8 +8,7 @@ RUN echo "deb http://archive.ubuntu.com/ubuntu trusty multiverse" >> /etc/apt/so
 
 RUN apt-get -q update && apt-get install -qy --force-yes sabnzbdplus sabnzbdplus-theme-classic sabnzbdplus-theme-mobile sabnzbdplus-theme-plush
 
-VOLUME /config
-
-EXPOSE 8080 9090
+RUN useradd --no-create-home -g users --uid 22000 sabnzbd
+USER sabnzbd
 
 CMD ["sabnzbdplus", "-f", "/config"]

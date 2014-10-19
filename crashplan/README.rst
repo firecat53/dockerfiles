@@ -8,7 +8,7 @@ Build
 
 First create a data-only volume for the CrashPlan software to live along with it's cache and logs. This is necessary to make sure you receive all the automatic updates and to retain program status between runs::
 
-	docker run -v /opt/crashplan --name crashplan_data busybox /bin/true
+	docker run -v /opt/crashplan --name crashplan_data scratch true &> /dev/null
 
 Now build the Docker image::
 

@@ -10,9 +10,11 @@ Build
 
     # docker build -t sickbeard .
 
-Create data volume::
+Create data volume and set permissions::
 
-    # docker run -v /data --name sickbeard_data busybox /bin/true
+    # docker run -v /data --name sickbeard_data scratch true &> /dev/null
+    # docker run -it --rm --volumes-from sickbeard_data ubuntu /bin/bash
+    root@xxxxx # chown -R 22000 /data
 
 Run
 ---

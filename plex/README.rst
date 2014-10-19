@@ -12,7 +12,7 @@ Build from Dockerfile::
 
 Create data-only volume::
 
-    docker run -v /config --name plex_config busybox /bin/true
+    docker run -v /config --name plex_config scratch true &> /dev/null
 
 Run
 ___

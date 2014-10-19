@@ -8,7 +8,7 @@ Build
 
 If using a data-only volume is desired for the registry::
 
-    # docker run -v /data --name registry_data busybox /bin/true
+    # docker run -v /data --name registry_data scratch true &> /dev/null
 
 Run
 ---

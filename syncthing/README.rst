@@ -8,9 +8,11 @@ Mount any desired directories to sync using ``-v <host_dir>:<host_dir>`` when ru
 Build
 -----
 
-Create config volume::
+Create config volume and set permissions::
 
-    # docker run -v /config --name syncthing_config busybox /bin/true
+    # docker run -v /config --name syncthing_config scratch true &> /dev/null
+    # docker run -it --rm --volumes-from syncthing_config ubuntu /bin/bash
+    root@xxxxx # chown -R 22000 /config
 
 Decide which version of the Dockerfile to use: use the default version if you have an external container manager like systemd that will restart the container automatically when Syncthing restarts. Otherwise use the .supervisord version and rename it to `Dockerfile`.
 

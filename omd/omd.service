@@ -1,0 +1,17 @@
+[Unit]
+Description=OMD container
+After=docker.service
+
+[Service]
+Restart=always
+RestartSec=10
+ExecStartPre=-/usr/bin/docker rm omd_run
+ExecStart=/usr/bin/docker run \
+--volumes-from omd_config \
+-p 5000:5000 \
+-v /etc/localtime:/etc/localtime:ro \
+--name omd_run omd
+ExecStop=/usr/bin/docker stop omd_run
+
+[Install]
+WantedBy=multi-user.target

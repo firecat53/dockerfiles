@@ -5,7 +5,7 @@
 ## It also runs the crashplan image one time to generate a my.service.xml file which will be automatically updated with the Docker IP address each time the crashplan container is started.
 volume_name=crashplan_data
 pkgname=crashplan
-pkgver=3.6.3
+pkgver=3.6.4
 srcdir=/
 
 cd "$srcdir"

@@ -1,0 +1,14 @@
+[Unit]
+Description=Syncthing Discovery server
+After=docker.service
+
+[Service]
+Restart=always
+ExecStartPre=-/usr/bin/docker rm syncthing_discovery_run
+ExecStart=/usr/bin/docker run \
+-p 21026:21026/udp \
+--name syncthing_discovery_run syncthing_discovery
+ExecStop=/usr/bin/docker stop syncthing_discovery_run
+
+[Install]
+WantedBy=multi-user.target

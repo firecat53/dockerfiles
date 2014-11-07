@@ -21,11 +21,11 @@ Running the container
 
 Docker >= 1.2: the --cap-add=NET_ADMIN flag has to be used so that the tun device can be created. ::
 
-    docker run -d --cap-add=NET_ADMIN --net=False --volumes-from transmission_config --volumes-from media_data --name transmission transmission
+    docker run -d --cap-add=NET_ADMIN --net=none --volumes-from transmission_config --volumes-from media_data --name transmission transmission
 
 Docker < 1.2: the --privileged flag has to be used so that the tun device can be created. ::
 
-    docker run -d --privileged --net=False --volumes-from transmission_config --volumes-from media_data --name transmission transmission
+    docker run -d --privileged --net=none --volumes-from transmission_config --volumes-from media_data --name transmission transmission
 
 Use pipework to assign a static IP address to the container (Note: br0 is existing bridge on the host system). The IP must have the CIDR and you must specify the gateway::
 

@@ -9,4 +9,4 @@ RUN mkdir /var/discosrv && chown syncthing: /var/discosrv
 
 USER syncthing
 
-CMD ["/discosrv/discosrv"]
+ENTRYPOINT ["/discosrv/discosrv"]

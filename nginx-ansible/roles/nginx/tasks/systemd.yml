@@ -1,4 +1,12 @@
 ---
+- name: Remove --net='host' from systemd service files when host_networking is False
+  lineinfile:
+    dest: "{{ dockerfile_repo_base }}/dockerfiles/{{ item.subdomain }}/{{ item.subdomain }}.service"
+    regexp: "^--net='host'"
+    state: absent
+  with_items: ssl_reverse_proxy_hosts
+  when: item.host_networking == 'False'
+
 - name: add systemd service file
   template:
     src: nginx.service.j2

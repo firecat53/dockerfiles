@@ -12,7 +12,7 @@ Restart=always
 RestartSec=10
 ExecStartPre=-/usr/bin/docker rm nginx_run
 ExecStart=/usr/bin/docker run -p 80:80 -p 443:443 \
-{% for item in ssl_reverse_proxy_hosts %}
+{% for item in ssl_reverse_proxy_hosts if not item.host_networking %}
 --link {{ item.subdomain }}_run:{{ item.subdomain }} \
 {% endfor %}
 -v /srv/http:/srv/http \

@@ -46,13 +46,24 @@ to::
 
     <address>:8080</address>
 
-Systemd service file available.
+Systemd service file available. Edit to enable or disable 'host' networking as necessary for local discovery needs.
 
 ::
 
-    # docker run -d -v /mnt/media:/mnt/media --volumes-from syncthing_config -p 22000:22000 -p 8080:8080 -p 21025:21025/udp --name syncthing_run syncthing
+    # docker run -d --net='host' -v /mnt/media:/mnt/media --volumes-from syncthing_config -p 22000:22000 -p 8080:8080 -p 21025:21025/udp --name syncthing_run syncthing
+
+Local Discovery
+---------------
+
+Local discovery between nodes will not work unless the container is run with 'host' networking instead of the default 'bridge' networking. Enable 'host' networking by adding `--net=host` to the `docker run` line.
+
+See here_ for precautions when running the container with 'host' networking.
+
+If you are running an nginx reverse-proxy inside a container on the same host to redirect traffic to the syncthing GUI (e.g. syncthing.myip.net -> <containerIP:GUIport>), you will not be able to run syncthing in 'host' networking mode and still have it accessible via the reverse proxy. At least not without some more complex configuring! 
 
 TODO
 ----
 
 1. Automate the initial configuration setup
+
+.. _here: https://docs.docker.com/articles/networking/#how-docker-networks-a-container

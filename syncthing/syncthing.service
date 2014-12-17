@@ -6,7 +6,7 @@ After=docker.service
 Restart=always
 ExecStartPre=-/usr/bin/docker rm syncthing_run
 ExecStart=/usr/bin/docker run \
---net='host'
+--net='host' \
 -v /mnt/media:/mnt/media \
 -v /srv:/srv \
 -v /home/syncthing:/home/syncthing \

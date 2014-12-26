@@ -3,6 +3,7 @@
   - Ansible-base (base image to be able to provision via Ansible)
   - Btsync
   - Couchpotato
+  - Handbrake-cli (handbrake-cli and mediainfo)
   - Headphones
   - Lazy Librarian
   - Nginx-ansible (Ansible playbook for semi-automatically setting up Nginx reverse proxy to the containers)

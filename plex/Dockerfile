@@ -3,7 +3,7 @@ FROM ubuntu:trusty
 MAINTAINER Scott Hansen <firecat4153@gmail.com>
 
 RUN apt-get -q update && apt-get install -qy --force-yes avahi-daemon avahi-utils
-ADD https://downloads.plex.tv/plex-media-server/0.9.11.4.739-a4e710f/plexmediaserver_0.9.11.4.739-a4e710f_amd64.deb /plexmediaserver.deb
+ADD https://downloads.plex.tv/plex-media-server/0.9.11.7.803-87d0708/plexmediaserver_0.9.11.7.803-87d0708_amd64.deb /plexmediaserver.deb
 RUN dpkg -i /plexmediaserver.deb
 RUN rm /plexmediaserver.deb
 

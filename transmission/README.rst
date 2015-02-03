@@ -10,9 +10,13 @@ First edit the files in private_example and rename private_example to private. S
 
 	docker build -rm -t transmission .
 
-Create data-only volume::
+Create data-only configuration volume::
 
     docker run -v /config --name transmission_config scratch true &> /dev/null
+
+If desired, create a data-only volume for your media. You can also just mount a directory on the host with the '-v' option instead of using --volumes-from::
+
+    docker run -v /media --name media_data scratch true &> /dev/null
 
 Install pipework_ on the host.
 
@@ -27,9 +31,11 @@ Docker < 1.2: the --privileged flag has to be used so that the tun device can be
 
     docker run -d --privileged --net=none --volumes-from transmission_config --volumes-from media_data --name transmission_run transmission
 
-Use pipework to assign a static IP address to the container (Note: br0 is existing bridge on the host system). The IP must have the CIDR and you must specify the gateway::
+Use pipework to assign a static IP address to the container (Note: br0 is existing bridge on the host system). The IP must have the CIDR, should be in the same network address space as the host, and you must specify the gateway (should be the same as the host uses)::
 
     # pipework br0 transmission_run <ip address>/24@<gateway ip>
+    # (example) pipework br0 transmission_run 192.168.0.123/24@192.168.0.1
+    where the gateway is 192.168.0.1, the host IP address might be 192.168.0.101, and the transmission container address is 192.168.0.123
 
 Systemd service file is also available.
 

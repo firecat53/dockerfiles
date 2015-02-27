@@ -5,23 +5,26 @@
 #
 
 # Pull base image.
-FROM ubuntu:trusty
+FROM nginx:latest
 
-# Install Nginx.
-RUN apt-get update && apt-get install -y nginx
-RUN echo "\ndaemon off;" >> /etc/nginx/nginx.conf
-
-ADD ./start.sh /start.sh
+COPY ./start.sh /start.sh
 RUN chmod u+x /start.sh
 
+# Add nginx.conf and proxy_params
+COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY ./proxy_params /etc/nginx/proxy_params
+
 # Add vhosts
-ADD ./sites-enabled /etc/nginx/sites-enabled
+COPY ./sites-enabled /etc/nginx/sites-enabled
 
 # Add nginx config files
-ADD ./server.conf.d /etc/nginx/server.conf.d
+COPY ./server.conf.d /etc/nginx/server.conf.d
+
+# Remove existing files in conf.d
+RUN rm etc/nginx/conf.d/*
 
 # Add nginx server config files
-ADD ./conf.d /etc/nginx/conf.d
+COPY ./conf.d /etc/nginx/conf.d
 
 # Set working directory.
 WORKDIR /etc/nginx

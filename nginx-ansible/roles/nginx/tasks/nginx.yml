@@ -17,6 +17,16 @@
     src: conf.d
     dest: "{{ docker_nginx_dir}}"
 
+- name: Copy nginx.conf
+  copy:
+    src: nginx.conf
+    dest: "{{ docker_nginx_dir }}"
+
+- name: Copy proxy_params
+  copy:
+    src: proxy_params
+    dest: "{{ docker_nginx_dir }}"
+
 - name: Copy nginx site configs
   copy:
     src: sites-enabled

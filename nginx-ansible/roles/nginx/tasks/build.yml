@@ -3,4 +3,4 @@
   docker_image:
     path: "{{ docker_nginx_dir }}"
     state: build
-    name: nginx
+    name: nginx_local

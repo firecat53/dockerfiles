@@ -13,4 +13,4 @@
     dest: /etc/systemd/system/nginx.service
   when: ansible_pkg_mgr == 'pacman'
   #when: ansible_os_family == 'Archlinux'
-
+  notify: systemd daemon-reload

@@ -24,7 +24,7 @@ docker run -it --volumes-from postgres_data --name postgres_temp postgres:latest
         # Create the data volume
         docker run -v /var/lib/postgresql/data \
             --name postgres_data \
-            scratch true &> /dev/null
+            busybox true
 
         # Initialize the database
         docker run -d -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD \

@@ -10,7 +10,7 @@ ExecStartPre=-/usr/bin/docker rm stringer_run
 ExecStart=/usr/bin/docker -p 5000:5000 \
 --link postgres_run:postgres \
 --name stringer_run \
--v /etc/localtime:/etc/localtime:ro
+-v /etc/localtime:/etc/localtime:ro \
 -e STRINGER_DATABASE_PASSWORD=lkljsad7879werhkvcd398 \
 stringer
 ExecStop=/usr/bin/docker stop stringer_run

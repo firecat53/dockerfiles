@@ -9,7 +9,7 @@ ExecStartPre=/usr/local/bin/postgres_init
 ExecStartPre=-/usr/bin/docker rm postgres_run
 ExecStart=/usr/bin/docker \
 --volumes-from postgres_data \
--v /etc/localtime:/etc/localtime:ro
+-v /etc/localtime:/etc/localtime:ro \
 --name postgres_run \
 postgres
 ExecStop=/usr/bin/docker stop postgres_run

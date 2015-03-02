@@ -1,0 +1,18 @@
+[Unit]
+Description=PostgresSQL Database container
+After=docker.service
+
+[Service]
+Restart=always
+RestartSec=10
+ExecStartPre=/usr/local/bin/postgres_init
+ExecStartPre=-/usr/bin/docker rm postgres_run
+ExecStart=/usr/bin/docker \
+--volumes-from postgres_data \
+-v /etc/localtime:/etc/localtime:ro
+--name postgres_run \
+postgres
+ExecStop=/usr/bin/docker stop postgres_run
+
+[Install]
+WantedBy=multi-user.target

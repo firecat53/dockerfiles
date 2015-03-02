@@ -1,0 +1,62 @@
+#!/bin/bash
+# Thanks to https://github.com/antonlindstrom/stringer-docker
+# This script sets up the Stringer database
+# The postgres database initialization script must either be in
+# ../postgres/postgres_init or in /usr/local/bin/postgres_init
+# That script sets up the main PostgreSQL server container.
+
+export STRINGER_DB_PASSWORD=lkljsad7879werhkvcd398
+
+if [[ -f ../postgres/postgres_init ]]; then
+    ../postgres/postgres_init 
+elif [[ -f /usr/local/bin/postgres_init ]]; then
+    /usr/local/bin/postgres_init
+else
+    echo "The postgres_init script not found. Exiting..."
+    exit 1
+fi
+
+# Check for POSTGRES_PASSWORD. If it's not there then attempt to import
+# the password from ./postgres_password or ~/.postgres_password
+if [[ -z $POSTGRES_PASSWORD ]]; then
+    if [[ -f postgres_password ]]; then
+        export $(cat postgres_password|grep -v ^#|xargs)
+    elif [[ -f $HOME/.postgres_password ]]; then
+        export "$(cat $HOME/.postgres_password|grep -v ^#|xargs)"
+    fi
+fi
+if [[ -z $POSTGRES_PASSWORD ]]; then
+    echo "You need to set POSTGRES_PASSWORD to initialize the database"
+    exit 1
+fi
+
+db_stop=False
+# Start the database if it's not running and stop it when we're done
+if [[ ! $(docker ps | grep postgres_run) && ! $(docker inspect -f {{.State.Running}} postgres_run) ]]; then 
+    docker rm postgres_run
+    docker run -d --volumes-from postgres_data --name postgres_run postgres:latest
+    sleep 5
+    db_stop=True
+fi
+
+cmd=$(docker run -it --rm -e PGPASSWORD=$POSTGRES_PASSWORD --link \
+        postgres_run:postgres postgres sh -c 'exec psql \
+        -h "$POSTGRES_PORT_5432_TCP_ADDR" \
+        -p "$POSTGRES_PORT_5432_TCP_PORT" \
+        -U postgres \
+        -lqt | cut -d \| -f 1 | grep -w stringerdb')
+
+if [[ ! $cmd ]]; then
+    # SQL to create user and database
+    connect='exec psql -h "$POSTGRES_PORT_5432_TCP_ADDR" -p "$POSTGRES_PORT_5432_TCP_PORT" -U postgres -c '
+    create_user="CREATE USER stringer WITH PASSWORD '$STRINGER_DB_PASSWORD';"
+    create_db="CREATE DATABASE stringerdb;"
+    grant_priv="GRANT ALL PRIVILEGES ON DATABASE stringerdb TO stringer;"
+    docker run --link postgres_run:postgres -e PGPASSWORD=$POSTGRES_PASSWORD --rm postgres sh -c "${connect} \"${create_user}\";"
+    docker run --link postgres_run:postgres -e PGPASSWORD=$POSTGRES_PASSWORD --rm postgres sh -c "${connect} \"${create_db}\";"
+    docker run --link postgres_run:postgres -e PGPASSWORD=$POSTGRES_PASSWORD --rm postgres sh -c "${connect} \"${grant_priv}\";"
+fi
+
+if [[ $db_stop == 'True' ]]; then
+    docker stop postgres_run && docker rm postgres_run
+fi

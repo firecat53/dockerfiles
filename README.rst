@@ -13,6 +13,7 @@
   - Sabnzbd
   - Shinken (Nagios-compatible server monitoring)
   - Sickbeard
+  - Stringer (Web-based RSS Reader)
   - Syncthing
   - Transmission (with OpenVPN client and privateinternetaccess.com script)
 

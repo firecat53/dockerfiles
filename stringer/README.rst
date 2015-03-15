@@ -1,7 +1,12 @@
 Docker Stringer
 ===============
 
-This is a Dockerfile to set up the Stringer RSS reader. Feeds will be updated every 10 min and old stories cleaned up every 30 days (values can be adjusted in schedule.rb)
+NOTE: I got this working on my laptop, but it gave me troubles on my server, so
+I gave up for now. No guarantees it'll work for you!
+
+This is a Dockerfile to set up the Stringer RSS reader. Feeds will be updated
+every 10 min and old stories cleaned up every 30 days (values can be adjusted in
+schedule.rb)
 
 Thanks to: https://github.com/antonlindstrom/stringer-docker
 
@@ -38,7 +43,8 @@ Systemd service file is available.
 Manage
 ------
 
-The Stringer database password is found in stringer_init.  To manage the Stringer database (with the postgres_run container already running)::
+The Stringer database password is found in stringer_init.  To manage the
+Stringer database (with the postgres_run container already running)::
 
     # docker run -it --rm --link postgres_run:postgres postgres sh -c 'psql -h "$POSTGRES_PORT_5432_TCP_ADDR" -p "$POSTGRES_PORT_5432_TCP_PORT" -d stringerdb -U stringer'
     # <enter stringerdb password>

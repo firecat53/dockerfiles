@@ -11,8 +11,8 @@ RUN useradd -g users --uid 22000 --create-home stringer
 RUN git clone https://github.com/swanson/stringer.git /stringer && \
     mkdir /stringer/data
 ADD ./database.yml /stringer/config/database.yml
-ADD ./run.sh run.sh
-ADD ./schedule.rb schedule.rb
+ADD ./run.sh /stringer/run.sh
+ADD ./schedule.rb /stringer/schedule.rb
 
 RUN chown -R stringer:users /stringer
 

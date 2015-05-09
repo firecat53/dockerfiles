@@ -1,0 +1,4 @@
+production:
+  adapter: sqlite3
+  encoding: unicode
+  database: data/stringer.sqlite

@@ -1,18 +1,16 @@
 [Unit]
 Description=Stringer RSS container
-After=docker.service postgres.service
+After=docker.service
 
 [Service]
 Restart=always
 RestartSec=10
 Environment=HOME=%h
-ExecStartPre=/usr/local/bin/stringer_init
 ExecStartPre=-/usr/bin/docker rm stringer_run
 ExecStart=/usr/bin/docker run -p 5000:5000 \
---link postgres_run:postgres \
 --name stringer_run \
 -v /etc/localtime:/etc/localtime:ro \
--e STRINGER_DATABASE_PASSWORD=lkljsad7879werhkvcd398 \
+--volumes-from stringer_data \
 stringer
 ExecStop=/usr/bin/docker stop stringer_run
 

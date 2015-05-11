@@ -6,7 +6,12 @@ After=docker.service
 Restart=always
 RestartSec=10
 ExecStartPre=-/usr/bin/docker rm headphones_run
-ExecStart=/usr/bin/docker run --volumes-from headphones_data -p 8181:8181 -v /etc/localtime:/etc/localtime:ro --name headphones_run Headphones
+ExecStart=/usr/bin/docker run \
+--volumes-from headphones_data \
+-p 8181:8181 \
+-v /etc/localtime:/etc/localtime:ro \
+--name headphones_run \
+headphones
 ExecStop=/usr/bin/docker stop headphones_run
 
 [Install]

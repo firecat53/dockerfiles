@@ -32,7 +32,7 @@ RUN apt-get autoremove -y build-essential && \
 
 # Add wiki user and run script
 RUN useradd -g users --uid $UID --create-home $GOLLUM_USER
-ADD run.sh /usr/local/bin/run.sh
+COPY run.sh /usr/local/bin/run.sh
 RUN chmod 755 /usr/local/bin/run.sh
 
 # Expose default gollum port 4567

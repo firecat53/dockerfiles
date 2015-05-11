@@ -5,8 +5,8 @@ FROM ubuntu:trusty
 MAINTAINER Scott Hansen firecat4153@gmail.com
 
 RUN apt-get update && apt-get -qy install wget openjdk-7-jre-headless
-ADD start.sh /start.sh
-ADD crashplan-install.sh /crashplan-install.sh
+COPY start.sh /start.sh
+COPY crashplan-install.sh /crashplan-install.sh
 RUN chmod +x /start.sh && chmod +x /crashplan-install.sh
 
 EXPOSE 4243 4242

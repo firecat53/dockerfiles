@@ -12,7 +12,7 @@ RUN sed -i "s/rlimit-nproc=3/#rlimit-nproc=3/" /etc/avahi/avahi-daemon.conf
 
 VOLUME /config
 
-ADD ./start.sh /start.sh
+COPY ./start.sh /start.sh
 RUN chmod u+x  /start.sh
 
 EXPOSE 32400:32400 32443:32443 1900:1900/udp 32463:32463 5353:5353/udp 32410:32410/udp 32412:32412/udp 32413:32413/udp 32414:32414/udp

@@ -10,7 +10,7 @@ RUN echo "deb http://labs.consol.de/repo/stable/ubuntu trusty main" >> /etc/apt/
 RUN apt-get update && apt-get install -y omd
 RUN apt-get install -y msmtp msmtp-mta heirloom-mailx
 
-ADD start.sh /start.sh
+COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
 CMD ["/start.sh"]

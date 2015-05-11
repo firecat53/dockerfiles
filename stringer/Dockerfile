@@ -3,16 +3,19 @@ FROM ruby:2.0.0-slim
 MAINTAINER Scott Hansen <firecat4153@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
+ENV STRINGER_USER stringer
+ENV UID 22000
+
 RUN apt-get -y update && \
     apt-get -y install git libcurl4-openssl-dev libpq-dev libsqlite3-dev build-essential 
 RUN gem install -N foreman rufus-scheduler
-RUN useradd -g users --uid 22000 --create-home stringer
+RUN useradd -g users --uid $UID --create-home $STRINGER_USER
 
 RUN git clone https://github.com/swanson/stringer.git /stringer && \
     mkdir /stringer/data
-ADD ./database.yml /stringer/config/database.yml
-ADD ./run.sh /stringer/run.sh
-ADD ./schedule.rb /stringer/schedule.rb
+COPY ./database.yml /stringer/config/database.yml
+COPY ./run.sh /stringer/run.sh
+COPY ./schedule.rb /stringer/schedule.rb
 
 RUN chown -R stringer:users /stringer
 

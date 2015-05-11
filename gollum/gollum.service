@@ -1,0 +1,21 @@
+[Unit]
+Description=Gollum container
+After=docker.service
+
+[Service]
+Restart=always
+RestartSec=10
+ExecStartPre=-/usr/bin/docker rm gollum_run
+ExecStart=/usr/bin/docker run \
+-p 4567:4567 \
+-v <path/to/wiki>:/home/<user>/wiki \
+-v /etc/localtime:/etc/localtime:ro \
+-v /home/<user>/.gitconfig:/home/<user>/.gitconfig:ro \
+--name gollum_run \
+gollum \
+--allow-uploads page \
+--show-all
+ExecStop=/usr/bin/docker stop gollum_run
+
+[Install]
+WantedBy=multi-user.target

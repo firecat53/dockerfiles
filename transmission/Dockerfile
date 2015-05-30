@@ -16,4 +16,8 @@ COPY ./pia_transmission_monitor /pia_transmission_monitor
 RUN chmod u+x  /pia_transmission_monitor
 COPY ./config.ini /config.ini
 
+ENV TRANSMISSION_USER transmission
+ENV UID 22000
+RUN useradd --no-create-home -g users --uid $UID $TRANSMISSION_USER
+
 CMD ["/start.sh"]

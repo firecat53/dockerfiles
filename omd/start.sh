@@ -1,5 +1,5 @@
 #!/bin/bash
-SITE=omd
+SITE=default
 
 # Link msmtp data volume to /etc/msmtprc
 chgrp omd /config/msmtp*
@@ -22,4 +22,4 @@ else
 	omd mv temp "$SITE"
 fi
 omd start "$SITE"
-tail -f /opt/omd/sites/monitoring/var/log/nagios.log
+tail -f "/opt/omd/sites/$SITE/var/log/nagios.log"

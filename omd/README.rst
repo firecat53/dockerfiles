@@ -10,11 +10,11 @@ If your site requires OMD to run with tmpfs, remove the line in start.sh that di
 
 Build from Dockerfile::
 
-	docker build -rm -t omd . 
+	docker build -rm -t omd .
 
 Create data-only volume. OMD site configurations will be auto-generated in /opt/omd/sites. ::
 
-    docker run -v /opt/omd/sites -v /config --name omd_config scratch true &> /dev/null
+    docker run -v /opt/omd/sites -v /config --name omd_config busybox
 
 Edit the msmtprc and msmtp-aliases files with your email SMTP info. Default site/user is omd. Then::
 

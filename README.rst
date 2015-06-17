@@ -1,4 +1,4 @@
-* An assorted collection of Dockerfiles. Build/run instructions are in each subdirectory. Bold items are ones that I currently use. Others could potentially be out of date.
+* An assorted collection of Dockerfiles, mostly designed for home server/lab use. Build/run instructions are in each subdirectory. Bold items are ones that I currently use. Others could potentially be out of date.
   
   - Ansible-base (base image to be able to provision via Ansible)
   - Btsync
@@ -12,6 +12,7 @@
   - **Plex**
   - **Rdiff-backup** (used for `backing up data-only volumes`_)
   - **Sabnzbd**
+  - **Samba**
   - Shinken (Nagios-compatible server monitoring)
   - **Sickbeard**
   - **Stringer** (Web-based RSS Reader)

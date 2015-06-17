@@ -1,0 +1,25 @@
+[Unit]
+Description=Samba container
+After=docker.service
+
+[Service]
+Restart=always
+RestartSec=10
+ExecStartPre=-/usr/bin/docker rm samba_run
+ExecStart=/usr/bin/docker run \
+--volumes-from samba_config \
+-p 137:137/udp \
+-p 138:138/udp \
+-p 139:139 \
+-p 445:445 \
+-v /etc/localtime:/etc/localtime:ro \
+-h homeserver \
+--volumes-from media_data \
+-v /home:/home \
+-v /mnt/media:/mnt/media \
+--name samba_run \
+samba
+ExecStop=/usr/bin/docker stop samba_run
+
+[Install]
+WantedBy=multi-user.target

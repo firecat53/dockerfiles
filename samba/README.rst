@@ -12,11 +12,12 @@ Build
 
 The initialize.sh script creates the data-only volume if necessary, adds the
 smb.conf file and a users.txt file if desired. Edit the smb.conf file as you
-like (make sure to add any shares). The users.txt file should be formatted
-like::
+like (make sure to add any shares). Make sure you accurately obtain the UID and
+GID for each user if they already exist on the host server, or you will have
+permissions problems later. The users.txt file should be formatted like::
 
-    user1 password1
-    user2 password2
+    user1 UID1 GID1 password1
+    user2 UID2 GID2 password2
     ....
 
 Then run::

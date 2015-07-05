@@ -17,7 +17,7 @@ COPY ./database.yml /stringer/config/database.yml
 COPY ./run.sh /stringer/run.sh
 COPY ./schedule.rb /stringer/schedule.rb
 
-RUN chown -R stringer:users /stringer
+RUN chown -R stringer:users /stringer && chown -R stringer:users /usr/local/bundle
 
 USER stringer
 ENV RACK_ENV=production

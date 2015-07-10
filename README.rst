@@ -7,6 +7,7 @@
   - **Handbrake-cli** (handbrake-cli and mediainfo)
   - Headphones
   - **Lazy Librarian**
+  - **Media tools** (collection of common tools for working with media files)
   - **Nginx-ansible** (Ansible playbook for semi-automatically setting up Nginx reverse proxy to the containers)
   - **OMD** (Open Monitoring Distribution. Pre-configured Nagios with Check_Mk plugin, et. al.)
   - **Plex**

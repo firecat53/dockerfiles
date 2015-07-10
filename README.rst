@@ -4,7 +4,6 @@
   - Btsync
   - **Couchpotato**
   - **Gollum** personal Wiki
-  - **Handbrake-cli** (handbrake-cli and mediainfo)
   - Headphones
   - **Lazy Librarian**
   - **Media tools** (collection of common tools for working with media files)

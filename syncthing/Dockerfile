@@ -7,7 +7,7 @@ ENV UID 22000
 
 RUN apt-get update && apt-get install -qy supervisor ca-certificates
 RUN useradd --no-create-home -g users --uid $UID $SYNCTHING_USER
-ADD https://github.com/syncthing/syncthing/releases/download/v0.11.18/syncthing-linux-amd64-v0.11.18.tar.gz /syncthing.tar.gz
+ADD https://github.com/syncthing/syncthing/releases/download/v0.11.19/syncthing-linux-amd64-v0.11.19.tar.gz /syncthing.tar.gz
 RUN tar -xzvf syncthing.tar.gz && mv sync*/syncthing /syncthing && rm syncthing.tar.gz
 # To use an existing syncthing binary in the root directory, comment out the previous 2 lines and uncomment the next line.
 # COPY syncthing /syncthing

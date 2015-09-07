@@ -17,8 +17,8 @@ Systemd service file available. You can add discosrv flags at the end of the doc
 
 ::
 
-    # docker run -d 22026:22026/udp --name syncthing_discovery_run syncthing_discovery
+    # docker run -d 22027:22027/udp --name syncthing_discovery_run syncthing_discovery
 
 or with arguments::
 
-    # docker run -d 22026:22026/udp --name syncthing_discovery_run syncthing_discovery -stats-intv=30
+    # docker run -d 22027:22027/udp --name syncthing_discovery_run syncthing_discovery -stats-intv=30

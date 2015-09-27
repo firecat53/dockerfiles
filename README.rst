@@ -2,6 +2,7 @@
   
   - Ansible-base (base image to be able to provision via Ansible)
   - Btsync
+  - Crashplan
   - **Couchpotato**
   - **Gollum** personal Wiki
   - Headphones

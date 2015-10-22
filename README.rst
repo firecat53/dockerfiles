@@ -4,6 +4,7 @@
   - Btsync
   - Crashplan
   - **Couchpotato**
+  - **Deluge** (with OpenVPN client and privateinternetaccess.com script)
   - **Gollum** personal Wiki
   - Headphones
   - **Lazy Librarian**
@@ -18,7 +19,7 @@
   - **Sickbeard**
   - **Stringer** (Web-based RSS Reader)
   - **Syncthing**
-  - **Transmission** (with OpenVPN client and privateinternetaccess.com script)
+  - Transmission (with OpenVPN client and privateinternetaccess.com script)
 
 * The standard UID:GID for the containers that don't run as root is 22000:100. Make sure to update UID/GID as necessary if you have shared data and need it to be easily accessible between containers/host
 * MIT License

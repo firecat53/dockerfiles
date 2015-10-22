@@ -1,0 +1,19 @@
+[Unit]
+Description=Deluge/Openvpn container
+After=docker.service
+
+[Service]
+ExecStartPre=-/usr/bin/docker rm deluge_run
+ExecStart=/usr/bin/docker run \
+--cap-add=NET_ADMIN \
+--net=none \
+--volumes-from deluge_config \
+--volumes-from media_data \
+-v /etc/localtime:/etc/localtime:ro \
+--name deluge_run \
+deluge
+ExecStartPost=/usr/bin/sleep 3 ; /usr/local/bin/pipework br0 deluge_run 192.168.0.124/24@192.168.0.1
+ExecStop=/usr/bin/docker stop deluge_run
+
+[Install]
+WantedBy=multi-user.target

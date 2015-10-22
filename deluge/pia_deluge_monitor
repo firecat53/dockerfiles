@@ -1,0 +1,283 @@
+#!/usr/bin/env python3
+import ast
+import os
+import shlex
+from collections import namedtuple
+from datetime import datetime
+from os.path import expanduser
+from subprocess import Popen, PIPE
+from threading import Thread
+from time import sleep
+try:
+    import configparser as configparser
+except ImportError:
+    import ConfigParser as configparser
+try:
+    from urllib.request import urlopen, Request
+except ImportError:
+    from urllib2 import urlopen, Request
+try:
+    from urllib.error import URLError
+except ImportError:
+    from urllib2 import URLError
+try:
+    from urllib.parse import urlencode
+except ImportError:
+    from urllib import urlencode
+
+
+def get_config():
+    """Parse config.ini. Return namedtuple of
+    (user, pw, client_id, pia_url, tun_dev, deluge_uid,
+    deluge_gid, deluge_daemon, deluge_web, openvpn_server, openvpn_gateway)
+
+    user:           PIA username
+    pw:             PIA password
+    client_id:      PIA generated client_id (see port forwarding forum post)
+    pia_url:        PIA port forwarding API URL
+    tun_dev:        name of tun/tap device (tun0)
+    deluge_uid:     uid of user to run the deluge daemon
+    deluge_gid:     gid of group to run the deluge daemon
+    deluge_daemon:  deluged command to run
+    deluge_web:     deluge-web command to run
+    openvpn_gateway: name of openvpn configuration file to use
+
+    """
+    conf = configparser.ConfigParser()
+    conf.read('config.ini')
+    with open(expanduser(conf.get('File_Paths', 'pia_credentials'))) as f:
+        user, pw = filter(None, (line.rstrip() for line in f))
+    with open(expanduser(conf.get('File_Paths', 'pia_client_id'))) as f:
+        client_id = filter(None, (line.rstrip() for line in f))
+    c_nt = namedtuple("c_nt", ["user",
+                               "pw",
+                               "client_id",
+                               "pia_url",
+                               "tun_dev",
+                               "openvpn_gateway",
+                               "deluge_uid",
+                               "deluge_gid",
+                               "deluge_command",
+                               "deluge_web_command",
+                               "openvpn_command"])
+    return c_nt(user,
+                pw,
+                client_id,
+                conf.get('PIA', 'url'),
+                conf.get('Server', 'tun_device'),
+                conf.get('Server', 'openvpn_gateway'),
+                conf.get('Server', 'deluge_uid'),
+                conf.get('Server', 'deluge_gid'),
+                conf.get('Server', 'deluge_command'),
+                conf.get('Server', 'deluge_web_command'),
+                conf.get('Server', 'openvpn_command'))
+
+
+def ip_check(conf):
+    """Check IP of tun device. Check 5 times until the IP exists then return
+    it or return false.
+
+    """
+    count = 5
+    while count:
+        try:
+            ip = Popen(["ip", "addr", "show", conf.tun_dev],
+                       stdout=PIPE).communicate()[0].decode()
+            ip = ip.split('inet')[1].split()[0]
+            return ip
+        except IndexError:
+            # If tun0 doesn't exist
+            print("IP for tun0 not available at {}".format(datetime.now()))
+            sleep(5)
+            count -= 1
+    return False
+
+
+def port_check(conf):
+    """Submit a request to PIA port forwarding API. The call should return
+    something like: {"port": 12345}. The function returns False or an integer
+    port number.
+
+    """
+    ip = ip_check(conf)
+    if ip is False:
+        return False
+    data = {"user": conf.user, "pass": conf.pw, "client_id": conf.client_id,
+            "local_ip": ip}
+    data = urlencode(data)
+    count = 5
+    while count:
+        req = Request(conf.pia_url, data.encode())
+        out = urlopen(req).read().decode()
+        try:
+            port = ast.literal_eval(out)["port"]
+        except KeyError:
+            port = False
+        finally:
+            if port:
+                return port
+            sleep(5)
+            count -= 1
+    return False
+
+
+def service_start_stop(name, status, conf):
+    """Stop or start a command
+
+    Args: name - the full command string to run
+          status - 'start' or 'stop'
+          conf - configuration namedtuple
+
+    """
+    if status not in ("start", "stop"):
+        raise Exception("Invalid service status")
+    if 'deluge' not in name:
+        uid = gid = 0
+    else:
+        uid = conf.deluge_uid
+        gid = conf.deluge_gid
+    cmd = shlex.split(name)
+    if status == "start":
+        process = Popen(cmd, preexec_fn=_demote(uid, gid), stdout=PIPE)
+        print("Started {} at {}".format(name, datetime.now()))
+    elif status == "stop":
+        process = Popen(["pkill", "-f", cmd[0]], stdout=PIPE)
+        print("Stopped {} at {}".format(name, datetime.now()))
+    process.wait()
+
+
+def _demote(user_uid, user_gid):
+    """Local function to call setgid and setuid on a command when passing to
+    Popen's preexec_fn
+
+    """
+    def result():
+        os.setgid(int(user_gid))
+        os.setuid(int(user_uid))
+    return result
+
+
+def restart_vpn(conf):
+    """Restarts openvpn. Updates the deluge bind address after openvpn
+    restarts.
+
+    """
+    control = False
+    while control is False:
+        # Continue restarting openvpn until we have a good IP address
+        service_start_stop(conf.openvpn_command, "stop", conf)
+        sleep(5)
+        service_start_stop(conf.openvpn_command, "start", conf)
+        sleep(10)
+        control = bind_addr_update(conf)
+
+
+def port_update(conf):
+    """Update the bound port number in deluge.
+
+    """
+    port = port_check(conf)
+    if port is False:
+        return False
+    args = shlex.split("deluge-console --config=/config/deluge "
+                       "'config -s listen_ports ({})'".format(port))
+    Popen(args, preexec_fn=_demote(conf.deluge_uid, conf.deluge_gid),
+          stdout=PIPE).communicate()
+    print("Updated port to {} at {}".format(port, datetime.now()))
+
+
+def bind_addr_update(conf):
+    """Update the bind address in deluge when it changes.
+
+    """
+    ip = ip_check(conf)
+    if ip is False:
+        return False
+    args = shlex.split("deluge-console --config=/config/deluge "
+                       "'config -s listen_interface {}'".format(ip))
+    Popen(args, preexec_fn=_demote(conf.deluge_uid, conf.deluge_gid),
+          stdout=PIPE).communicate()
+    print("Updated bind IP to {} at {}".format(ip, datetime.now()))
+    return True
+
+
+def daily():
+    """Thread to count one day
+
+    """
+    sleep(86400)
+
+
+def hourly():
+    """Thread to count 10 min
+
+       Sleep 10 min. The call to the PIA API should be at least once per hour.
+
+    """
+    sleep(600)
+
+
+def check_running(proc):
+    """Check the given process name to see if it is running.
+
+    """
+    res = Popen(["pgrep", "-f", proc], stdout=PIPE).communicate()[0]
+    print(res)
+    if not res:
+        return False
+    return True
+
+
+def update_config_permissions(conf):
+    """Recursively update permissions in /config/deluge to the correct
+    user/group
+
+    """
+    path = "/config/"
+    for root, dirs, files in os.walk(path):
+        for d in dirs:
+            os.chown(os.path.join(root, d),
+                     int(conf.deluge_uid), int(conf.deluge_gid))
+        for f in files:
+            os.chown(os.path.join(root, f),
+                     int(conf.deluge_uid), int(conf.deluge_gid))
+
+
+def run():
+    conf = get_config()
+    day = Thread(target=daily)
+    hour = Thread(target=hourly)
+    update_config_permissions(conf)
+    service_start_stop(conf.deluge_command, "start", conf)
+    service_start_stop(conf.deluge_web_command, "start", conf)
+    while True:
+        if not day.isAlive():
+            # Restart the VPN once per day
+            print("Daily restart of VPN at {}".format(datetime.now()))
+            restart_vpn(conf)
+            day = Thread(target=daily)
+            day.start()
+        if not hour.isAlive():
+            # do port_update every 10 min, unless connection problems, then try
+            # every 30 seconds.
+            try:
+                port_update(conf)
+            except URLError:
+                print("Port update failed: restarting "
+                      "VPN at {}".format(datetime.now()))
+                restart_vpn(conf)
+                sleep(30)
+            else:
+                hour = Thread(target=hourly)
+                hour.start()
+        sleep(10)
+        if not check_running('openvpn'):
+            restart_vpn(conf)
+        if not check_running('deluged'):
+            service_start_stop(conf.deluge_command, "start", conf)
+        if not check_running('deluge-web'):
+            service_start_stop(conf.deluge_web_command, "start", conf)
+
+
+if __name__ == "__main__":
+    run()

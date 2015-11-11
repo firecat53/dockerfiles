@@ -6,7 +6,9 @@ RUN echo "deb http://archive.ubuntu.com/ubuntu/ trusty multiverse" >> /etc/apt/s
 RUN apt-get -q update && \
     apt-get install -qy --force-yes \
     handbrake-cli \
+    libav \
     mediainfo \
+    mkvtoolnix \
     par2 \
     ranger \
     rsync \

@@ -8,7 +8,7 @@ ENV UID 22000
 
 RUN apt-get update && apt-get install -qy ca-certificates
 RUN useradd --no-create-home -g users --uid $UID $SYNCTHING_USER
-ADD https://github.com/syncthing/syncthing/releases/download/v0.12.3/syncthing-linux-amd64-v0.12.3.tar.gz /syncthing.tar.gz
+ADD https://github.com/syncthing/syncthing/releases/download/v0.12.4/syncthing-linux-amd64-v0.12.4.tar.gz /syncthing.tar.gz
 RUN tar -xzvf syncthing.tar.gz && \
   mv sync*/syncthing /syncthing && \
   rm -rf syncthing.tar.gz syncthing-linux*

@@ -11,6 +11,5 @@
   template:
     src: nginx.service.j2
     dest: /etc/systemd/system/nginx.service
-  when: ansible_pkg_mgr == 'pacman'
-  #when: ansible_os_family == 'Archlinux'
+  when: ansible_os_family == 'Archlinux'
   notify: systemd daemon-reload

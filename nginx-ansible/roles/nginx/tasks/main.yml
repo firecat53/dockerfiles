@@ -1,10 +1,15 @@
 ---
-- include: nginx.yml tags=nginx
+- include: nginx.yml
+  tags: nginx
 
-- include: ssl.yml tags=nginx
+- include: ssl.yml
+  tags: nginx
 
-- include: proxies.yml tags=nginx
+- include: proxies.yml
+  tags: nginx
 
-- include: build.yml tags=nginx
+- include: build.yml
+  tags: nginx
 
-- include: systemd.yml tags=nginx
+- include: systemd.yml
+  tags: nginx

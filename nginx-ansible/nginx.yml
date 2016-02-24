@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  sudo: yes
+  become: yes
   gather_facts: yes
   roles:
     - nginx

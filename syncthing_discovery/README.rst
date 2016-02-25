@@ -6,9 +6,14 @@ This is a Dockerfile to set up a self-hosted Syncthing global discovery server.
 Build
 -----
 
+To generate cert.pem and key.pem assuming you have a syncthing container with
+the executable /syncthing::
+
+    $ ./initialize.sh
+
 ::
 
-    # docker build --rm -t syncthing_discovery .
+    # docker build -t syncthing_discovery .
 
 Run
 ---

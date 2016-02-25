@@ -1,8 +1,8 @@
 FROM ubuntu:trusty
-# Dockerfile to run a self-hosted Syncthing discovery server.
+# Dockerfile to run a self-hosted Syncthing discovery server (latest build).
 MAINTAINER Scott Hansen <firecat4153@gmail.com>
 
-ADD https://github.com/syncthing/discosrv/releases/download/v0.12.2/discosrv-linux-amd64.tar.gz /discosrv.tar.gz
+ADD http://build.syncthing.net/job/discosrv/lastSuccessfulBuild/artifact/discosrv-linux-amd64.tar.gz /discosrv.tar.gz
 RUN tar -xzvf discosrv.tar.gz && rm discosrv.tar.gz && mv discosrv* discosrv
 ADD cert.pem /discosrv/
 ADD key.pem /discosrv/

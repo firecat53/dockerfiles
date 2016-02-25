@@ -10,5 +10,6 @@ RUN useradd --no-create-home -g users --uid 22000 syncthing
 RUN chown syncthing: /discosrv/*pem && mkdir /var/discosrv && chown syncthing: /var/discosrv
 
 USER syncthing
+WORKDIR /discosrv
 
-ENTRYPOINT ["/discosrv/discosrv"]
+ENTRYPOINT ["./discosrv"]

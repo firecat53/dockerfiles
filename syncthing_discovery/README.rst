@@ -1,7 +1,8 @@
 Docker Syncthing Discovery Server
 =================================
 
-This is a Dockerfile to set up a self-hosted Syncthing global discovery server.
+This is a Dockerfile to set up a self-hosted Syncthing global discovery server
+using the latest git build.
 
 Build
 -----
@@ -22,8 +23,8 @@ Systemd service file available. You can add discosrv flags at the end of the doc
 
 ::
 
-    # docker run -d 8443:8443/udp --name syncthing_discovery_run syncthing_discovery
+    # docker run -d -p 8443:8443 --name syncthing_discovery_run syncthing_discovery
 
 or with arguments::
 
-    # docker run -d 8443:8443/udp --name syncthing_discovery_run syncthing_discovery -stats-intv=30
+    # docker run -d -p 8443:8443 --name syncthing_discovery_run syncthing_discovery -stats-intv=30

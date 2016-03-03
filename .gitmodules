@@ -1,0 +1,6 @@
+[submodule "docker-gen"]
+	path = docker-gen
+	url = https://github.com/jwilder/docker-gen.git
+[submodule "docker-letsencrypt-nginx-proxy-companion"]
+	path = docker-letsencrypt-nginx-proxy-companion
+	url = https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion

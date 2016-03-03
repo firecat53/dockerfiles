@@ -1,10 +1,17 @@
-* An assorted collection of Dockerfiles, mostly designed for home server/lab use. Build/run instructions are in each subdirectory. Bold items are ones that I currently use. Others could potentially be out of date.
+* An assorted collection of Dockerfiles, mostly designed for home server/lab
+  use. Build/run instructions are in each subdirectory. Bold items are ones that
+  I currently use. Others could potentially be out of date. Docker-gen and its
+  Let's Encrypt companion are git submodules. To update the submodules::
+
+      git submodule update --remote
   
   - Ansible-base (base image to be able to provision via Ansible)
   - Btsync
   - Crashplan
   - **Couchpotato**
   - **Deluge** (with OpenVPN client and privateinternetaccess.com script)
+  - `**Docker_Gen**`_ (Auto-generate Nginx reverse-proxy template)
+  - `**Docker Let's Encrypt Proxy Companion**`_ (auto-generate and renew SSL certs)
   - **Gollum** personal Wiki
   - Headphones
   - **Lazy Librarian**
@@ -25,3 +32,5 @@
 * MIT License
 
 .. _backing up data-only volumes: https://github.com/firecat53/docker-tools
+.. _**Docker_Gen**: https://github.com/jwilder/docker-gen
+.. _**Docker Let's Encrypt Proxy Companion**: https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion

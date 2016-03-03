@@ -38,10 +38,9 @@ Dockerfile.
 
     # docker build --rm -t syncthing .
 
-To build from the latest source, run the build.sh script to generate the
-syncthing binary. Then edit the desired Dockerfile to use the generated
-syncthing binary instead of downloading the prebuilt binary. See the comments in
-the Dockerfiles for instructions.
+If you want to use a compiled syncthing binary instead of downloading the latest
+release, edit the desired Dockerfile to use the generated syncthing binary. See
+the comments in the Dockerfiles for instructions.
 
 Run
 ---
@@ -66,7 +65,7 @@ necessary for local discovery needs.
 
 ::
 
-    # docker run -d --net='host' -v /mnt/media:/mnt/media --volumes-from syncthing_config -p 22000:22000 -p 8080:8080 -p 21025:21025/udp --name syncthing_run syncthing
+    # docker run -d --net='host' -v /mnt/media:/mnt/media --volumes-from syncthing_config -p 22000:22000 -p 8080:8080 -p 21027:21027/udp --name syncthing_run syncthing
 
 Local Discovery
 ---------------

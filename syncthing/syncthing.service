@@ -6,14 +6,13 @@ After=docker.service
 Restart=always
 ExecStartPre=-/usr/bin/docker rm syncthing_run
 ExecStart=/usr/bin/docker run \
---net='host' \
 -v /mnt/media:/mnt/media \
 -v /srv:/srv \
 -v /home/syncthing:/home/syncthing \
 --volumes-from syncthing_config \
 -p 22000:22000 \
 -p 8080:8080 \
--p 21025:21025/udp \
+-p 21027:21027/udp \
 -v /etc/localtime:/etc/localtime:ro \
 --name syncthing_run syncthing
 ExecStop=/usr/bin/docker stop syncthing_run

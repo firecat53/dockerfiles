@@ -7,10 +7,23 @@ using the latest git build.
 Build
 -----
 
-If you need to generate cert.pem and key.pem, assuming you have a syncthing
+First, complete one of the following three options:
+
+1. If you need to generate cert.pem and key.pem, assuming you have a syncthing
 container with the executable /syncthing::
 
     $ ./initialize.sh
+
+OR
+
+2. If you have an existing key and certificate file, add those to the build
+   directory as key.pem and cert.pem
+
+OR
+
+3. If you are running the discovery server with the -http option (proxy mode),
+   you don't need a key or cert file, so comment out those two ADD lines in the
+   Dockerfile.
 
 ::
 

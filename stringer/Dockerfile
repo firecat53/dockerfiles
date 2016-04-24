@@ -1,4 +1,4 @@
-FROM ruby:2.0.0-slim
+FROM ruby:2.3.0-slim
 
 MAINTAINER Scott Hansen <firecat4153@gmail.com>
 

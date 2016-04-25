@@ -9,7 +9,7 @@ ExecStartPre=-/usr/bin/docker rm sabnzbd_run
 ExecStart=/usr/bin/docker run \
 --volumes-from sabnzbd_config \
 --volumes-from media_data \
--p 9090:9090 \
+-p 8080:8080 \
 -v /etc/localtime:/etc/localtime:ro \
 --name sabnzbd_run \
 sabnzbd

@@ -1,6 +1,0 @@
----
-- name: build nginx docker image
-  docker_image:
-    path: "{{ docker_nginx_dir }}"
-    state: build
-    name: nginx_local

@@ -1,6 +1,0 @@
----
-# Add linked container variables to start.sh based on listed reverse proxy vhosts
-- name: process start.sh
-  template:
-    src: start.sh.j2
-    dest: "{{ docker_nginx_dir }}/start.sh"

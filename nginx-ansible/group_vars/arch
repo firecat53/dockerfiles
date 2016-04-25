@@ -1,3 +1,0 @@
----
-ansible_python_interpreter: /usr/bin/python2
-dockerfile_repo_base: /usr/local/src

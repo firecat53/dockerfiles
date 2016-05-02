@@ -33,7 +33,8 @@ Run
 Systemd service file is available if desired. Otherwise::
 
     $ docker run -d -p 445:445 -p 139:139 -p 138:138/udp -p 137:137/udp \
-        --volumes-from samba_config\
+        -p 5355:5355/udp \
+        --volumes-from samba_config \
         -h <your server hostname> \
         -v /etc/localtime:/etc/localtime:ro
         ## The next 3 lines are just examples of mounting different folders

@@ -12,6 +12,7 @@ ExecStart=/usr/bin/docker run \
 -p 138:138/udp \
 -p 139:139 \
 -p 445:445 \
+-p 5355:5355/udp \
 -v /etc/localtime:/etc/localtime:ro \
 -h homeserver \
 --volumes-from media_data \

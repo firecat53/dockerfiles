@@ -18,7 +18,7 @@
   - **Media tools** (collection of common tools for working with media files)
   - **OMD** (Open Monitoring Distribution. Pre-configured Nagios with Check_Mk plugin, et. al.)
   - **Plex**
-  - **Rdiff-backup** (used for `backing up data-only volumes`_)
+  - **Rsync** (used for backing up Docker data-only volumes)
   - **Sabnzbd**
   - **Samba**
   - Shinken (Nagios-compatible server monitoring)
@@ -30,6 +30,5 @@
 * The standard UID:GID for the containers that don't run as root is 22000:100. Make sure to update UID/GID as necessary if you have shared data and need it to be easily accessible between containers/host
 * MIT License
 
-.. _backing up data-only volumes: https://github.com/firecat53/docker-tools
 .. _**Docker_Gen**: https://github.com/jwilder/docker-gen
 .. _**Docker Let's Encrypt Proxy Companion**: https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion

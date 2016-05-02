@@ -7,4 +7,4 @@ if [ -f "/config/users.txt" ]; then
     done < /config/users.txt
 fi
 nmbd -D
-exec ionice -c 3 smbd -FS --configfile=/config/smb.conf
+exec ionice -c 3 smbd -FS --configfile=/config/smb.conf < /dev/null

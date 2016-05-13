@@ -2,10 +2,8 @@ FROM ubuntu:16.04
 
 MAINTAINER Scott Hansen <firecat4153@gmail.com>
 
-ARG BTSYNC_USER=btsync
-ENV BTSYNC_USER ${BTSYNC_USER}
-ARG UID=2200
-ENV UID ${UID}
+ENV BTSYNC_USER btsync
+ENV UID 22000
 
 RUN apt-get update && \
     apt-get install -qy wget && \

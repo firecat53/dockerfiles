@@ -1,19 +1,20 @@
-FROM ubuntu:trusty
+FROM ubuntu:16.04
 
 MAINTAINER Scott Hansen <firecat4153@gmail.com>
 
-ENV DEBIAN_FRONTEND noninteractive
 ENV COUCHPOTATO_USER couchpotato
 ENV UID 22000
 
-RUN apt-get -q update && apt-get install -qy git-core python
-
-RUN git clone https://github.com/RuudBurger/CouchPotatoServer.git
-
 COPY ./start.sh /start.sh
-RUN chmod u+x /start.sh
 
-RUN useradd --no-create-home -g users --uid $UID $COUCHPOTATO_USER
+RUN apt-get -q update && \
+    apt-get install -qy git-core python && \
+    git clone https://github.com/RuudBurger/CouchPotatoServer.git && \
+    chmod u+x /start.sh && \
+    useradd --no-create-home -g users --uid $UID $COUCHPOTATO_USER && \
+    apt-get autoremove -qy git-core && \
+    rm -rf /var/lib/apt/lists/*
+
 USER $COUCHPOTATO_USER
 
 CMD ["/start.sh"]

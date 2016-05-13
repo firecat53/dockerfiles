@@ -6,7 +6,8 @@ This is a Dockerfile to set up the Gollum_ personal wiki.
 Build
 -----
 
-Configure your user and UID in the Dockerfile first, then build the image::
+Configure your user and UID in the Dockerfile first (these should match the user
+that owns the host directory containing the wiki), then build the image::
 
     # docker build -t gollum .
 

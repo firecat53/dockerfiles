@@ -24,19 +24,17 @@ enable remote access**.
 
 Then build from Dockerfile::
 
-	docker build -rm -t deluge .
+	docker build -t deluge .
 
 Create data-only configuration volume and chown the directory to your intended
 user UID::
 
-    docker run -v /config --name deluge_config scratch true &> /dev/null
-    docker run --volumes-from deluge_config ubuntu chown -R <UID>:users /config
+    docker run -v /config --name deluge_config ubuntu chown -R <UID>:users /config
 
 If desired, create a data-only volume for your media. You can also just mount a
 directory on the host with the '-v' option instead of using --volumes-from::
 
-    docker run -v /data --name media_data scratch true &> /dev/null
-    docker run --volumes-from media_data ubuntu chown -R <UID>:users /data
+    docker run -v /data --name media_data ubuntu chown -R <UID>:users /data
 
 Install pipework_ on the host.
 

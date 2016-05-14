@@ -6,6 +6,7 @@
       git submodule update --remote
   
   - Btsync
+  - Check-MK (Monitoring system based on Nagios. Lighter than OMD)
   - Crashplan
   - **Couchpotato**
   - **Deluge** (with OpenVPN client and privateinternetaccess.com script)

@@ -1,14 +1,21 @@
-FROM ubuntu:trusty
+FROM ubuntu:16.04
 MAINTAINER Scott Hansen <firecat4153@gmail.com>
 
-ENV HEADPHONES_USER
-ENV UID
+ENV HEADPHONES_USER headphones
+ENV UID 22000
 
-RUN apt-get update && apt-get install -qy git-core python ca-certificates
-RUN git clone https://github.com/rembo10/headphones
+COPY start.sh /start.sh
+RUN apt-get update -q && \
+    apt-get install -qy git-core \
+                        python \
+                        ca-certificates && \
+    git clone https://github.com/rembo10/headphones && \
+    useradd --no-create-home -g users --uid $UID $HEADPHONES_USER && \
+    mv /start.sh /headphones/start.sh && \
+    chmod +x /headphones/start.sh && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN useradd --no-create-home -g users --uid $UID $HEADPHONES_USER
 USER $HEADPHONES_USER
 WORKDIR /headphones
 
-CMD ["python", "Headphones.py", "--datadir", "/data", "--nolaunch"]
+CMD ["./start.sh"]

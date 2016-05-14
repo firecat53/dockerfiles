@@ -12,10 +12,7 @@ Build
 
 Create data volume and set permissions::
 
-    # docker run -v /data --name headphones_data scratch /bin/true &> /dev/null
-    # docker run -it --rm --volumes-from headphones_data ubuntu /bin/bash
-    root@xxxxx # chown -R 22000 /data
-
+    # docker run -v /data --name headphones_data ubuntu chown -R 22000 /data
 
 Run
 ---

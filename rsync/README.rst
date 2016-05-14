@@ -1,11 +1,12 @@
 Docker rsync
 ============
 
-Simple Dockerfile to install rsync in an image.
+Simple Dockerfile to install rsync in an image. Useful for data-only container
+backups.
 
 Build
 -----
 
 ::
 
-    # docker build --rm -t rsync .
+    # docker build -t rsync .

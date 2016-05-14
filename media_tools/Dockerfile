@@ -1,4 +1,4 @@
-FROM ubuntu:trusty
+FROM ubuntu:16.04
 
 MAINTAINER Scott Hansen <firecat4153@gmail.com>
 
@@ -12,6 +12,7 @@ RUN apt-get -q update && \
     par2 \
     ranger \
     rsync \
-    unrar
+    unrar && \
+    rm -rf /var/lib/apt/lists/*
 
 ENTRYPOINT ["/bin/bash"]

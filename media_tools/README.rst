@@ -17,7 +17,7 @@ Build
 
 ::
 
-    $ docker build --rm -t media_tools .
+    $ docker build -t media_tools .
 
 Usage
 -----

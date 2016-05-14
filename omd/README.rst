@@ -13,7 +13,7 @@ SYS_ADMIN`.
 
 Build from Dockerfile::
 
-    docker build -rm -t omd .
+    docker build -t omd .
 
 Create data-only volume. OMD site configurations will be auto-generated in
 /opt/omd/sites. ::

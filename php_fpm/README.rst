@@ -9,14 +9,14 @@ Build
 
 Build from Dockerfile::
 
-	docker build -rm -t php_fpm . 
+	docker build -t php_fpm .
 
 Run
 ___
 
 Make sure to include the volume from the nginx container that contains the php files::
 
-    docker run -d --name php_fpm_run -volumes-from nginx_run php_fpm
+    docker run -d --name php_fpm_run --volumes-from nginx_run php_fpm
 
 
 Usage

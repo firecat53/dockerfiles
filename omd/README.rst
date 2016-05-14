@@ -18,14 +18,13 @@ Build from Dockerfile::
 Create data-only volume. OMD site configurations will be auto-generated in
 /opt/omd/sites. ::
 
-    docker run -v /opt/omd/sites -v /config --name omd_config busybox
+    docker run -v /opt/omd/sites -v /config --name omd_config debian:jessie
 
 Edit the msmtprc and msmtp-aliases files with your email SMTP info. Default
 site/user is omd. Then::
 
-    docker run --volumes-from omd_config -v $(pwd):/home -it ubuntu /bin/bash
-    root@xxxxx # cp /home/msmtp* /config/
-    root@xxxxx # exit
+    docker cp msmtprc omd_config:/config/
+    docker cp msmtp-aliases omd_config:/config/
 
 Run
 ___

@@ -1,16 +1,19 @@
 # Open Monitoring Distribution
 
-FROM ubuntu:trusty
+FROM debian:jessie
 MAINTAINER Scott Hansen, firecat4153@gmail.com
 
-# Install OMD
-RUN gpg --keyserver keys.gnupg.net --recv-keys F8C1CA08A57B9ED7
-RUN gpg --armor --export F8C1CA08A57B9ED7 | apt-key add -
-RUN echo "deb http://labs.consol.de/repo/stable/ubuntu trusty main" >> /etc/apt/sources.list
-RUN apt-get update && apt-get install -y omd
-RUN apt-get install -y msmtp msmtp-mta heirloom-mailx
+ENV DEBIAN_FRONTEND noninteractive
 
+# Install OMD
 COPY start.sh /start.sh
-RUN chmod +x /start.sh
+RUN gpg --keyserver keys.gnupg.net --recv-keys F8C1CA08A57B9ED7 && \
+    gpg --armor --export F8C1CA08A57B9ED7 | apt-key add - && \
+    echo "deb http://labs.consol.de/repo/stable/debian jessie main" >> /etc/apt/sources.list && \
+    apt-get update -q && \
+    apt-get install -qy omd && \
+    apt-get install -qy msmtp msmtp-mta heirloom-mailx && \
+    chmod +x /start.sh && \
+    rm -rf /var/lib/apt/lists/*
 
 CMD ["/start.sh"]

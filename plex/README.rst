@@ -8,11 +8,11 @@ Build
 
 Build from Dockerfile::
 
-	docker build -rm -t plex . 
+	docker build -t plex . 
 
-Create data-only volume::
+Create data-only volume for configuration files::
 
-    docker run -v /config --name plex_config scratch true &> /dev/null
+    docker create -v /config --name plex_config ubuntu
 
 Run
 ___

@@ -1,4 +1,4 @@
-FROM ubuntu:trusty
+FROM ubuntu:16.04
 
 MAINTAINER Scott Hansen <firecat4153@gmail.com>
 
@@ -6,13 +6,22 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV SABNZBD_USER sabnzbd
 ENV UID 22000
 
-RUN gpg --keyserver keys.gnupg.net --recv-keys 4BB9F05F
-RUN gpg --armor --export 4BB9F05F | apt-key add -
-RUN echo "deb http://ppa.launchpad.net/jcfp/ppa/ubuntu trusty main" >> /etc/apt/sources.list
-RUN echo "deb http://archive.ubuntu.com/ubuntu/ trusty multiverse" >> /etc/apt/sources.list
-RUN apt-get -q update && apt-get install -qy --force-yes sabnzbdplus sabnzbdplus-theme-classic sabnzbdplus-theme-mobile sabnzbdplus-theme-plush unrar
+COPY start.sh /start.sh
+RUN gpg --keyserver keys.gnupg.net --recv-keys 4BB9F05F && \
+    gpg --armor --export 4BB9F05F | apt-key add - && \
+    echo "deb http://ppa.launchpad.net/jcfp/ppa/ubuntu xenial main" >> /etc/apt/sources.list && \
+    echo "deb http://archive.ubuntu.com/ubuntu/ xenial multiverse" >> /etc/apt/sources.list && \
+    apt-get -q update && \
+    apt-get install -qy \
+        sabnzbdplus \
+        sabnzbdplus-theme-classic \
+        sabnzbdplus-theme-mobile \
+        sabnzbdplus-theme-plush \
+        unrar && \
+    useradd --no-create-home -g users --uid $UID $SABNZBD_USER && \
+    chmod +x /start.sh && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN useradd --no-create-home -g users --uid $UID $SABNZBD_USER
 USER $SABNZBD_USER
 
-CMD ["sabnzbdplus", "-f", "/config"]
+CMD ["/start.sh"]

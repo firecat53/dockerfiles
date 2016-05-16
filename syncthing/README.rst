@@ -15,9 +15,7 @@ Build
 
 Create config volume and set permissions::
 
-    # docker run -v /config --name syncthing_config scratch true &> /dev/null
-    # docker run -it --rm --volumes-from syncthing_config ubuntu /bin/bash
-    root@xxxxx # chown -R 22000 /config
+    # docker run -v /config --name syncthing_config ubuntu chown -R 22000 /config
 
 Decide which version of the Dockerfile to use: use the default version if you
 have an external container manager like systemd that will restart the container
@@ -36,36 +34,17 @@ Dockerfile.
   
    ::
 
-    # docker build --rm -t syncthing .
-
-If you want to use a compiled syncthing binary instead of downloading the latest
-release, edit the desired Dockerfile to use the generated syncthing binary. See
-the comments in the Dockerfiles for instructions.
+    # docker build -t syncthing .
 
 Run
 ---
-
-Run Syncthing once inside the container to generate the configuration files::
-
-    # docker run --rm -it --volumes-from syncthing_config syncthing /bin/bash
-    root@851f9e42ac1c:/# ./syncthing -home /config
-    root@851f9e42ac1c:/# chown -R <username>:users /config
-    root@851f9e42ac1c:/# vi /config/config.xml
-
-Edit /config/config.xml to change::
-
-    <address>127.0.0.1:8080</address>
-
-to::
-
-    <address>:8080</address>
 
 Systemd service file available. Edit to enable or disable 'host' networking as
 necessary for local discovery needs.
 
 ::
 
-    # docker run -d --net='host' -v /mnt/media:/mnt/media --volumes-from syncthing_config -p 22000:22000 -p 8080:8080 -p 21027:21027/udp --name syncthing_run syncthing
+    # docker run -d --net='host' -v /mnt/media:/mnt/media --volumes-from syncthing_config -p 22000:22000 -p 8384:8384 -p 21027:21027/udp --name syncthing_run syncthing
 
 Local Discovery
 ---------------
@@ -81,10 +60,5 @@ redirect traffic to the syncthing GUI (e.g. syncthing.myip.net ->
 <containerIP:GUIport>), you will not be able to run syncthing in 'host'
 networking mode and still have it accessible via the reverse proxy. At least not
 without some more complex configuring! 
-
-TODO
-----
-
-1. Automate the initial configuration setup
 
 .. _here: https://docs.docker.com/articles/networking/#how-docker-networks-a-container

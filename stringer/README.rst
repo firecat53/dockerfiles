@@ -20,7 +20,7 @@ Setup
 
 Create a data-only volume for saving the stringer sqlite database. This also creates the sqlite database::
 
-    # docker run -it -v /stringer/data --name stringer_data stringer bundle exec rake db:migrate
+    # docker run -v /home/stringer/stringer/data --name stringer_data stringer bundle exec rake db:migrate
 
 Run
 ---

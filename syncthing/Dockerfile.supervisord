@@ -6,7 +6,7 @@ MAINTAINER Scott Hansen <firecat4153@gmail.com>
 ENV SYNCTHING_USER syncthing
 ENV UID 22000
 
-COPY start.sh /
+COPY start_supervisord.sh /
 COPY supervisord.conf /etc/supervisor/conf.d/
 
 RUN apt-get update && \

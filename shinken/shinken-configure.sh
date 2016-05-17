@@ -12,5 +12,4 @@ shinken -c $SHINKEN_CONFIG install sqlitedb
 sed -i 's/^\s*modules/    modules webui/' /etc/shinken/brokers/broker-master.cfg
 sed -i 's/^\s*modules/    modules auth-cfg-password,SQLitedb/' /etc/shinken/modules/webui.cfg
 # Change the auth_secret in webui.cfg
-sed -i "s/CHANGE_ME/$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)/" /etc/shinken/modules/webui.
-cfg
+sed -i "s/CHANGE_ME/$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)/" /etc/shinken/modules/webui.cfg

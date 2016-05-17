@@ -2,7 +2,7 @@ FROM ubuntu:16.04
 
 MAINTAINER Scott Hansen <firecat4153@gmail.com>
 
-RUN echo "deb http://archive.ubuntu.com/ubuntu/ trusty multiverse" >> /etc/apt/sources.list
+RUN echo "deb http://archive.ubuntu.com/ubuntu/ xenial multiverse" >> /etc/apt/sources.list
 RUN apt-get -q update && \
     apt-get install -qy --force-yes \
     handbrake-cli \

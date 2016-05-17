@@ -11,6 +11,7 @@ COPY start.sh pia_transmission_monitor config.ini /
 RUN apt-get -q update && \
     apt-get install -qy wget \
                         openvpn \
+                        python \
                         transmission-daemon && \
     wget https://github.com/jpetazzo/pipework/raw/master/pipework -O /usr/bin/pipework && \
     chmod u+x /usr/bin/pipework && \

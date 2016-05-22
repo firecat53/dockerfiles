@@ -29,7 +29,7 @@ except ImportError:
 def get_config():
     """Parse config.ini. Return namedtuple of
     (user, pw, client_id, pia_url, tun_dev, deluge_uid,
-    deluge_gid, deluge_daemon, deluge_web, openvpn_server, openvpn_gateway)
+    deluge_gid, deluge_daemon, deluge_web, openvpn_server)
 
     user:           PIA username
     pw:             PIA password
@@ -40,11 +40,10 @@ def get_config():
     deluge_gid:     gid of group to run the deluge daemon
     deluge_daemon:  deluged command to run
     deluge_web:     deluge-web command to run
-    openvpn_gateway: name of openvpn configuration file to use
 
     """
     conf = configparser.ConfigParser()
-    conf.read('config.ini')
+    conf.read('/config/config.ini')
     with open(expanduser(conf.get('File_Paths', 'pia_credentials'))) as f:
         user, pw = filter(None, (line.rstrip() for line in f))
     with open(expanduser(conf.get('File_Paths', 'pia_client_id'))) as f:
@@ -54,7 +53,6 @@ def get_config():
                                "client_id",
                                "pia_url",
                                "tun_dev",
-                               "openvpn_gateway",
                                "deluge_uid",
                                "deluge_gid",
                                "deluge_command",
@@ -65,7 +63,6 @@ def get_config():
                 client_id,
                 conf.get('PIA', 'url'),
                 conf.get('Server', 'tun_device'),
-                conf.get('Server', 'openvpn_gateway'),
                 conf.get('Server', 'deluge_uid'),
                 conf.get('Server', 'deluge_gid'),
                 conf.get('Server', 'deluge_command'),
@@ -139,10 +136,8 @@ def service_start_stop(name, status, conf):
     cmd = shlex.split(name)
     if status == "start":
         process = Popen(cmd, preexec_fn=_demote(uid, gid), stdout=PIPE)
-        print("Started {} at {}".format(name, datetime.now()))
     elif status == "stop":
         process = Popen(["pkill", "-f", cmd[0]], stdout=PIPE)
-        print("Stopped {} at {}".format(name, datetime.now()))
     process.wait()
 
 
@@ -222,7 +217,6 @@ def check_running(proc):
 
     """
     res = Popen(["pgrep", "-f", proc], stdout=PIPE).communicate()[0]
-    print(res)
     if not res:
         return False
     return True

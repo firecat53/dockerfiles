@@ -2,9 +2,9 @@ Docker Deluge-Web
 ==========================
 
 This is a Dockerfile to set up deluge-web with an OpenVPN client attached
-through PrivateInternetAccess.com_ and managed with pia_deluge_monitor You need
+through PrivateInternetAccess.com_ and managed with pia_deluge_monitor. You need
 to have a network bridge (br0) already setup on the host, because pipework_ is
-used to establish the connection so the container can have it's own IP address
+used to establish the connection so the container can have its own IP address
 on the network. This also avoids any port forwarding/open port issues.
 
 Build
@@ -26,10 +26,10 @@ Then build from Dockerfile::
 
 	docker build -t deluge .
 
-Create data-only configuration volume and chown the directory to your intended
-user UID::
+Edit UID in initialize.sh to match your intended user then create the data-only
+configuration volume for OpenVPN and Deluge settings::
 
-    docker run -v /config --name deluge_config ubuntu chown -R <UID>:users /config
+    $ ./initialize.sh
 
 If desired, create a data-only volume for your media. You can also just mount a
 directory on the host with the '-v' option instead of using --volumes-from::
@@ -66,6 +66,11 @@ before you start downloading. Otherwise the default is /root/ and you will get
 permission errors.
 
 Systemd service file is also available.
+
+Accessing the web interface
+---------------------------
+
+From inside the local network, http://192.168.0.125:81122. Default password is 'default'.
 
 .. _PrivateInternetAccess.com: http://privateinternetaccess.com
 .. _pipework: https://github.com/jpetazzo/pipework

@@ -2,7 +2,7 @@ FROM ubuntu:16.04
 
 MAINTAINER Scott Hansen <firecat4153@gmail.com>
 
-ENV DELUGE_USER deluge
+ENV DELUGE_SSHD_USER deluge
 ENV UID 22000
 
 RUN apt-get -q update && \
@@ -14,7 +14,7 @@ RUN apt-get -q update && \
                         deluge-web && \
     wget https://github.com/jpetazzo/pipework/raw/master/pipework -O /usr/bin/pipework && \
     chmod u+x /usr/bin/pipework && \
-    useradd --no-create-home --shell /usr/sbin/nologin -g users --uid $UID $DELUGE_USER && \
+    useradd --no-create-home --shell /usr/sbin/nologin -g users --uid $UID $DELUGE_SSHD_USER && \
     sed -i 's/^\(#\)\?PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config && \
     sed -i 's/^\(#\)\?PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/sshd_config && \
     sed -i 's/^\(#\)\?AuthorizedKeysFile.*/AuthorizedKeysFile \/etc\/ssh\/%u/' /etc/ssh/sshd_config && \

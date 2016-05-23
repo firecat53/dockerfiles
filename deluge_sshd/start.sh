@@ -5,9 +5,9 @@
 
 pipework --wait
 
-cp /config/deluge_ed25519.pub /etc/ssh/$DELUGE_USER
-chown $DELUGE_USER /etc/ssh/$DELUGE_USER
-chmod 600 /etc/ssh/$DELUGE_USER
+cp /config/deluge_ed25519.pub /etc/ssh/$DELUGE_SSHD_USER
+chown $DELUGE_SSHD_USER /etc/ssh/$DELUGE_SSHD_USER
+chmod 600 /etc/ssh/$DELUGE_SSHD_USER
 
 mkdir /var/run/sshd
 /usr/sbin/sshd

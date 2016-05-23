@@ -17,9 +17,10 @@ Then build from Dockerfile::
 
 	docker build -t transmission .
 
-Create data-only configuration volume::
+Edit UID in initialize.sh to match your intended user then create the data-only
+configuration volume for OpenVPN and Transmission settings::
 
-    docker run -v /config --name transmission_config ubuntu chown -R <UID>:users /config
+    $ ./initialize.sh
 
 If desired, create a data-only volume for your media. You can also just mount a
 directory on the host with the '-v' option instead of using --volumes-from::
@@ -48,9 +49,15 @@ be the same as the host uses)::
 
     # pipework br0 transmission_run <ip address>/24@<gateway ip>
     # (example) pipework br0 transmission_run 192.168.0.123/24@192.168.0.1
-    where the gateway is 192.168.0.1, the host IP address might be 192.168.0.101, and the transmission container address is 192.168.0.123
+    where the gateway is 192.168.0.1, the host IP address might be
+    192.168.0.101, and the transmission container address is 192.168.0.123
 
 Systemd service file is also available.
+
+Accessing the web interface
+---------------------------
+
+From inside the local network, http://192.168.0.123:9091/transmission/web.
 
 .. _PrivateInternetAccess.com: http://privateinternetaccess.com
 .. _pia_transmission_monitor: https://github.com/firecat53/pia_transmission_monitor 

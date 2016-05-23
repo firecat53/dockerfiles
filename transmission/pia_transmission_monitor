@@ -31,7 +31,7 @@ except ImportError:
 def get_config():
     """Parse config.ini. Return namedtuple of
     (user, pw, client_id, pia_url, transmission_rc, tun_dev, transmission_uid,
-    transmission_gid, transmission_daemon, openvpn_server, openvpn_gateway)
+    transmission_gid, transmission_daemon, openvpn_server)
 
     user:           PIA username
     pw:             PIA password
@@ -42,12 +42,11 @@ def get_config():
     transmission_uid: uid of user to run the transmission daemon
     transmission_gid: gid of group to run the transmission daemon
     transmission_daemon: actual transmission command to run
-    openvpn_gateway: name of openvpn configuration file to use
     netrc:          Location of netrc file
 
     """
     conf = configparser.ConfigParser()
-    conf.read('config.ini')
+    conf.read('/config/config.ini')
     with open(expanduser(conf.get('File_Paths', 'pia_credentials'))) as f:
         user, pw = filter(None, (line.rstrip() for line in f))
     with open(expanduser(conf.get('File_Paths', 'pia_client_id'))) as f:
@@ -59,7 +58,6 @@ def get_config():
                                "transmission_rc",
                                "tun_dev",
                                "netrc",
-                               "openvpn_gateway",
                                "transmission_uid",
                                "transmission_gid",
                                "transmission_command",
@@ -71,7 +69,6 @@ def get_config():
                 expanduser(conf.get('File_Paths', 'transmission_rc')),
                 conf.get('Server', 'tun_device'),
                 expanduser(conf.get('File_Paths', 'netrc')),
-                conf.get('Server', 'openvpn_gateway'),
                 conf.get('Server', 'transmission_uid'),
                 conf.get('Server', 'transmission_gid'),
                 conf.get('Server', 'transmission_command'),

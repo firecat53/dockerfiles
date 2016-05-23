@@ -17,6 +17,7 @@ RUN gpg --keyserver keys.gnupg.net --recv-keys 4BB9F05F && \
         sabnzbdplus-theme-classic \
         sabnzbdplus-theme-mobile \
         sabnzbdplus-theme-plush \
+        ca-certificates \
         unrar && \
     useradd --no-create-home -g users --uid $UID $SABNZBD_USER && \
     chmod +x /start.sh && \

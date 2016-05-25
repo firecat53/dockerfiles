@@ -47,7 +47,7 @@ def get_config():
     with open(expanduser(conf.get('File_Paths', 'pia_credentials'))) as f:
         user, pw = filter(None, (line.rstrip() for line in f))
     with open(expanduser(conf.get('File_Paths', 'pia_client_id'))) as f:
-        client_id = filter(None, (line.rstrip() for line in f))
+        client_id = filter(None, (line.rstrip() for line in f))[0]
     c_nt = namedtuple("c_nt", ["user",
                                "pw",
                                "client_id",

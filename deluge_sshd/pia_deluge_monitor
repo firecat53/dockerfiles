@@ -138,7 +138,6 @@ def service_start_stop(name, status, conf):
         process = Popen(cmd, preexec_fn=_demote(uid, gid), stdout=PIPE)
     elif status == "stop":
         process = Popen(["pkill", "-f", cmd[0]], stdout=PIPE)
-        print("Stopped {} at {}".format(name, datetime.now()))
     process.wait()
 
 
@@ -176,7 +175,7 @@ def port_update(conf):
     if port is False:
         return False
     args = shlex.split("deluge-console --config=/config/deluge "
-                       "'config -s listen_ports ({})'".format(port))
+                       "'config -s listen_ports ({0},{0})'".format(port))
     Popen(args, preexec_fn=_demote(conf.deluge_uid, conf.deluge_gid),
           stdout=PIPE).communicate()
     print("Updated port to {} at {}".format(port, datetime.now()))
@@ -243,8 +242,6 @@ def run():
     day = Thread(target=daily)
     hour = Thread(target=hourly)
     update_config_permissions(conf)
-    service_start_stop(conf.deluge_command, "start", conf)
-    service_start_stop(conf.deluge_web_command, "start", conf)
     while True:
         if not day.isAlive():
             # Restart the VPN once per day

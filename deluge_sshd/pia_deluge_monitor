@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 import ast
+import fileinput
 import os
 import shlex
+import sys
 from collections import namedtuple
 from datetime import datetime
 from os.path import expanduser
@@ -35,6 +37,7 @@ def get_config():
     pw:             PIA password
     client_id:      PIA generated client_id (see port forwarding forum post)
     pia_url:        PIA port forwarding API URL
+    deluge_rc       file path to deluge core.conf
     tun_dev:        name of tun/tap device (tun0)
     deluge_uid:     uid of user to run the deluge daemon
     deluge_gid:     gid of group to run the deluge daemon
@@ -52,6 +55,7 @@ def get_config():
                                "pw",
                                "client_id",
                                "pia_url",
+                               "deluge_rc",
                                "tun_dev",
                                "deluge_uid",
                                "deluge_gid",
@@ -62,6 +66,7 @@ def get_config():
                 pw,
                 client_id,
                 conf.get('PIA', 'url'),
+                expanduser(conf.get('File_Paths', 'deluge_rc')),
                 conf.get('Server', 'tun_device'),
                 conf.get('Server', 'deluge_uid'),
                 conf.get('Server', 'deluge_gid'),
@@ -157,6 +162,8 @@ def restart_vpn(conf):
     restarts.
 
     """
+    service_start_stop(conf.deluge_command, "stop", conf)
+    sleep(5)
     control = False
     while control is False:
         # Continue restarting openvpn until we have a good IP address
@@ -165,6 +172,9 @@ def restart_vpn(conf):
         service_start_stop(conf.openvpn_command, "start", conf)
         sleep(10)
         control = bind_addr_update(conf)
+        if control is True:
+            service_start_stop(conf.deluge_command, "start", conf)
+            sleep(5)
 
 
 def port_update(conf):
@@ -182,16 +192,20 @@ def port_update(conf):
 
 
 def bind_addr_update(conf):
-    """Update the bind address in deluge when it changes.
+    """Update the bind address in deluge when it changes. Daemon must not be
+    running.
 
     """
     ip = ip_check(conf)
     if ip is False:
         return False
-    args = shlex.split("deluge-console --config=/config/deluge "
-                       "'config -s listen_interface {}'".format(ip))
-    Popen(args, preexec_fn=_demote(conf.deluge_uid, conf.deluge_gid),
-          stdout=PIPE).communicate()
+    perms = os.stat(conf.deluge_rc)
+    if str(ip) not in open(conf.deluge_rc).read():
+        for line in fileinput.input(conf.deluge_rc, inplace=1):
+            if "listen_interface" in line:
+                line = '  "listen_interface": "{}",'.format(ip)
+            sys.stdout.write(line)
+    os.chown(conf.deluge_rc, perms.st_uid, perms.st_gid)
     print("Updated bind IP to {} at {}".format(ip, datetime.now()))
     return True
 

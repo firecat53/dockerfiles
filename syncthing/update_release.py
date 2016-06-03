@@ -33,20 +33,25 @@ def get_release():
 
 
 def update_files():
-    """Update Dockerfile and Dockerfile.supervisord with the newest version
+    """Update Dockerfile, Dockerfile.supervisord and
+    syncthing_discovery/Dockerfile with the newest version number
 
     """
-    files = ["Dockerfile", "Dockerfile.supervisord"]
+    files = ["Dockerfile", "Dockerfile.supervisord",
+             "../syncthing_discovery/Dockerfile"]
     v = get_release()
     if not v:
         return
     for fn in files:
-        with open(fn) as f:
-            file = f.readlines()
-            for idx, line in enumerate(file):
-                file[idx] = re.sub('v\d+\.\d+\.\d+', v, line)
-        with open(fn, 'w') as f:
-            f.writelines(file)
+        try:
+            with open(fn) as f:
+                file = f.readlines()
+                for idx, line in enumerate(file):
+                    file[idx] = re.sub('v\d+\.\d+\.\d+', v, line)
+            with open(fn, 'w') as f:
+                f.writelines(file)
+        except FileNotFoundError:
+            continue
 
 
 if __name__ == "__main__":

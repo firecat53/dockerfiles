@@ -12,6 +12,8 @@
   - **Deluge** (with OpenVPN client and privateinternetaccess.com script)
   - `**Docker_Gen**`_ (Auto-generate Nginx reverse-proxy template)
   - `**Docker Let's Encrypt Proxy Companion**`_ (auto-generate and renew SSL certs)
+  - **Docker-Matrix** (`Matrix.org`_ Synapse homeserver + Turn server)
+  - **Docker-Matrix-Vector** (`Vector.im`_ client for Matrix.org homeserver)
   - **Gollum** personal Wiki
   - Headphones
   - **Lazy Librarian**
@@ -32,3 +34,5 @@
 
 .. _**Docker_Gen**: https://github.com/jwilder/docker-gen
 .. _**Docker Let's Encrypt Proxy Companion**: https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion
+.. _Matrix.org: https://matrix.org
+.. _Vector.im: https://vector.im

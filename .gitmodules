@@ -5,8 +5,8 @@
 	path = docker-letsencrypt-nginx-proxy-companion
 	url = https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion
 [submodule "docker-matrix"]
-	path = docker-matrix
+	path = matrix
 	url = https://github.com/firecat53/docker-matrix.git
 [submodule "docker-matrix-vector"]
-	path = docker-matrix-vector
+	path = vector
 	url = https://github.com/firecat53/docker-matrix-vector.git

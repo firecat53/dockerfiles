@@ -14,7 +14,7 @@ RUN apt-get update && \
         supervisor \
         ca-certificates \
         wget && \
-    wget https://github.com/syncthing/syncthing/releases/download/v0.13.5/syncthing-linux-amd64-v0.13.5.tar.gz -O /syncthing.tar.gz && \
+    wget https://github.com/syncthing/syncthing/releases/download/v0.13.6/syncthing-linux-amd64-v0.13.6.tar.gz -O /syncthing.tar.gz && \
     tar -xzvf syncthing.tar.gz && \
     mv sync*/syncthing /syncthing && \
     rm -rf syncthing.tar.gz syncthing-linux* && \

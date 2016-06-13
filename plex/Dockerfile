@@ -8,7 +8,7 @@ RUN apt-get -q update && \
         avahi-daemon \
         avahi-utils \
         wget && \
-    wget https://downloads.plex.tv/plex-media-server/0.9.16.6.1993-5089475/plexmediaserver_0.9.16.6.1993-5089475_amd64.deb -O /plexmediaserver.deb && \
+    wget https://downloads.plex.tv/plex-media-server/0.9.17.2.2159-2bd156c/plexmediaserver_0.9.17.2.2159-2bd156c_amd64.deb -O /plexmediaserver.deb && \
     dpkg -i /plexmediaserver.deb && \
     rm /plexmediaserver.deb && \
     chmod u+x /start.sh && \

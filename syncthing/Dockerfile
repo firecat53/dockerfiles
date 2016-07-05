@@ -12,7 +12,7 @@ RUN apt-get update -q && \
     apt-get install -qy \
         ca-certificates \
         wget && \
-    wget https://github.com/syncthing/syncthing/releases/download/v0.13.9/syncthing-linux-amd64-v0.13.9.tar.gz -O /syncthing.tar.gz && \
+    wget https://github.com/syncthing/syncthing/releases/download/v0.13.10/syncthing-linux-amd64-v0.13.10.tar.gz -O /syncthing.tar.gz && \
     tar -xzvf syncthing.tar.gz && \
     mv sync*/syncthing /syncthing && \
     rm -rf syncthing.tar.gz syncthing-linux* && \

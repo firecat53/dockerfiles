@@ -13,7 +13,7 @@ except ImportError:
 
 
 def get_release():
-    """Get syncthing release version from the Github API.
+    """Get syncthing latest release version from the Github API.
 
     Returns: version - empty or string like 'v0.9.15'
 
@@ -32,13 +32,12 @@ def get_release():
         return ""
 
 
-def update_files():
-    """Update Dockerfile, Dockerfile.supervisord and
-    syncthing_discovery/Dockerfile with the newest version number
+def update_syncthing():
+    """Update Dockerfile and Dockerfile.supervisord with the newest version
+    number
 
     """
-    files = ["Dockerfile", "Dockerfile.supervisord",
-             "../syncthing_discovery/Dockerfile"]
+    files = ["Dockerfile", "Dockerfile.supervisord"]
     v = get_release()
     if not v:
         return
@@ -55,4 +54,4 @@ def update_files():
 
 
 if __name__ == "__main__":
-    update_files()
+    update_syncthing()

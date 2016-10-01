@@ -6,6 +6,7 @@ After=docker.service
 ExecStartPre=-/usr/bin/docker rm transmission_run
 ExecStart=/usr/bin/docker run \
 --cap-add=NET_ADMIN \
+--device=/dev/net/tun \
 --net=none \
 --volumes-from transmission_config \
 --volumes-from media_data \

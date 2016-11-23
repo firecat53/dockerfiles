@@ -7,6 +7,7 @@ ENV UID 22000
 
 RUN apt-get -q update && \
     apt-get install -qy wget \
+                        ca-certificates \
                         openvpn \
                         openssh-server \
                         deluged \

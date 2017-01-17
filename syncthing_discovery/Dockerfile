@@ -2,7 +2,7 @@ FROM ubuntu:16.04
 # Dockerfile to run a self-hosted Syncthing discovery server (latest build).
 MAINTAINER Scott Hansen <firecat4153@gmail.com>
 
-ADD https://build.syncthing.net/job/stdiscosrv/1856/artifact/stdiscosrv-linux-amd64-v0.14.8+5-g215503b.tar.gz /stdiscosrv.tar.gz
+ADD https://build.syncthing.net/job/stdiscosrv/2074/artifact/stdiscosrv-linux-amd64-v0.14.19+3-gf36f00e.tar.gz /stdiscosrv.tar.gz
 COPY cert.pem key.pem /
 RUN tar -xzvf stdiscosrv.tar.gz && \
     rm stdiscosrv.tar.gz && \

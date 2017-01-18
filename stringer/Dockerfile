@@ -32,7 +32,8 @@ RUN mkdir data && \
     sed -i '/^group :development do/,/^end/d' Gemfile && \
     sed -i '/pg/d' Gemfile.lock && \
     sed -i "s/.*/$RUBY_VERSION/" .ruby-version && \
-    bundle install --deployment && \
+    bundle update && \
+    bundle install --deployment --without=development test && \
     sed -i 's/^console/#console/' Procfile
 
 CMD ["./run.sh"]

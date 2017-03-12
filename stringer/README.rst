@@ -11,6 +11,8 @@ Thanks to: https://github.com/antonlindstrom/stringer-docker
 Build
 -----
 
+Set correct TZ in run.sh.
+
 ::
 
     # docker build -t stringer .

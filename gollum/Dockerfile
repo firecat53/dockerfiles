@@ -18,7 +18,7 @@ RUN apt-get update && \
     # Add wiki user and run script
     chmod 755 /usr/local/bin/run.sh && \
     # Install gollum and markdown support
-    gem install --no-document gollum redcarpet github-markdown && \
+    gem install --no-document gollum github-markdown && \
     # Other markup flavors (uncomment as needed)
     # Mediawiki
     # gem install --no-document asciidoctor

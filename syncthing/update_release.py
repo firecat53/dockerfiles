@@ -19,17 +19,17 @@ def get_release():
 
     """
     github_url = ("https://api.github.com/repos/syncthing/"
-                  "syncthing/releases?per_page=1")
+                  "syncthing/releases")
     res = urlopen(github_url)
     if not res:
         return ""
     res = res.read().decode()
     res = json.loads(res)
-    if res[0]['prerelease'] is False:
-        return res[0]['name'] or res[0]['tag_name']
-    else:
-        print("Prerelease found. No changes made")
-        return ""
+    for idx, _ in enumerate(res):
+        if res[idx]['prerelease'] is False:
+            return res[idx]['name'] or res[idx]['tag_name']
+    print("No regular release found. No changes made")
+    return ""
 
 
 def update_syncthing():
@@ -38,15 +38,15 @@ def update_syncthing():
 
     """
     files = ["Dockerfile", "Dockerfile.supervisord"]
-    v = get_release()
-    if not v:
+    ver = get_release()
+    if not ver:
         return
     for fn in files:
         try:
             with open(fn) as f:
                 file = f.readlines()
                 for idx, line in enumerate(file):
-                    file[idx] = re.sub('v\d+\.\d+\.\d+', v, line)
+                    file[idx] = re.sub(r'v\d+\.\d+\.\d+', ver, line)
             with open(fn, 'w') as f:
                 f.writelines(file)
         except FileNotFoundError:

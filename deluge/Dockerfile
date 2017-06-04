@@ -5,9 +5,12 @@ MAINTAINER Scott Hansen <firecat4153@gmail.com>
 ENV DELUGE_USER deluge
 ENV UID 22000
 
+RUN echo "deb http://archive.ubuntu.com/ubuntu/ xenial multiverse" >> /etc/apt/sources.list
 RUN apt-get -q update && \
     apt-get install -qy wget \
                         openvpn \
+                        unrar \
+                        unzip \
                         deluged \
                         deluge-console \
                         deluge-web && \

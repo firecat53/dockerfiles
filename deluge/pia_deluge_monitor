@@ -31,7 +31,7 @@ except ImportError:
 def get_config():
     """Parse config.ini. Return namedtuple of
     (user, pw, client_id, pia_url, tun_dev, deluge_uid,
-    deluge_gid, deluge_daemon, deluge_web, openvpn_server)
+    deluge_gid, deluge_daemon, deluge_web, openvpn_server, deluge_umask)
 
     user:           PIA username
     pw:             PIA password
@@ -43,6 +43,7 @@ def get_config():
     deluge_gid:     gid of group to run the deluge daemon
     deluge_daemon:  deluged command to run
     deluge_web:     deluge-web command to run
+    deluge_umask:   umask of created files/directory
 
     """
     conf = configparser.ConfigParser()
@@ -61,7 +62,8 @@ def get_config():
                                "deluge_gid",
                                "deluge_command",
                                "deluge_web_command",
-                               "openvpn_command"])
+                               "openvpn_command",
+                               "deluge_umask"])
     return c_nt(user,
                 pw,
                 client_id,
@@ -72,7 +74,8 @@ def get_config():
                 conf.get('Server', 'deluge_gid'),
                 conf.get('Server', 'deluge_command'),
                 conf.get('Server', 'deluge_web_command'),
-                conf.get('Server', 'openvpn_command'))
+                conf.get('Server', 'openvpn_command'),
+                conf.get('Server', 'deluge_umask'))
 
 
 def ip_check(conf):
@@ -138,22 +141,24 @@ def service_start_stop(name, status, conf):
     else:
         uid = conf.deluge_uid
         gid = conf.deluge_gid
+    umask = conf.deluge_umask
     cmd = shlex.split(name)
     if status == "start":
-        process = Popen(cmd, preexec_fn=_demote(uid, gid), stdout=PIPE)
+        process = Popen(cmd, preexec_fn=_demote(uid, gid, umask), stdout=PIPE)
     elif status == "stop":
         process = Popen(["pkill", "-f", cmd[0]], stdout=PIPE)
     process.wait()
 
 
-def _demote(user_uid, user_gid):
-    """Local function to call setgid and setuid on a command when passing to
-    Popen's preexec_fn
+def _demote(user_uid, user_gid, user_umask):
+    """Local function to call setgid, setuid and umask on a command when passing
+    to Popen's preexec_fn
 
     """
     def result():
         os.setgid(int(user_gid))
         os.setuid(int(user_uid))
+        os.umask(int(user_umask))
     return result
 
 
@@ -186,7 +191,8 @@ def port_update(conf):
         return False
     args = shlex.split("deluge-console --config=/config/deluge "
                        "'config -s listen_ports ({0},{0})'".format(port))
-    Popen(args, preexec_fn=_demote(conf.deluge_uid, conf.deluge_gid),
+    Popen(args, preexec_fn=_demote(conf.deluge_uid, conf.deluge_gid,
+                                   conf.deluge_umask),
           stdout=PIPE).communicate()
     print("Updated port to {} at {}".format(port, datetime.now()))
 

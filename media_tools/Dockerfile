@@ -12,7 +12,8 @@ RUN apt-get -q update && \
     par2 \
     ranger \
     rsync \
-    unrar && \
+    unrar \
+    vim-tiny && \
     rm -rf /var/lib/apt/lists/*
 
 ENTRYPOINT ["/bin/bash"]

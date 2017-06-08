@@ -15,6 +15,7 @@ RUN gpg --keyserver keys.gnupg.net --recv-keys 4BB9F05F && \
     apt-get install -qy \
         sabnzbdplus \
         ca-certificates \
+        locales \
         python-sabyenc \
         par2-tbb \
         unrar && \

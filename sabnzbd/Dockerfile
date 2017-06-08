@@ -11,7 +11,6 @@ RUN gpg --keyserver keys.gnupg.net --recv-keys 4BB9F05F && \
     gpg --armor --export 4BB9F05F | apt-key add - && \
     echo "deb http://ppa.launchpad.net/jcfp/ppa/ubuntu xenial main" >> /etc/apt/sources.list && \
     echo "deb http://ppa.launchpad.net/jcfp/sab-addons/ubuntu xenial main" >> /etc/apt/sources.list && \
-    echo "deb http://archive.ubuntu.com/ubuntu/ xenial multiverse" >> /etc/apt/sources.list && \
     apt-get -q update && \
     apt-get install -qy \
         sabnzbdplus \

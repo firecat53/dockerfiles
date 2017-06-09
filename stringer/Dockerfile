@@ -14,6 +14,7 @@ RUN apt-get -y update && \
         libcurl4-openssl-dev \
         libpq-dev \
         libsqlite3-dev \
+        nodejs \
         build-essential && \
     gem install -N foreman rufus-scheduler && \
     useradd -g users --uid $UID --create-home $STRINGER_USER && \

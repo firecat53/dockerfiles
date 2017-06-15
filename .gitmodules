@@ -4,9 +4,3 @@
 [submodule "docker-letsencrypt-nginx-proxy-companion"]
 	path = docker-letsencrypt-nginx-proxy-companion
 	url = https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion
-[submodule "docker-matrix"]
-	path = docker-matrix
-	url = https://github.com/firecat53/docker-matrix.git
-[submodule "docker-matrix-vector"]
-	path = docker-matrix-vector
-	url = https://github.com/firecat53/docker-matrix-vector.git

@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 # Installs the plexmediaserver (plexpass version) from the .deb downloaded from Plex
-MAINTAINER Scott Hansen <firecat4153@gmail.com>
+LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
 COPY ./start.sh /start.sh
 RUN apt-get -q update && \

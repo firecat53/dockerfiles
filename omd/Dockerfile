@@ -1,7 +1,7 @@
 # Open Monitoring Distribution
 
 FROM debian:jessie
-MAINTAINER Scott Hansen, firecat4153@gmail.com
+LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
 ENV DEBIAN_FRONTEND noninteractive
 

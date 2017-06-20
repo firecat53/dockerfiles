@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 
-MAINTAINER Scott Hansen <firecat4153@gmail.com>
+LABEL "Mainainer"="Scott Hansen <firecat4153@gmail.com>"
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV SHINKEN_CONFIG /var/lib/shinken/.shinken.ini

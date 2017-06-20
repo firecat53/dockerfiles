@@ -1,6 +1,6 @@
 FROM ruby:2.3.3-slim
 
-MAINTAINER Scott Hansen <firecat4153@gmail.com>
+LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV STRINGER_USER stringer

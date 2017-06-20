@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 
-MAINTAINER Scott Hansen <firecat4153@gmail.com>
+LABEL "Mainainer"="Scott Hansen <firecat4153@gmail.com>"
 
 ENV BTSYNC_USER btsync
 ENV UID 22000

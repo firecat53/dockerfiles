@@ -1,7 +1,7 @@
 FROM ubuntu:16.04
 # Dockerfile to run Syncthing. Requires an external container manager such as
 # systemd to auto-restart the container when Syncthing restarts.
-MAINTAINER Scott Hansen <firecat4153@gmail.com>
+LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
 ENV SYNCTHING_USER syncthing
 ENV UID 22000

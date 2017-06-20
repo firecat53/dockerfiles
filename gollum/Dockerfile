@@ -1,6 +1,6 @@
 FROM ruby:slim
 
-MAINTAINER Scott Hansen <firecat4153@gmail.com>
+LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
 ENV GOLLUM_USER gollum
 ENV UID 22000

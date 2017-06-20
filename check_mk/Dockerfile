@@ -1,7 +1,7 @@
 # Check_MK
 
 FROM ubuntu:16.04
-MAINTAINER Scott Hansen, firecat4153@gmail.com
+LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
 ENV VERSION 1.2.8p1
 ENV DEBIAN_FRONTEND noninteractive

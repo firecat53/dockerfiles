@@ -1,5 +1,5 @@
 FROM ubuntu:16.04
-MAINTAINER Scott Hansen <firecat4153@gmail.com>
+LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
 ENV HEADPHONES_USER headphones
 ENV UID 22000

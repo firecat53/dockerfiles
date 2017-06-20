@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 
-MAINTAINER Scott Hansen <firecat4153@gmail.com>
+LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
 ENV TRANSMISSION_USER transmission
 ENV UID 22000

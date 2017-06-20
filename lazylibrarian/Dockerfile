@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 
-MAINTAINER Scott Hansen <firecat4153@gmail.com>
+LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
 ENV LAZYLIBRARIAN_USER lazylibrarian
 ENV UID 22000

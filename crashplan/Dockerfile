@@ -2,7 +2,7 @@ FROM ubuntu:trusty
 # Crashplan is actually installed to a data-only container. You must run
 # crashplan-install.sh before running this container.
 
-MAINTAINER Scott Hansen firecat4153@gmail.com
+LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
 RUN apt-get update && apt-get -qy install wget openjdk-7-jre-headless
 COPY start.sh /start.sh

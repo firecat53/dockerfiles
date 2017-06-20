@@ -36,6 +36,10 @@ Dockerfile.
 
     # docker build -t syncthing .
 
+To build a specific version, pass the `--build-arg` flag::
+
+    # docker build -t syncthing --build-arg version=v0.14.29 .
+
 Run
 ---
 

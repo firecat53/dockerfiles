@@ -5,9 +5,7 @@
 
       git submodule update --remote
   
-  - Btsync
   - Check-MK (Monitoring system based on Nagios. Lighter than OMD)
-  - Crashplan
   - **Couchpotato**
   - **Deluge** (with OpenVPN client and privateinternetaccess.com script)
   - `**Docker_Gen**`_ (Auto-generate Nginx reverse-proxy template)
@@ -21,7 +19,6 @@
   - **Rsync** (used for backing up Docker data-only volumes)
   - **Sabnzbd**
   - **Samba**
-  - Shinken (Nagios-compatible server monitoring)
   - **Sickbeard**
   - **Stringer** (Web-based RSS Reader)
   - **Syncthing**

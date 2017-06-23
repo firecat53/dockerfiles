@@ -3,7 +3,7 @@
 FROM ubuntu:16.04
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
-ENV VERSION 1.2.8p1
+ENV VERSION 1.4.0p6
 ENV DEBIAN_FRONTEND noninteractive
 
 COPY start.sh /start.sh

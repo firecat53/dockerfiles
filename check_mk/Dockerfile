@@ -48,6 +48,7 @@ RUN apt-get update -q && \
                         rpcbind \
                         rpm \
                         rsync \
+                        s-nail \
                         smbclient \
                         snmp \
                         time \

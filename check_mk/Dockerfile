@@ -58,7 +58,7 @@ RUN apt-get update -q && \
                         xinetd && \
     wget https://mathias-kettner.de/support/$VERSION/check-mk-raw-${VERSION}_0.xenial_amd64.deb && \
     dpkg --unpack check-mk-raw-${VERSION}_0.xenial_amd64.deb && \
-    sed -i 's/systemctl/#systemctl/' /var/lib/dpkg/info/check-mk-raw-1.4.0p7.postinst && \
+    sed -i 's/systemctl/#systemctl/' /var/lib/dpkg/info/check-mk-raw-${VERSION}.postinst && \
     apt-get -f install && \
     rm check-mk-raw-${VERSION}_0.xenial_amd64.deb && \
     chmod +x /start.sh && \

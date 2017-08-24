@@ -9,7 +9,8 @@ RUN mv stdiscosrv* stdiscosrv && \
     useradd --no-create-home -g users --uid 22000 syncthing && \
     chown syncthing: /stdiscosrv/*pem && \
     mkdir /var/stdiscosrv && \
-    chown syncthing: /var/stdiscosrv
+    chown syncthing: /var/stdiscosrv && \
+    mv stdiscosrv/stdiscosrv*/stdiscosrv stdiscosrv/
 
 USER syncthing
 WORKDIR /stdiscosrv

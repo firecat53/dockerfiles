@@ -1,4 +1,4 @@
-FROM ruby:2.3.3-slim
+FROM ruby:slim
 
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 

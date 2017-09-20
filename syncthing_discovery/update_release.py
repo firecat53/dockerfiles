@@ -1,32 +1,55 @@
 #!/usr/bin/env python
 
-"""Updates stdiscosrv Dockerfile with the latest Jenkins linux-amd64 build.
+"""Updates stdiscosrv Dockerfile with the latest TeamCity linux-amd64 build.
 Python 2/3 compatible.
 
 """
-import json
+import xml.etree.cElementTree as ET
 try:
-    from urllib2 import urlopen
+    from urllib2 import urljoin, urlopen
 except ImportError:
-    from urllib.request import urlopen
+    from urllib.request import urljoin, urlopen
 
+BASE_URL = "https://build2.syncthing.net"
 
-def get_release():
-    """Get stdiscosrv latest linux-amd64 release version from the Jenkins API.
-
-    Returns: download url
+def get_result(url):
+    """Download given url and return ElementTree tree
 
     """
-    jenkins_url = ("https://build.syncthing.net/job/"
-                   "stdiscosrv/lastStableBuild/api/json")
-    res = urlopen(jenkins_url)
+    res = urlopen(urljoin(BASE_URL, url))
     if not res:
         return ""
     res = res.read().decode()
-    res = json.loads(res)
-    fn = [i['fileName'] for i in res['artifacts']
-          if 'linux-amd64' in i['fileName']][0]
-    return "{}artifact/{}".format(res['url'], fn)
+    tree = ET.fromstring(res)
+    return tree
+
+def get_id():
+    """Get latest build id from TeamCity
+
+    Returns: 'id' - integer
+
+    """
+    id_url = ("/guestAuth/app/rest/buildTypes/"
+              "id:DiscoveryServer_Build/builds?locator=branch:master,"
+              "state:finished,status:SUCCESS,count:1")
+    tree = get_result(id_url)
+    id = tree.find('build').attrib['id']
+    return id
+
+def get_release():
+    """Return url for latest linux-amd64 build
+
+    """
+    id = get_id()
+    if not id:
+        return ""
+    build_url = ("/guestAuth/app/rest/builds/"
+                 "id:{}/artifacts/children".format(id))
+    tree = get_result(build_url)
+    url = next((i.attrib['href'] for i in tree if
+                i.attrib['name'].startswith('stdiscosrv-linux-amd64')), None)
+    url = url.replace('metadata', 'content')
+    return url
 
 
 def update_stdiscosrv():
@@ -36,6 +59,7 @@ def update_stdiscosrv():
     url = get_release()
     if not url:
         return
+    url = urljoin(BASE_URL, url)
     with open('Dockerfile') as f:
         file = f.readlines()
         for idx, line in enumerate(file):

@@ -4,7 +4,7 @@ FROM ubuntu:16.04
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
 ARG version
-ENV VERSION=${version:-v0.14.38}
+ENV VERSION=${version:-v0.14.39}
 ENV SYNCTHING_USER syncthing
 ENV UID 22000
 

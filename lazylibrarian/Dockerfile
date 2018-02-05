@@ -15,7 +15,7 @@ RUN apt-get update -q && \
     rm master.zip && \
     useradd --no-create-home -g users --uid $UID $LAZYLIBRARIAN_USER && \
     chown -R $LAZYLIBRARIAN_USER LazyLibrarian-master && \
-    chmod +x /start.sh
+    chmod +x /start.sh && \
     apt-get autoremove -qy unzip wget && \
     rm -rf /var/lib/apt/lists/*
 

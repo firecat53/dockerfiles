@@ -9,7 +9,7 @@ RUN tar -xzf stdiscosrv.tar.gz && \
     mv stdiscosrv* stdiscosrv && \
     mv /cert.pem /key.pem stdiscosrv/ && \
     useradd --no-create-home -g users --uid 22000 syncthing && \
-    chown syncthing: /stdiscosrv/*pem && \
+    chown -R syncthing: /stdiscosrv && \
     mkdir /var/stdiscosrv && \
     chown syncthing: /var/stdiscosrv
 

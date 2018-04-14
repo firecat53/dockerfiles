@@ -1,0 +1,14 @@
+[Unit]
+Description=SSHD container for socks proxy
+After=docker.service
+
+[Service]
+ExecStartPre=-/usr/bin/docker rm sshd_run
+ExecStart=/usr/bin/docker run \
+--net=container:openvpn_run \
+--name sshd_run \
+sshd
+ExecStop=/usr/bin/docker stop sshd_run
+
+[Install]
+WantedBy=multi-user.target

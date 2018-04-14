@@ -1,19 +1,17 @@
 [Unit]
-Description=Transmission/Openvpn container
+Description=Transmission container
 After=docker.service
 
 [Service]
 ExecStartPre=-/usr/bin/docker rm transmission_run
 ExecStart=/usr/bin/docker run \
---cap-add=NET_ADMIN \
---device=/dev/net/tun \
---net=none \
+--net=container:openvpn_run \
 --volumes-from transmission_config \
 --volumes-from media_data \
+--volumes-from pia_port \
 -v /etc/localtime:/etc/localtime:ro \
 --name transmission_run \
 transmission
-ExecStartPost=/usr/bin/sleep 3 ; /usr/local/bin/pipework br0 transmission_run 192.168.0.123/24@192.168.0.1
 ExecStop=/usr/bin/docker stop transmission_run
 
 [Install]

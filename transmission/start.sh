@@ -1,8 +1,5 @@
-#! /bin/bash
+#!/bin/sh
 
-[ -d /dev/net ] || mkdir -p /dev/net
-[ -c /dev/net/tun ] || mknod /dev/net/tun c 10 200
-
-pipework --wait
-
-./pia_transmission_monitor
+[ ! -f /config/settings.json ] && cp /var/lib/transmission/settings.json /config/
+sleep 20 && transmission-remote --port "$(cat /var/run/pia_port/pia_port)" &
+exec transmission-daemon -f -g /config

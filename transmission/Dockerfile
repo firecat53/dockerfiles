@@ -1,21 +1,17 @@
-FROM ubuntu:16.04
+FROM alpine
+MAINTAINER Scott Hansen <firecat4153@gmail.com>
 
-LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
+COPY settings.json /var/lib/transmission/
+COPY start.sh /usr/local/bin/start.sh
 
-ENV TRANSMISSION_USER transmission
-ENV UID 22000
+VOLUME /config
+VOLUME /data
 
-RUN apt-get -q update && \
-    apt-get install -qy wget \
-                        openvpn \
-                        python \
-                        transmission-daemon && \
-    wget https://github.com/jpetazzo/pipework/raw/master/pipework -O /usr/bin/pipework && \
-    chmod u+x /usr/bin/pipework && \
-    useradd --no-create-home -g users --uid $UID $TRANSMISSION_USER && \
-    apt-get -qy autoremove wget && \
-    rm -rf /var/lib/apt/lists/*
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
+    apk --no-cache add curl \
+                       transmission-cli \
+                       transmission-daemon && \
+    chown -R transmission:users /var/lib/transmission
 
-COPY start.sh pia_transmission_monitor /
-
-CMD ["/start.sh"]
+USER transmission:users
+CMD ["start.sh"]

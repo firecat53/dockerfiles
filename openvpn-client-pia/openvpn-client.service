@@ -1,0 +1,20 @@
+[Unit]
+Description=OpenVPN PIA client
+After=docker.service
+
+[Service]
+ExecStartPre=-/usr/bin/docker rm openvpn_run
+ExecStart=/usr/bin/docker run \
+--cap-add=NET_ADMIN \
+--device=/dev/net/tun \
+-p 2222:22 \
+-p 9091:9091 \
+-v /var/local/pia/:/config \
+-v pia_port:/var/run/pia \
+-v /etc/localtime:/etc/localtime:ro \
+--name openvpn_run \
+openvpn
+ExecStop=/usr/bin/docker stop openvpn_run
+
+[Install]
+WantedBy=multi-user.target

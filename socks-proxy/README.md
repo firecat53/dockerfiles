@@ -17,13 +17,13 @@ The public key and username(optional) need to be defined and are copied into the
 image at build time. The default username is `proxy`, so SSHD_USER can be
 skipped if desired.
 
-    docker build -t sshd \
+    docker build -t socks-proxy \
                  --build-arg PUB_KEY=$(cat <path/to/id_ed25519.pub>) \
                  --build-arg SSHD_USER=firecat53 .
 
 ## Run
 
-    docker run -d --net container:openvpn_run --name sshd_run sshd
+    docker run -d --net container:openvpn_run --name socks-proxy_run socks-proxy
 
 ## Example Usage
 

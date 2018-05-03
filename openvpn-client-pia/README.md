@@ -13,12 +13,15 @@ server, specifically for use by other containers.
 
 * `docker build -t openvpn-client .`
 * Get PIA config files from https://www.privateinternetaccess.com/openvpn/openvpn.zip
-* Rename the desired .ovpn config file to pia.ovpn. Copy that and the associated
-  .crt and .pem files to a local directory. This directory will be bind-mounted
-  into the container as /config.
-* `sed -i 's/auth-user-pass.*/auth-user-pass pia.cred/' pia.ovpn` 
-* Create a file `pia.cred` in the config directory with PIA username on the
-  first line and PIA password on the second. `chmod 600 pia.cred`
+* Rename the desired .ovpn config file to pia.ovpn. Then:
+    `sed -i 's/auth-user-pass.*/auth-user-pass pia_cred/' pia.ovpn`
+* Create a file `pia_cred` in the config directory with PIA username on the
+  first line and PIA password on the second. `chmod 600 pia_cred`
+* Copy pia.ovpn, pia_cred and the associated .crt and .pem files to a local
+  directory. This directory will be bind-mounted into the container as /config.
+  Alternatively, create a volume and copy the config files into it:
+    - `docker volume create pia_config`
+    - `docker run --rm -v pia_config:/config -v <local dir>:/mnt alpine sh -c "cp -a /mnt/* /config/"`
 * Create a docker volume to share the forwarded port with other containers
   (without sharing the entire config directory). `docker volume create pia_port`
  
@@ -26,7 +29,7 @@ server, specifically for use by other containers.
 
 Note that because this container controls networking for other containers, _any
 ports published that will be needed by other containers need to be published
-when the openvpn container is started._
+when the openvpn container is started (unless a reverse proxy is being used)._
 
     docker run -d \
                --cap-add=NET_ADMIN \

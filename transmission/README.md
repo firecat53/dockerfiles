@@ -27,12 +27,12 @@ Make sure the downloads directory has `g+w` set and is part of the `users` group
 ## Run
 
 <b>NOTE:</b> The port publishing (`-p 9091:9091`) needs to be done on the
-openvpn container.
+openvpn container unless a reverse proxy will be used to conenct to the web UI.
 
     docker run -d \
                --net=container:openvpn_run \
                --volumes-from transmission_config \
-               --volumes-from pia_port \
+               -v pia_port:/var/run/pia \
                -v /media/downloads:/data \
                -v /etc/localtime:/etc/localtime:ro \
                --name transmission_run \

@@ -8,6 +8,8 @@ OpenVPN container. Also contains p7zip and unrar for the extractor plugin.
 - Runs as user `deluge`. Default group `users`. Default password is `deluge`.
 - Config directory: `/config/`
 - Download volume: `/data/` (change Download path in web UI on first run)
+- The volume `pia_port` needs to exists and is created as part of the
+  openvpn-client-pia setup.
 
 ## Build
 
@@ -29,9 +31,9 @@ Make sure to run with the `--init` flag to ensure container is properly
 shutdown.
 
     docker run -d \
-               --net=container:openvpn_run \
+               --net=container:openvpn-client-pia_run \
                --volumes-from deluge_config \
-               --volumes-from pia_port \
+               -v pia_port:/var/run/pia \
                -v /media/downloads:/data \
                -v /etc/localtime:/etc/localtime:ro \
                --name deluge_run \

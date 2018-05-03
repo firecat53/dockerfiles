@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 #
 # Enable port forwarding when using Private Internet Access
-# Store forwarded port in /var/run/pia_port
+# Store forwarded port in /var/run/pia/pia_port
 
 sleep 15  # Ensure tunnel creation is complete
 client_id=$(head -n 100 /dev/urandom | sha256sum | tr -d " -")

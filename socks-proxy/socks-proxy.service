@@ -1,0 +1,15 @@
+[Unit]
+Description=SSHD container for socks proxy
+BindsTo=openvpn-client-pia.service
+After=docker.service openvpn-client-pia.service
+
+[Service]
+ExecStartPre=-/usr/bin/docker rm socks-proxy_run
+ExecStart=/usr/bin/docker run \
+--net=container:openvpn-client-pia_run \
+--name socks-proxy_run \
+socks-proxy
+ExecStop=/usr/bin/docker stop socks-proxy_run
+
+[Install]
+WantedBy=multi-user.target

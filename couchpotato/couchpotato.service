@@ -7,7 +7,7 @@ Restart=always
 RestartSec=10
 ExecStartPre=-/usr/bin/docker rm couchpotato_run
 ExecStart=/usr/bin/docker run \
---volumes-from couchpotato_data \
+--volumes-from couchpotato_config \
 -p 5050:5050 \
 -v /etc/localtime:/etc/localtime:ro \
 --name couchpotato_run \

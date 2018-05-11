@@ -1,20 +1,15 @@
-FROM ubuntu:16.04
+FROM alpine
 
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
-ENV COUCHPOTATO_USER couchpotato
-ENV UID 22000
+RUN apk --no-cache add git python2 py2-lxml shadow && \
+    git clone https://github.com/RuudBurger/CouchPotatoServer.git /usr/local/src/couchpotato && \
+    useradd --no-create-home --uid 22000 couchpotato && \
+    chown -R couchpotato:users /usr/local/src/couchpotato && \
+    apk del git shadow
 
-COPY ./start.sh /start.sh
+USER couchpotato
+VOLUME /config
+WORKDIR /usr/local/src/couchpotato
 
-RUN apt-get -q update && \
-    apt-get install -qy git-core python && \
-    git clone https://github.com/RuudBurger/CouchPotatoServer.git && \
-    chmod u+x /start.sh && \
-    useradd --no-create-home -g users --uid $UID $COUCHPOTATO_USER && \
-    apt-get autoremove -qy git-core && \
-    rm -rf /var/lib/apt/lists/*
-
-USER $COUCHPOTATO_USER
-
-CMD ["/start.sh"]
+CMD ["./CouchPotato.py", "--data_dir", "/config"]

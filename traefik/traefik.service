@@ -1,0 +1,22 @@
+[Unit]
+Description=Traefik
+After=docker.service
+
+[Service]
+ExecStartPre=-/usr/bin/docker rm traefik_run
+ExecStart=/usr/bin/docker run \
+-p 80:80 \
+-p 443:443 \
+-v /var/run/docker.sock:/var/run/docker.sock \
+-v traefik_config:/etc/traefik \
+-v /etc/localtime:/etc/localtime:ro \
+-l traefik.frontend.rule=Host:monitor.myhost.org \
+-l traefik.backend=traefik_run \
+-l traefik.port=8080 \
+--name traefik_run \
+traefik:alpine \
+--docker
+ExecStop=/usr/bin/docker stop traefik_run
+
+[Install]
+WantedBy=multi-user.target

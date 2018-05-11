@@ -1,0 +1,35 @@
+defaultEntryPoints = ["http", "https"]
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.redirect]
+    entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+  [entryPoints.https.tls]
+  [entryPoints.monitor]
+  address = ":8080"
+    [entryPoints.monitor.auth]
+      [entryPoints.monitor.auth.basic]
+        users = ["user:$apr1$pass....."]
+
+[retry]
+
+[docker]
+domain = "myhost.org"
+watch = true
+exposedByDefault = false
+
+[acme]
+email = "email@myhost.org"
+storage = "acme.json"
+entryPoint = "https"
+onHostRule = true
+# Uncomment for the LetsEncrypt staging server for testing
+# caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+[acme.httpChallenge]
+entryPoint = "http"
+
+[api]
+entryPoint = "monitor"
+dashboard = true

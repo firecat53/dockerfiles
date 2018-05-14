@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 # Installs the plexmediaserver (plexpass version) from the .deb downloaded from Plex
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
@@ -8,7 +8,7 @@ RUN apt-get -q update && \
         avahi-daemon \
         avahi-utils \
         wget && \
-    wget https://downloads.plex.tv/plex-media-server/1.12.2.4929-29f6d1796/plexmediaserver_1.12.2.4929-29f6d1796_amd64.deb -O /plexmediaserver.deb && \
+    wget https://downloads.plex.tv/plex-media-server/1.13.0.5023-31d3c0c65/plexmediaserver_1.13.0.5023-31d3c0c65_amd64.deb -O /plexmediaserver.deb && \
     dpkg -i /plexmediaserver.deb && \
     rm /plexmediaserver.deb && \
     chmod u+x /start.sh && \

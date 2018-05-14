@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-"""Updates Dockerfile and Dockerfile.supervisord with the latest Github Release
-Syncthing version. Python 2/3 compatible.
+"""Updates Dockerfile with the latest Github Release Syncthing version. Python
+2/3 compatible.
 
 """
 import json
@@ -33,24 +33,18 @@ def get_release():
 
 
 def update_syncthing():
-    """Update Dockerfile and Dockerfile.supervisord with the newest version
-    number
+    """Update Dockerfile with the newest version number
 
     """
-    files = ["Dockerfile", "Dockerfile.supervisord"]
     ver = get_release()
     if not ver:
         return
-    for fn in files:
-        try:
-            with open(fn) as f:
-                file = f.readlines()
-                for idx, line in enumerate(file):
-                    file[idx] = re.sub(r'v\d+\.\d+\.\d+', ver, line)
-            with open(fn, 'w') as f:
-                f.writelines(file)
-        except FileNotFoundError:
-            continue
+    with open('Dockerfile') as f:
+        file = f.readlines()
+        for idx, line in enumerate(file):
+            file[idx] = re.sub(r'v\d+\.\d+\.\d+', ver, line)
+    with open('Dockerfile', 'w') as f:
+        f.writelines(file)
 
 
 if __name__ == "__main__":

@@ -1,17 +1,20 @@
-FROM ubuntu:16.04
+FROM alpine
 # Dockerfile to run a self-hosted Syncthing discovery server (latest build).
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
-ADD https://build2.syncthing.net/guestAuth/app/rest/builds/id:17960/artifacts/content/stdiscosrv-linux-amd64-v0.14.45+22-g1471c15.tar.gz /stdiscosrv.tar.gz
 COPY cert.pem key.pem /
-RUN tar -xzf stdiscosrv.tar.gz && \
+
+RUN apk --no-cache add wget && \
+    wget --quiet \
+        https://build2.syncthing.net/guestAuth/app/rest/builds/id:20878/artifacts/content/stdiscosrv-linux-amd64-v0.14.48-rc.4+11-gd59aecb.tar.gz \
+        -O /stdiscosrv.tar.gz && \
+    tar -xzf stdiscosrv.tar.gz && \
     rm stdiscosrv.tar.gz && \
     mv stdiscosrv* stdiscosrv && \
     mv /cert.pem /key.pem stdiscosrv/ && \
-    useradd --no-create-home -g users --uid 22000 syncthing && \
+    adduser -DHG users -u 22000 syncthing && \
     chown -R syncthing: /stdiscosrv && \
-    mkdir /var/stdiscosrv && \
-    chown syncthing: /var/stdiscosrv
+    apk del wget
 
 USER syncthing
 WORKDIR /stdiscosrv

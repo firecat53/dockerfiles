@@ -1,49 +1,36 @@
-Docker Syncthing Discovery Server
-=================================
+# Docker Syncthing Discovery Server
 
 This is a Dockerfile to set up a self-hosted Syncthing global discovery server
 using the latest git build.
 
-Build
------
+## Build
 
 First, complete one of the following three options:
 
 1. If you need to generate cert.pem and key.pem, assuming you have a syncthing
-container with the executable /syncthing::
+container with the executable `syncthing`::
 
-    $ ./initialize.sh
+        ./initialize.sh
 
 OR
 
 2. If you have an existing key and certificate file, add those to the build
    directory as key.pem and cert.pem
 
-OR
 
-3. If you are running the discovery server with the -http option (proxy mode),
-   you don't need a key or cert file, so comment out those two ADD lines in the
-   Dockerfile.
+        docker build -t syncthing_discovery .
 
-::
-
-    # docker build -t syncthing_discovery .
-
-Run
----
+## Run
 
 Systemd service file available. You can add discosrv flags at the end of the docker run line.
 
-::
-
-    # docker run -d -p 8443:8443 --name syncthing_discovery_run syncthing_discovery
+    docker run -d -p 8443:8443 --name syncthing_discovery_run syncthing_discovery
 
 or with arguments::
 
-    # docker run -d -p 8443:8443 --name syncthing_discovery_run syncthing_discovery -stats-intv=30
+    docker run -d -p 8443:8443 --name syncthing_discovery_run syncthing_discovery -stats-intv=30
 
-Reverse Proxy Notes
--------------------
+## Reverse Proxy Notes
 
 If you are using an SSL certificate on the reverse proxy, run the discovery
 server with the -http option. You also need to put the following two lines into
@@ -52,4 +39,3 @@ client SSL certificates to discosrv::
 
     proxy_set_header X-SSL-Cert $ssl_client_cert;
     ssl_verify_client optional_no_ca;
-

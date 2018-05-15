@@ -8,7 +8,7 @@ RestartSec=10
 Environment=HOME=%h
 ExecStartPre=-/usr/bin/docker rm stringer_run
 ExecStart=/usr/bin/docker run \
--p 5000:5000 \
+-p 8080:8080 \
 --name stringer_run \
 -v /etc/localtime:/etc/localtime:ro \
 --volumes-from stringer_data \

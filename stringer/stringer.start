@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+cd /app
+bundle exec rake db:migrate
+exec s6-setuidgid stringer bundle exec unicorn -p $PORT -c ./config/unicorn.rb

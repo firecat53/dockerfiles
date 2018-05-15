@@ -1,45 +1,47 @@
-FROM ruby:slim
+FROM ruby:alpine
 
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
-ENV DEBIAN_FRONTEND noninteractive
-ENV STRINGER_USER stringer
-ENV UID 22000
-
-COPY database.yml run.sh schedule.rb /
-
-RUN apt-get -y update && \
-    apt-get -qy install \
-        git \
-        libcurl4-openssl-dev \
-        libpq-dev \
-        libsqlite3-dev \
-        nodejs \
-        build-essential && \
-    gem install -N foreman rufus-scheduler && \
-    useradd -g users --uid $UID --create-home $STRINGER_USER && \
-    git clone https://github.com/swanson/stringer.git /home/$STRINGER_USER/stringer/ && \
-    mv database.yml /home/$STRINGER_USER/stringer/config/ && \
-    mv run.sh schedule.rb /home/$STRINGER_USER/stringer/ && \
-    chown -R $STRINGER_USER:users /home/$STRINGER_USER /usr/local/bundle
-
-USER stringer
-WORKDIR /home/$STRINGER_USER/stringer
 ENV RACK_ENV=production
+ENV PORT=8080
+ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v0.1.3/supercronic-linux-amd64 \
+    SUPERCRONIC=supercronic-linux-amd64 \
+    SUPERCRONIC_SHA1SUM=96960ba3207756bb01e6892c978264e5362e117e
 
-# Sets the production database to sqlite and installs requirements
-RUN mkdir data && \
-    sed -i 's/^  gem "pg".*$/  gem "sqlite3", "~> 1.3", ">= 1.3.8"/' Gemfile && \
-    sed -i '/^group :development do/,/^end/d' Gemfile && \
-    sed -i '/pg/d' Gemfile.lock && \
+WORKDIR /app
+
+RUN apk --no-cache add build-base \ 
+                       curl \
+                       git \
+                       linux-headers \
+                       nodejs \
+                       sqlite-dev \
+                       s6 && \
+    mkdir -p /etc/s6/cron && \
+    mkdir /etc/s6/stringer && \
+    ln -s /bin/true /etc/s6/cron/finish && \
+    ln -s /bin/true /etc/s6/stringer/finish && \
+    curl -fsSLO "$SUPERCRONIC_URL" && \
+    echo "${SUPERCRONIC_SHA1SUM}  ${SUPERCRONIC}" | sha1sum -c - && \
+    chmod +x "$SUPERCRONIC" && \
+    mv "$SUPERCRONIC" "/usr/local/bin/${SUPERCRONIC}" && \
+    ln -s "/usr/local/bin/${SUPERCRONIC}" /usr/local/bin/supercronic && \
+    git clone https://github.com/swanson/stringer.git . && \
     sed -i "s/.*/$RUBY_VERSION/" .ruby-version && \
+    sed -i 's/^  gem "pg".*$/  gem "sqlite3", "~> 1.3", ">= 1.3.8"/' Gemfile && \
+    sed -i '/^group :development, :test do/,/^end/d' Gemfile && \
+    sed -i '/^group :development do/,/^end/d' Gemfile && \
+    bundle lock && \
     bundle update && \
-    bundle install --deployment --without=development test && \
-    sed -i 's/^console/#console/' Procfile
+    adduser -D -h /app/ stringer && \
+    chown -R stringer:stringer /app && \
+    apk del build-base curl git linux-headers
 
-CMD ["./run.sh"]
+COPY database.yml /app/config/
+COPY cron.start /etc/s6/cron/run
+COPY stringer.start /etc/s6/stringer/run
 
-# Cleanup
-USER root
-RUN apt-get autoremove -qy build-essential git && \
-    rm -rf /var/lib/apt/lists/*
+EXPOSE 8080
+VOLUME /data
+
+ENTRYPOINT ["s6-svscan", "/etc/s6"]

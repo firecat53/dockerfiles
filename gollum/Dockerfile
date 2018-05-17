@@ -1,44 +1,42 @@
-FROM ruby:slim
+FROM ruby:alpine
 
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
-ENV GOLLUM_USER gollum
-ENV UID 22000
-
-COPY run.sh /usr/local/bin/run.sh
+ARG uid=1000
+ARG gid=100
 
 # Install dependencies (and RST support: python-docutils)
-RUN apt-get update && \
-    apt-get install -qy build-essential \
-                        python2.7 \
-                        python-docutils \
-                        libicu-dev \
-                        git-core && \
-    useradd -g users --uid $UID --create-home $GOLLUM_USER && \
-    # Add wiki user and run script
-    chmod 755 /usr/local/bin/run.sh && \
+RUN apk --no-cache add build-base \
+                       git \
+                       icu-dev \
+                       icu-libs && \
+    # Change `users` gid to match the passed in $gid
+    [ $(getent group users | awk -F ':' '{print $3}') == $gid ] || \
+            sed -i "s/users:x:[0-9]\+:/users:x:$gid:/" /etc/group && \
+    adduser -Dh /home/gollum -G users -u $uid gollum && \
+    mkdir /home/gollum/wiki && \
+    chown -R $uid:$gid /home/gollum && \
     # Install gollum and markdown support
     gem install --no-document gollum github-markdown && \
     # Other markup flavors (uncomment as needed)
+    # RST
+    # apk --no-cache add python2 py2-docutils && \
     # Mediawiki
-    # gem install --no-document asciidoctor
+    # gem install --no-document asciidoctor && \
     # Creole
-    # gem install --no-document creole
+    # gem install --no-document creole && \
     # Org mode
-    # gem install --no-document org-ruby
+    # gem install --no-document org-ruby && \
     # Textile
-    # gem install --no-document RedCloth
+    # gem install --no-document RedCloth && \
     # MediaWiki
-    # gem install --no-document wikicloth
+    # gem install --no-document wikicloth && \
     # Cleanup
-    apt-get autoremove -y build-essential && \
-    rm -rf /var/lib/apt/lists/*
+    apk del build-base icu-dev
 
-
-# Expose default gollum port 4567
 EXPOSE 4567
 
-USER $GOLLUM_USER
-WORKDIR /home/$GOLLUM_USER/wiki
+USER gollum
+WORKDIR /home/gollum/wiki
 
-ENTRYPOINT ["/usr/local/bin/run.sh"]
+ENTRYPOINT ["gollum"]

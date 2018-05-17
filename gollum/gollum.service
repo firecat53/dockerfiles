@@ -8,9 +8,9 @@ RestartSec=10
 ExecStartPre=-/usr/bin/docker rm gollum_run
 ExecStart=/usr/bin/docker run \
 -p 4567:4567 \
--v <path/to/wiki>:/home/<user>/wiki \
+-v <path/to/wiki>:/home/gollum/wiki \
 -v /etc/localtime:/etc/localtime:ro \
--v /home/<user>/.gitconfig:/home/<user>/.gitconfig:ro \
+-v /home/<user>/.gitconfig:/home/gollum/.gitconfig:ro \
 --name gollum_run \
 gollum \
 --allow-uploads page \

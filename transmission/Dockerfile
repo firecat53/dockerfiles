@@ -1,5 +1,5 @@
 FROM alpine
-MAINTAINER Scott Hansen <firecat4153@gmail.com>
+LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
 COPY settings.json /var/lib/transmission/
 COPY start.sh /usr/local/bin/start.sh

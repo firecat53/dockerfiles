@@ -35,7 +35,7 @@
   Dockerfile:
 
         FROM scratch
-        LABEL maintainer="<name> <email>"
+        LABEL "Maintainer"="<name> <email>"
 
   Then:
 

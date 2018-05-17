@@ -19,7 +19,8 @@ RUN apt-get update && \
         unzip && \
     useradd --no-create-home -g users -u $uid sabnzbd && \
     locale-gen en_US.UTF-8 en_US && \
-    apt-get autoremove -qy software-properties-common
+    apt-get autoremove -qy software-properties-common && \
+    rm -rf /var/lib/apt/lists
 
 COPY start.sh /usr/local/bin/
 

@@ -1,5 +1,5 @@
 FROM alpine
-MAINTAINER Scott Hansen <firecat4153@gmail.com>
+LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
 # Install openvpn
 RUN apk --no-cache --no-progress add curl openvpn && \

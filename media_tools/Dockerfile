@@ -6,16 +6,17 @@ ARG gid=100
 
 RUN apt-get -q update && \
     apt-get install -qy \
-    handbrake-cli \
-    ffmpeg \
-    mediainfo \
-    mkvtoolnix \
-    par2 \
-    ranger \
-    rsync \
-    unrar \
-    vim-tiny && \
-    useradd -g $gid -u $uid media
+                    handbrake-cli \
+                    ffmpeg \
+                    mediainfo \
+                    mkvtoolnix \
+                    par2 \
+                    ranger \
+                    rsync \
+                    unrar \
+                    vim-tiny && \
+    useradd -g $gid -u $uid media && \
+    rm -rf /var/lib/apt/lists
 
 USER media
 ENTRYPOINT ["/bin/bash"]

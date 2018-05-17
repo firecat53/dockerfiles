@@ -1,12 +1,13 @@
-FROM ubuntu:16.04
+FROM ubuntu
 
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
+ARG uid=1000
+ARG gid=100
 
-RUN echo "deb http://archive.ubuntu.com/ubuntu/ xenial multiverse" >> /etc/apt/sources.list
 RUN apt-get -q update && \
-    apt-get install -qy --force-yes \
+    apt-get install -qy \
     handbrake-cli \
-    libav-tools \
+    ffmpeg \
     mediainfo \
     mkvtoolnix \
     par2 \
@@ -14,6 +15,7 @@ RUN apt-get -q update && \
     rsync \
     unrar \
     vim-tiny && \
-    rm -rf /var/lib/apt/lists/*
+    useradd -g $gid -u $uid media
 
+USER media
 ENTRYPOINT ["/bin/bash"]

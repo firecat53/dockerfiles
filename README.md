@@ -25,9 +25,7 @@
   - **Traefik** (Configuration notes for the official Traefik image.)
   - **Transmission**
 
-* The standard UID:GID for the containers that don't run as root is 22000:100.
-  Make sure to update UID/GID as necessary if you have shared data and need it
-  to be easily accessible between containers/host * MIT License
+* MIT License
 
 * I use data-only volumes frequently in place of regular volumes due to the
   difficulty of changing ownership of a standard Docker volume. To generate the

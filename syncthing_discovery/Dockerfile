@@ -12,7 +12,7 @@ RUN apk --no-cache add wget && \
     rm stdiscosrv.tar.gz && \
     mv stdiscosrv* stdiscosrv && \
     mv /cert.pem /key.pem stdiscosrv/ && \
-    adduser -DHG users -u 22000 syncthing && \
+    adduser -DHG users syncthing && \
     chown -R syncthing: /stdiscosrv && \
     apk del wget
 

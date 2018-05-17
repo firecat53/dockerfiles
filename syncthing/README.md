@@ -11,10 +11,10 @@ like systemd to restart the container after Syncthing updates and/or restarts.
 
 Update Syncthing version to latest values in the Dockerfile.
    
-*NOTE*: the userid of the <username> you select will not necessarily match the
-username on your host if the UID isn't the same. Default user and UID are `syncthing 22000`.
+*NOTE*: To prevent permissions problems, build Syncthing to match the uid and
+gid of the user who will be running Syncthing.
 
-    docker build --build-arg SYCNTHING_USER=<username> --build-arg UID=1000 -t syncthing .
+    docker build --build-arg=uid=$(id -u) --build-arg=gid=$(id -g) -t syncthing .
 
 Pass `--build-arg VERSION=v0.xx.xx` to build a specific version. Default version
 is kept updated in the Dockerfile.
@@ -29,7 +29,14 @@ Create config volume and set permissions::
 Systemd service file available. Edit to enable or disable 'host' networking as
 necessary for local discovery needs.
 
-    docker run -d --net='host' -v /mnt/media:/mnt/media --volumes-from syncthing_config -p 22000:22000 -p 8384:8384 -p 21027:21027/udp --name syncthing_run syncthing
+    docker run -d \
+               -v /mnt/media:/mnt/media \
+               --volumes-from syncthing_config \
+               -p 22000:22000 \
+               -p 8384:8384 \
+               -p 21027:21027/udp \
+               --name syncthing_run \
+               syncthing
 
 ## Local Discovery
 
@@ -45,4 +52,4 @@ redirect traffic to the syncthing GUI (e.g. syncthing.myip.net ->
 networking mode and still have it accessible via the reverse proxy. At least not
 without some more complex configuring! 
 
-[1]: https://docs.docker.com/articles/networking/#how-docker-networks-a-container
+[1]: https://docs.docker.com/network/host/

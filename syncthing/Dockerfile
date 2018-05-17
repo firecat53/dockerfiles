@@ -2,8 +2,8 @@ FROM alpine
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
 ARG VERSION=v0.14.47
-ARG SYNCTHING_USER=syncthing
-ARG UID=22000
+ARG uid=1000
+ARG gid=100
 
 COPY start.sh /usr/local/bin/
 
@@ -12,9 +12,12 @@ RUN apk --no-cache add ca-certificates wget && \
     tar -xzf syncthing.tar.gz && \
     mv sync*/syncthing /usr/local/bin/syncthing && \
     rm -rf syncthing.tar.gz syncthing-linux* && \
-    adduser -DHG users -u $UID $SYNCTHING_USER && \
+    # Change `users` gid to match the passed in $gid
+    [ $(getent group users | awk -F ':' '{print $3}') == $gid ] || \
+            sed -i "s/users:x:[0-9]\+:/users:x:$gid:/" /etc/group && \
+    adduser -DHG users -u $uid syncthing && \
     apk del wget
 
-USER $SYNCTHING_USER
+USER syncthing
 
 CMD ["start.sh"]

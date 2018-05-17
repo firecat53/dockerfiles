@@ -1,24 +1,22 @@
-FROM ubuntu:16.04
+FROM alpine
 
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
-ENV LAZYLIBRARIAN_USER lazylibrarian
-ENV UID 22000
-
-COPY start.sh /start.sh
-RUN apt-get update -q && \
-    apt-get install -qy unzip \
-                        python \
-                        wget && \
-    wget https://github.com/dobytang/LazyLibrarian/archive/master.zip -O /master.zip && \
+RUN apk --no-cache add python3 \
+                       unzip \
+                       wget && \
+    wget -q https://github.com/dobytang/LazyLibrarian/archive/master.zip -O /master.zip && \
     unzip master.zip && \
     rm master.zip && \
-    useradd --no-create-home -g users --uid $UID $LAZYLIBRARIAN_USER && \
-    chown -R $LAZYLIBRARIAN_USER LazyLibrarian-master && \
-    chmod +x /start.sh && \
-    apt-get autoremove -qy unzip wget && \
-    rm -rf /var/lib/apt/lists/*
+    # Prevents attempts at updating or checking git version
+    sed -i 's/^LAZY.*/LAZYLIBRARIAN_VERSION = "Package"/' LazyLibrarian-master/lazylibrarian/version.py && \
+    adduser -DH lazy && \
+    mkdir -p /config && \
+    chown -R lazy:users /config /LazyLibrarian-master/ && \
+    apk del unzip wget
 
-USER $LAZYLIBRARIAN_USER
+EXPOSE 5299
+VOLUME ["/config"]
 
-CMD ["/start.sh"]
+USER lazy
+CMD ["python3", "LazyLibrarian-master/LazyLibrarian.py", "--datadir=/config"]

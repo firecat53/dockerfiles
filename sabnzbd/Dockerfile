@@ -1,33 +1,33 @@
-FROM ubuntu:16.04
+FROM ubuntu
 
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
+ARG uid=1000
 ENV DEBIAN_FRONTEND noninteractive
-ENV SABNZBD_USER sabnzbd
-ENV UID 22000
 
-COPY start.sh /start.sh
-RUN gpg --keyserver keys.gnupg.net --recv-keys 4BB9F05F && \
-    gpg --armor --export 4BB9F05F | apt-key add - && \
-    echo "deb http://ppa.launchpad.net/jcfp/ppa/ubuntu xenial main" >> /etc/apt/sources.list && \
-    echo "deb http://ppa.launchpad.net/jcfp/sab-addons/ubuntu xenial main" >> /etc/apt/sources.list && \
-    apt-get -q update && \
+RUN apt-get update && \
+    apt-get install -qy software-properties-common && \
+    add-apt-repository -yn ppa:jcfp/nobetas && \
+    add-apt-repository -y ppa:jcfp/sab-addons && \
     apt-get install -qy \
-        sabnzbdplus \
         ca-certificates \
         locales \
-        python-sabyenc \
         par2-tbb \
-        unrar && \
-    useradd --no-create-home -g users --uid $UID $SABNZBD_USER && \
-    chmod +x /start.sh && \
-    rm -rf /var/lib/apt/lists/* && \
-    locale-gen en_US.UTF-8
+        python-sabyenc \
+        sabnzbdplus \
+        unrar \
+        unzip && \
+    useradd --no-create-home -g users -u $uid sabnzbd && \
+    locale-gen en_US.UTF-8 en_US && \
+    apt-get autoremove -qy software-properties-common
+
+COPY start.sh /usr/local/bin/
 
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
+EXPOSE 8080
 
-USER $SABNZBD_USER
+USER sabnzbd
 
-CMD ["/start.sh"]
+CMD ["start.sh"]

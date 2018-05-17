@@ -1,21 +1,18 @@
-FROM ubuntu:16.04
+FROM alpine
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
-ENV HEADPHONES_USER headphones
-ENV UID 22000
+RUN apk --no-cache add python \
+                       unzip \
+                       wget && \
+    wget -q https://github.com/rembo10/headphones/archive/master.zip -O /master.zip && \
+    unzip master.zip && \
+    rm master.zip && \
+    adduser -DH headphones && \
+    mkdir /config && \
+    chown -R headphones:users /config && \
+    apk del unzip wget
 
-COPY start.sh /start.sh
-RUN apt-get update -q && \
-    apt-get install -qy git-core \
-                        python \
-                        ca-certificates && \
-    git clone https://github.com/rembo10/headphones && \
-    useradd --no-create-home -g users --uid $UID $HEADPHONES_USER && \
-    mv /start.sh /headphones/start.sh && \
-    chmod +x /headphones/start.sh && \
-    rm -rf /var/lib/apt/lists/*
+EXPOSE 8181
 
-USER $HEADPHONES_USER
-WORKDIR /headphones
-
-CMD ["./start.sh"]
+USER headphones
+CMD ["python", "headphones-master/Headphones.py", "--datadir", "/config", "--host", "0.0.0.0"]

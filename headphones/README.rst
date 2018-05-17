@@ -1,22 +1,28 @@
-Docker Headphones
-=================
+# Headphones
 
-This is a Dockerfile to set up Headphones. Create a volume mount point at /data for data.
+This is a Dockerfile to set up [Headphones][1]
 
-Build
------
+Note: Due to the way the Headphones program runs in the container, the
+`Restart` button in the GUI will just shut it down. Restart the container
+instead.
 
-::
+## Build
 
-    # docker build -t headphones .
+Create config volume and set permissions, then build:
 
-Create data volume and set permissions::
+    docker create -v /config --name headphones_config myscratch true
+    docker run --rm --volumes-from headphones_config --user root headphones chown -R headphones:users /config
+    docker build -t headphones .
 
-    # docker run -v /data --name headphones_data ubuntu chown -R 22000 /data
+# Run
 
-Run
----
+Systemd service file available.
 
-Systemd service file is also available.  ::
+    docker run -d \
+               --volumes-from headphones_config \
+               -p 8181:8181 \
+               --name headphones_run \
+               headphones
 
-    # docker run -d --volumes-from headphones_data -p 8181:8181 --name headphones_run headphones
+
+[1]: https://github.com/rembo10/headphones "Headphones"

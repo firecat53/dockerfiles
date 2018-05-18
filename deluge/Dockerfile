@@ -13,7 +13,7 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositorie
                                service_identity && \
     apk del py2-pip && \
     # Change `users` gid to match the passed in $gid
-    [ $(getent group users | awk -F ':' '{print $3}') == $gid ] || \
+    [ $(getent group users | cut -d: -f3) == $gid ] || \
             sed -i "s/users:x:[0-9]\+:/users:x:$gid:/" /etc/group && \
     adduser -h /config -s /sbin/nologin -D -u $uid deluge && \
     echo "deluge:deluge" | chpasswd && \

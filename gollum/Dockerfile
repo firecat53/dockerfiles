@@ -11,7 +11,7 @@ RUN apk --no-cache add build-base \
                        icu-dev \
                        icu-libs && \
     # Change `users` gid to match the passed in $gid
-    [ $(getent group users | awk -F ':' '{print $3}') == $gid ] || \
+    [ $(getent group users | cut -d: -f3) == $gid ] || \
             sed -i "s/users:x:[0-9]\+:/users:x:$gid:/" /etc/group && \
     adduser -Dh /home/gollum -G users -u $uid gollum && \
     mkdir /home/gollum/wiki && \

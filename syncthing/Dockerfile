@@ -13,7 +13,7 @@ RUN apk --no-cache add ca-certificates wget && \
     mv sync*/syncthing /usr/local/bin/syncthing && \
     rm -rf syncthing.tar.gz syncthing-linux* && \
     # Change `users` gid to match the passed in $gid
-    [ $(getent group users | awk -F ':' '{print $3}') == $gid ] || \
+    [ $(getent group users | cut -d: -f3) == $gid ] || \
             sed -i "s/users:x:[0-9]\+:/users:x:$gid:/" /etc/group && \
     adduser -DHG users -u $uid syncthing && \
     apk del wget

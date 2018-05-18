@@ -1,8 +1,8 @@
 FROM alpine
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
-VOLUME /config
-VOLUME /data
+ARG uid=1000
+ARG gid=100
 
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositories && \
     apk --no-cache add p7zip py2-pip unrar && \
@@ -12,10 +12,18 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositorie
                                incremental \
                                service_identity && \
     apk del py2-pip && \
-    adduser -h /config -s /sbin/nologin -D deluge users && \
-    echo "deluge:deluge" | chpasswd
+    # Change `users` gid to match the passed in $gid
+    [ $(getent group users | awk -F ':' '{print $3}') == $gid ] || \
+            sed -i "s/users:x:[0-9]\+:/users:x:$gid:/" /etc/group && \
+    adduser -h /config -s /sbin/nologin -D -u $uid deluge && \
+    echo "deluge:deluge" | chpasswd && \
+    mkdir /data && \
+    chown -R deluge:users /config /data
 
-COPY start.sh /usr/local/bin/start.sh
+COPY start.sh /usr/local/bin/
 
-USER deluge:users
+USER deluge
+
+VOLUME ["/config", "/data"]
+
 CMD ["start.sh"]

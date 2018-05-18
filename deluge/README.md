@@ -13,14 +13,15 @@ OpenVPN container. Also contains p7zip and unrar for the extractor plugin.
 
 ## Build
 
-    docker build -t deluge .
+To avoid permissions issues with shared volumes, use `--build-arg` to change the
+uid:gid of the image at build time.
+
+    docker build --build-arg=uid=$(id -u) --build-arg $(id -g) -t deluge .
     docker create -v /config --name deluge_config myscratch true
     docker run --rm --volumes-from deluge_config --user root deluge chown -R deluge:users /config
 
 A bind-mounted volume can be used in place of the data-only volume for
 deluge_config.
-
-Make sure the downloads directory has `g+w` set and is part of the `users` group.
 
 ## Run
 

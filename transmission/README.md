@@ -15,14 +15,15 @@ an OpenVPN container.
 
 ## Build
 
-    docker build -t transmission .
+To avoid permissions issues with shared volumes, use `--build-arg` to change the
+uid:gid of the image at build time.
+
+    docker build --build-arg=uid=$(id -u) --build-arg=gid=$(id -g) -t transmission .
     docker create -v /config --name transmission_config myscratch true
     docker run --rm --volumes-from transmission_config --user root transmission chown -R transmission:users /config
 
 A bind-mounted volume can be used in place of the data-only volume for
 transmission_config.
-
-Make sure the downloads directory has `g+w` set and is part of the `users` group.
 
 ## Run
 

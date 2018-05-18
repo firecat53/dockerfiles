@@ -27,13 +27,15 @@ site/user is omd. Then:
 
 ## Run
 
-Systemd service file is also available.
+Systemd service file is also available. Make sure to run with the `--init` flag
+to best manage the container shutdown process.
 
     docker run -d \
                --volumes-from check_mk_config \
                -v /etc/localtime:/etc/localtime \
                -p 5000:5000 \
                --name check_mk_run \
+               --init \
                check_mk
 
 Be patient when starting (20-40 seconds). The site has to be generated

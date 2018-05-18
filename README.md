@@ -3,8 +3,7 @@
   I currently use. Others could potentially be out of date. I prefer when
   possible to build my own Docker images rather than pull images build by
   someone else. The only exceptions are `official` images that are vetted by
-  Docker and the Plex image (because I trust the company and pay them money for
-  support).
+  Docker and the Plex image.
 
   - **Check-MK** (Monitoring system based on Nagios.)
   - **Couchpotato**
@@ -22,6 +21,7 @@
   - **Socks-proxy** (ssh server for use as a SOCKS proxy to the OpenVPN-client-pia container)
   - **Stringer** (Web-based RSS Reader)
   - **Syncthing**
+  - **Syncthing Discovery server**
   - **Traefik** (Configuration notes for the official Traefik image.)
   - **Transmission**
 

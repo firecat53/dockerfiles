@@ -22,7 +22,7 @@ is kept updated in the Dockerfile.
 Create config volume and set permissions::
 
     docker create -v /config --name syncthing_config myscratch true
-    docker run --rm --volumes-from syncthing_config --user root syncthing chown -R <username>:users /config
+    docker run --rm --volumes-from syncthing_config --user root syncthing chown -R syncthing:users /config
 
 ## Run
 

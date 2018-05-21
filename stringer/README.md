@@ -15,7 +15,7 @@ Create a data-only volume for saving the stringer sqlite database:
 
 ## Run
 
-    # docker run -d -p 5000:5000 \
+    # docker run -d -p 8080:8080 \
         --volumes-from stringer_data \
         --name stringer_run \
         stringer

@@ -3,6 +3,7 @@ FROM ubuntu
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
 ARG uid=1000
+ARG gid=100
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && \
@@ -17,6 +18,9 @@ RUN apt-get update && \
         sabnzbdplus \
         unrar \
         unzip && \
+    # Change `users` gid to match the passed in $gid
+    [ $(getent group users | cut -d: -f3) == $gid ] || \
+            groupmod -g $gid users && \
     useradd --no-create-home -g users -u $uid sabnzbd && \
     locale-gen en_US.UTF-8 en_US && \
     apt-get autoremove -qy software-properties-common && \

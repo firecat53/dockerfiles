@@ -6,12 +6,11 @@ desire for storing configuration and downloads.
 
 ## Build
 
-The default UID in the container is 1000. If your user has a different uid, pass
-`--build-arg=uid=$(id -u)` so the uid of your user matches the uid of the
-sabnzbd user in the container. If you would prefer to not have a matching uid,
-make sure to set g+w on your /data directory.
+The default UID:GID in the container is 1000:100. If your user has a different
+uid:gid, pass `--build-arg` so the uid:gid of your user matches the sabnzbd user
+in the container.
 
-    docker build --build-arg=uid=$(id -u) -t sabnzbd .
+    docker build --build-arg=uid=$(id -u) --build-arg=gid=$(id -g) -t sabnzbd .
 
 If using data-only volumes for config and data:
 

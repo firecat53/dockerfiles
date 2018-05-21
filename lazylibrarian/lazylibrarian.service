@@ -8,7 +8,6 @@ RestartSec=10
 ExecStartPre=-/usr/bin/docker rm lazylibrarian_run
 ExecStart=/usr/bin/docker run \
 --volumes-from lazylibrarian_config \
---volumes-from media_data \
 -p 5299:5299 \
 -v /etc/localtime:/etc/localtime:ro \
 --name lazylibrarian_run \

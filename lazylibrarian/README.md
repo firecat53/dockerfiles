@@ -8,11 +8,11 @@ instead.
 
 ## Build
 
-Create config volume and set permissions, then build:
+Build, then create config volume and set permissions:
 
+    docker build -t lazylibrarian .
     docker create -v /config --name lazylibrarian_config myscratch true
     docker run --rm --volumes-from lazylibrarian_config --user root lazylibrarian chown -R lazy:users /config
-    docker build -t lazylibrarian .
 
 # Run
 

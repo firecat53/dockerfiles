@@ -22,11 +22,11 @@ RUN apt-get update && \
     [ $(getent group users | cut -d: -f3) == $gid ] || \
             groupmod -g $gid users && \
     useradd --no-create-home -g users -u $uid sabnzbd && \
+    mkdir /config && \
+    chown -R sabnzbd:users /config && \
     locale-gen en_US.UTF-8 en_US && \
     apt-get autoremove -qy software-properties-common && \
     rm -rf /var/lib/apt/lists
-
-COPY start.sh /usr/local/bin/
 
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
@@ -35,4 +35,4 @@ EXPOSE 8080
 
 USER sabnzbd
 
-CMD ["start.sh"]
+CMD ["sabnzbdplus", "--server", "0.0.0.0:8080", "--config-file", "/config/"]

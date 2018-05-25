@@ -20,4 +20,5 @@ RUN apk --no-cache add ca-certificates wget && \
 
 USER syncthing
 
-CMD ["start.sh"]
+ENTRYPOINT ["syncthing"]
+CMD ["-home=/config", "-gui-address=0.0.0.0:8384"]

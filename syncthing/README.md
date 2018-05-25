@@ -27,7 +27,9 @@ Create config volume and set permissions::
 ## Run
 
 Systemd service file available. Edit to enable or disable 'host' networking as
-necessary for local discovery needs.
+necessary for local discovery needs. Pass additional arguments to syncthing
+after the image name if desired. Default entrypoint is `syncthing` and default
+CMD is `-home=/config -gui-address=0.0.0.0:8384`
 
     docker run -d \
                -v /mnt/media:/mnt/media \

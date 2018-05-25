@@ -10,6 +10,8 @@ RUN apk --no-cache add build-base \
                        python-dev && \
     pip --no-cache-dir install --upgrade sickrage && \
     adduser -HD sickrage && \
+    mkdir /config && \
+    chown -R sickrage:users /config && \
     apk del build-base linux-headers python-dev
 
 EXPOSE 8081

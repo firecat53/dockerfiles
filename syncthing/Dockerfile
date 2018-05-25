@@ -5,8 +5,6 @@ ARG VERSION=v0.14.47
 ARG uid=1000
 ARG gid=100
 
-COPY start.sh /usr/local/bin/
-
 RUN apk --no-cache add ca-certificates wget && \
     wget --quiet https://github.com/syncthing/syncthing/releases/download/$VERSION/syncthing-linux-amd64-$VERSION.tar.gz -O /syncthing.tar.gz && \
     tar -xzf syncthing.tar.gz && \

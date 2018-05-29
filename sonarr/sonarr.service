@@ -1,0 +1,18 @@
+[Unit]
+Description=Sonarr container
+After=docker.service
+
+[Service]
+Restart=always
+RestartSec=10
+ExecStartPre=-/usr/bin/docker rm sonarr_run
+ExecStart=/usr/bin/docker run \
+--volumes-from sonarr_config \
+-p 8989:8989 \
+-v /etc/localtime:/etc/localtime:ro \
+--name sonarr_run \
+sonarr
+ExecStop=/usr/bin/docker stop sonarr_run
+
+[Install]
+WantedBy=multi-user.target

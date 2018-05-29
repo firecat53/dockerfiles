@@ -15,7 +15,10 @@ RUN apt-get -q update && \
                     rsync \
                     unrar \
                     vim-tiny && \
-    useradd -g $gid -u $uid media && \
+    # Change `users` gid to match the passed in $gid
+    [ $(getent group users | cut -d: -f3) == $gid ] || \
+            groupmod -g $gid users && \
+    useradd --no-create-home -g users -u $uid media && \
     rm -rf /var/lib/apt/lists
 
 USER media

@@ -14,6 +14,8 @@ RUN apk --no-cache add ca-certificates wget && \
     [ $(getent group users | cut -d: -f3) == $gid ] || \
             sed -i "s/users:x:[0-9]\+:/users:x:$gid:/" /etc/group && \
     adduser -DHG users -u $uid syncthing && \
+    mkdir /config && \
+    chown -R syncthing:users /config && \
     apk del wget
 
 USER syncthing

@@ -4,7 +4,10 @@ This is a Dockerfile to set up Sonarr from their PPA.
 
 ## Build
 
-    docker build -t sonarr .
+To avoid permissions issues with shared volumes, use `--build-arg` to change the
+uid:gid of the image at build time.
+
+    docker build --build-arg=uid=$(id -u) --build-arg=gid=$(id -g) -t sonarr .
 
 If using data-only volumes for config and data:
 
@@ -15,4 +18,9 @@ If using data-only volumes for config and data:
 
 Systemd service file is also available.
 
-    docker run -d --volumes-from sonarr_config -p 8989:8989 --name sonarr_run sonarr
+    docker run -d \
+               --volumes-from sonarr_config \
+               --volumes-from media_data \
+               -p 8989:8989 \
+               --name sonarr_run \
+               sonarr

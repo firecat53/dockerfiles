@@ -1,0 +1,20 @@
+[Unit]
+Description=jackett container
+After=docker.service
+
+[Service]
+Restart=always
+RestartSec=10
+ExecStartPre=-/usr/bin/docker rm jackett_run
+ExecStart=/usr/bin/docker run \
+--net=container:openvpn-client-pia_run \
+--volumes-from jackett_config \
+--volumes-from media_data \
+-v /etc/localtime:/etc/localtime:ro \
+--name jackett_run \
+--init \
+jackett
+ExecStop=/usr/bin/docker stop jackett_run
+
+[Install]
+WantedBy=multi-user.target

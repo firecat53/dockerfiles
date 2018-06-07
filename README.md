@@ -10,6 +10,7 @@
   - **Deluge**
   - **Gollum** personal Wiki
   - Headphones
+  - **Jackett**
   - **Lazy Librarian**
   - **Media tools** (collection of common tools for working with media files)
   - **OpenVPN-client-pia** (OpenVPN for PIA with port forwarding)

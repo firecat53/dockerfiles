@@ -19,7 +19,8 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositorie
     curl -o \
         /tmp/jacket.tar.gz -L \
         https://github.com/Jackett/Jackett/releases/download/$tag/Jackett.Binaries.Mono.tar.gz && \
-    tar xf /tmp/jacket.tar.gz -C /opt/Jackett --strip-components=1
+    tar xf /tmp/jacket.tar.gz -C /opt/Jackett --strip-components=1 && \
+    rm -rf /tmp/*
 
 EXPOSE 9117
 USER jackett

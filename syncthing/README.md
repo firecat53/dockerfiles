@@ -9,15 +9,12 @@ like systemd to restart the container after Syncthing updates and/or restarts.
 
 ## Build
 
-Update Syncthing version to latest values in the Dockerfile.
-   
+Most recent release will be built.
+
 *NOTE*: To prevent permissions problems, build Syncthing to match the uid and
 gid of the user who will be running Syncthing.
 
     docker build --build-arg=uid=$(id -u) --build-arg=gid=$(id -g) -t syncthing .
-
-Pass `--build-arg VERSION=v0.xx.xx` to build a specific version. Default version
-is kept updated in the Dockerfile.
 
 Create config volume and set permissions::
 

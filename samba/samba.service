@@ -14,7 +14,7 @@ ExecStart=/usr/bin/docker run \
 -p 445:445 \
 -v /etc/localtime:/etc/localtime:ro \
 -h homeserver \
---volumes-from media_data \
+-v /mnt/downloads:/mnt/downloads \
 -v /home:/home \
 -v /mnt/media:/mnt/media \
 --name samba_run \

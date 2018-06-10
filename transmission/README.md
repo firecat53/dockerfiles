@@ -34,7 +34,7 @@ openvpn container unless a reverse proxy will be used to conenct to the web UI.
                --net=container:openvpn_run \
                --volumes-from transmission_config \
                -v pia_port:/var/run/pia \
-               -v /media/downloads:/data \
+               -v /mnt/downloads:/data \
                -v /etc/localtime:/etc/localtime:ro \
                --name transmission_run \
                transmission

@@ -20,7 +20,7 @@ Systemd service file is also available.
 
     docker run -d \
                --volumes-from sonarr_config \
-               --volumes-from media_data \
+               -v /mnt/downloads:/data \
                -p 8989:8989 \
                --name sonarr_run \
                sonarr

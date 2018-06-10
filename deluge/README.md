@@ -35,7 +35,7 @@ shutdown.
                --net=container:openvpn-client-pia_run \
                --volumes-from deluge_config \
                -v pia_port:/var/run/pia \
-               -v /media/downloads:/data \
+               -v /mnt/downloads:/data \
                -v /etc/localtime:/etc/localtime:ro \
                --name deluge_run \
                --init \

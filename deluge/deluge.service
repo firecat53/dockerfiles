@@ -8,7 +8,7 @@ ExecStartPre=-/usr/bin/docker rm deluge_run
 ExecStart=/usr/bin/docker run \
 --net=container:openvpn-client-pia_run \
 --volumes-from deluge_config \
---volumes-from media_data \
+-v /mnt/downloads:/data \
 -v pia_port:/var/run/pia \
 -v /etc/localtime:/etc/localtime:ro \
 --init \

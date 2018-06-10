@@ -36,7 +36,7 @@ Systemd service file is available if desired. Otherwise::
         ## and/or volumes to be used as shares
         -v /home:/home \
         -v /mnt/media:/mnt/media \
-        --volumes-from media_data\
+        -v /mnt/downloads:/data\
         --name samba_run samba
 
 ## Manage

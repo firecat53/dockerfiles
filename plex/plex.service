@@ -8,7 +8,7 @@ RestartSec=10
 ExecStartPre=-/usr/bin/docker rm plex_run
 ExecStart=/usr/bin/docker run \
 --volumes-from plex_config \
---volumes-from media_data \
+-v /mnt/downloads:/data \
 -v /mnt/media:/mnt/media \
 -p 32400:32400/tcp \
 -p 3005:3005/tcp \

@@ -24,7 +24,7 @@ cleaner and quicker container shutdowns.
 
     docker run -d \
                --volumes-from jackett_config \
-               --volumes-from media_data \
+               -v /mnt/downloads:/data \
                --name jackett_run \
                --init \
                jackett

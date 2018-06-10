@@ -34,5 +34,6 @@ ENV LC_ALL en_US.UTF-8
 EXPOSE 8080
 
 USER sabnzbd
+VOLUME /config
 
 CMD ["sabnzbdplus", "--server", "0.0.0.0:8080", "--config-file", "/config/"]

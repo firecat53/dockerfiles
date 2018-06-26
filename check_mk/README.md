@@ -57,5 +57,21 @@ site:
     # omd su default
     OMD[default]:~$ ....
 
+## Update
+
+* Each site has to be updated to the new version while the old version is
+  installed. Until I figure out how to automate this, it has to be done
+  manually.
+
+      $ docker exec -it check_mk_run /bin/bash
+      # export VERSION=1.4.0p34
+      # curl -o new_version.deb https://mathias-kettner.de/support/$VERSION/check-mk-raw-${VERSION}_0.bionic_amd64.deb
+      # dpkg -i new_version.deb
+      # omd stop <site name>
+      # omd update <site name>
+      
+* Now update the Dockerfile and rebuild the image with the new version and
+  restart check_mk.
+
 [1]: http://mathias-kettner.com/check_mk.html  "Check-MK Monitoring"
 [2]: http://mathias-kettner.com/check_mk_download.php?HTML=yes "downloads page" 

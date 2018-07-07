@@ -15,7 +15,7 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositorie
     # Change `users` gid to match the passed in $gid
     [ $(getent group users | cut -d: -f3) == $gid ] || \
             sed -i "s/users:x:[0-9]\+:/users:x:$gid:/" /etc/group && \
-    adduser -h /config -s /sbin/nologin -D -u $uid deluge && \
+    adduser -h /config -s /sbin/nologin -DG users -u $uid deluge && \
     echo "deluge:deluge" | chpasswd && \
     mkdir /data && \
     chown -R deluge:users /config /data

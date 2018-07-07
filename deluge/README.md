@@ -6,6 +6,7 @@ OpenVPN container. Also contains p7zip and unrar for the extractor plugin.
 #### Defaults:
 
 - Runs as user `deluge`. Default group `users`. Default password is `deluge`.
+- Umask set to 002 (edit in start.sh if desired)
 - Config directory: `/config/`
 - Download volume: `/data/` (change Download path in web UI on first run)
 - The volume `pia_port` needs to exists and is created as part of the

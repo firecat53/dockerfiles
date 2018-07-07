@@ -1,5 +1,6 @@
 #!/bin/sh
 
+umask 002
 echo "::10" > /config/auth
 sleep 60 && \
     deluge-console -c /config \

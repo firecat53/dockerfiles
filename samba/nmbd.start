@@ -1,2 +1,2 @@
 #!/bin/sh
-exec nmbd -F -S < /dev/null
+exec nmbd -F -S --no-process-group < /dev/null

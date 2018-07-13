@@ -18,4 +18,4 @@ repositories) in an image. Used for system backups.
       -v /mnt/data_root:/mnt/data_root:ro \
       -v /mnt/backup/btrbk_homeserver:/mnt/backup/btrbk_homeserver \
       btrbk \
-      btrbk run -c /etc/btrbk.conf -v dryrun
+      btrbk -c /etc/btrbk.conf -v dryrun

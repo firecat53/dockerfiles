@@ -11,9 +11,6 @@ if [[ ! -d "/opt/omd/sites/$SITE" ]]; then
 	# Set up a default site "omd"
 	omd create "$SITE"
 
-	# We don't want TMPFS as it requires higher privileges
-	omd config "$SITE" set TMPFS off
-
 	# Accept connections on any IP address, since we get a random one
 	omd config "$SITE" set APACHE_TCP_ADDR 0.0.0.0
 else

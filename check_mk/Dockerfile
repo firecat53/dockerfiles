@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
-ENV VERSION 1.4.0p34
+ENV VERSION 1.5.0
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update -q && \

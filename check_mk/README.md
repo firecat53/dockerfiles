@@ -6,9 +6,8 @@ Msmtp send-only mail (using Gmail, Mandrill, etc.) for notifications.
 ## Build
 
 1. Ensure the correct version from the [downloads page][2] is noted in the
-Dockerfile.  If your site requires Check-MK to run with tmpfs, remove the line
-in start.sh that disables it, then run the container with either `--priviliged`
-or `--cap-add SYS_ADMIN`.
+Dockerfile. As of version 1.5.0, Check-MK requires a tmpfs so the container must
+be run with either `--privileged` or `--cap-add SYS_ADMIN`.
 
 1. Build from Dockerfile:
 
@@ -31,6 +30,7 @@ Systemd service file is also available. Make sure to run with the `--init` flag
 to best manage the container shutdown process.
 
     docker run -d \
+               --cap-add SYS_ADMIN \
                --volumes-from check_mk_config \
                -v /etc/localtime:/etc/localtime \
                -p 5000:5000 \

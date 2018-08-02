@@ -7,7 +7,7 @@ Msmtp send-only mail (using Gmail, Mandrill, etc.) for notifications.
 
 1. Ensure the correct version from the [downloads page][2] is noted in the
 Dockerfile. As of version 1.5.0, Check-MK requires a tmpfs so the container must
-be run with either `--privileged` or `--cap-add SYS_ADMIN`.
+be run with either `--privileged` or `--cap-add SYS_ADMIN` with `--security-opt apparmor:unconfined`.
 
 1. Build from Dockerfile:
 

@@ -8,6 +8,7 @@ RestartSec=10
 ExecStartPre=-/usr/bin/docker rm check_mk_run
 ExecStart=/usr/bin/docker run \
 --cap-add SYS_ADMIN \
+--security-opt apparmor:unconfined \
 --volumes-from check_mk_config \
 -p 5000:5000 \
 -v /etc/localtime:/etc/localtime:ro \

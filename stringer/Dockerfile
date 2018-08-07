@@ -31,6 +31,7 @@ RUN apk --no-cache add build-base \
     sed -i 's/^  gem "pg".*$/  gem "sqlite3", "~> 1.3", ">= 1.3.8"/' Gemfile && \
     sed -i '/^group :development, :test do/,/^end/d' Gemfile && \
     sed -i '/^group :development do/,/^end/d' Gemfile && \
+    sed -i '/    enable :logging/a\\    ActiveRecord::Base.logger.level = Logger::WARN' app.rb && \
     bundle lock && \
     bundle update && \
     adduser -D -h /app/ stringer && \

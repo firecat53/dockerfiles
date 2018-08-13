@@ -15,4 +15,4 @@ Create data volume and set permissions:
 
 Systemd service file is also available.
 
-    docker run -d --volumes-from sickrage_config -p 8081:8081 --name sickrage_run sickrage
+    docker run -d --volumes-from sickrage_config -p 8081:8081 --name sickrage_run --init sickrage

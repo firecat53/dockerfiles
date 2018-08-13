@@ -5,6 +5,7 @@ LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 RUN apk --no-cache add build-base \
                        ca-certificates \
                        linux-headers \
+                       py2-lxml \
                        py2-openssl \
                        py2-pip \
                        python-dev && \

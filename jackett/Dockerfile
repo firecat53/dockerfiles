@@ -4,7 +4,7 @@ LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 ARG uid=1000
 ARG gid=100
 ARG DEBIAN_FRONTEND=noninteractive
-ARG XDG_CONFIG_HOME=/config
+ENV XDG_CONFIG_HOME=/config
 
 RUN apt-get update && \
     apt-get install -qy curl software-properties-common && \

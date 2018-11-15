@@ -19,6 +19,7 @@ ENTRYPOINT ["openvpn", \
             "--config", "/config/pia.ovpn", \
             "--inactive", "3600", \
             "--keepalive", "10", "60", \
+            "--mssfix", "1460", \
             "--route-delay", "2", \
             "--route-up", "/sbin/ip route del default", \
             "--script-security", "2", \

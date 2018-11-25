@@ -1,22 +1,47 @@
-FROM alpine
+FROM ubuntu
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
 ARG uid=1000
 ARG gid=100
 
-RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositories && \
-    echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
-    apk --no-cache add p7zip py2-pip unrar && \
-    apk --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing add deluge && \
-    pip install --no-cache-dir automat \
-                               constantly  \
-                               incremental \
-                               service_identity && \
-    apk del py2-pip && \
+RUN apt-get update && \
+    apt-get install -y deluged \
+                       deluge-console \
+                       deluge-web \
+                       iproute2 \
+                       libssl1.0.0 \
+                       openssl \
+                       p7zip \
+                       unrar \
+                       unzip && \
+    apt-get install -y build-essential \
+                       libssl-dev \
+                       libffi-dev \
+                       python-dev \
+                       python-pip && \
+    pip install --no-cache-dir -U crypto \
+                                  incremental \
+                                  mako \
+                                  markupsafe \
+                                  pyopenssl \
+                                  service_identity \
+                                  six \
+                                  twisted \
+                                  zope.interface && \
+    apt-get purge -y build-essential \
+                     libffi-dev \
+                     libssl-dev \
+                     python-dev \
+                     python-pip && \
+    apt-get --purge autoremove -y && \
+    apt-get clean && \
+    rm -rf /tmp/* \
+           /var/lib/apt/lists/* \
+           /var/tmp/* && \
     # Change `users` gid to match the passed in $gid
     [ $(getent group users | cut -d: -f3) == $gid ] || \
             sed -i "s/users:x:[0-9]\+:/users:x:$gid:/" /etc/group && \
-    adduser -h /config -s /sbin/nologin -DG users -u $uid deluge && \
+    useradd -m -d /config -g users -u $uid deluge && \
     echo "deluge:deluge" | chpasswd && \
     mkdir /data && \
     chown -R deluge:users /config /data

@@ -8,6 +8,7 @@ ARG SSHD_USER
 RUN apk --no-cache --no-progress add openssh shadow && \
     useradd --no-create-home --shell /sbin/nologin ${SSHD_USER:-proxy} && \
     echo "$SSHD_USER:$(date|md5sum)" | chpasswd && \
+    sed -i 's/^\(#\)\?AllowTcpForwarding.*/AllowTcpForwarding yes/' /etc/ssh/sshd_config && \
     sed -i 's/^\(#\)\?PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config && \
     sed -i 's/^\(#\)\?PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/sshd_config && \
     sed -i 's/^\(#\)\?AuthorizedKeysFile.*/AuthorizedKeysFile \/etc\/ssh\/%u/' /etc/ssh/sshd_config && \

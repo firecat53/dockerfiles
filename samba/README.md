@@ -19,7 +19,7 @@ be formatted like::
 
 Then run
 
-    ./initialze.sh
+    ./initialize.sh
 
 I strongly recommend deleting users.txt from the current directory after it gets
 copied into the data-only volume as it contains passwords in plain text!
@@ -44,7 +44,7 @@ Systemd service file is available if desired. Otherwise::
 To add new users or update the smb.conf, edit or recreate those files in the
 working directory, then run::
 
-    ./initialze.sh
+    ./initialize.sh
 
 Note that this completely replaces existing users/smb.conf. If you just want to
 add a user without re-creating users.txt or smb.conf, use docker exec to enter

@@ -11,7 +11,7 @@ database instead of the default postgres database.
 Create a data-only volume for saving the stringer sqlite database:
 
     docker create -v /data --name stringer_data myscratch true
-    docker run --rm --volumes-from stringer_data --user root stringer chown -R stringer:stringer /data
+    docker run --rm --volumes-from stringer_data --user root --entrypoint= stringer chown -R stringer:stringer /data
 
 ## Run
 

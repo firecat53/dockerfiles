@@ -1,4 +1,4 @@
-FROM ruby:alpine
+FROM ruby:2.3-alpine
 
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
@@ -13,6 +13,7 @@ WORKDIR /app
 RUN apk --no-cache add build-base \ 
                        curl \
                        git \
+                       gmp-dev \
                        linux-headers \
                        nodejs \
                        sqlite-dev \
@@ -33,10 +34,10 @@ RUN apk --no-cache add build-base \
     sed -i '/^group :development do/,/^end/d' Gemfile && \
     sed -i '/    enable :logging/a\\    ActiveRecord::Base.logger.level = Logger::WARN' app.rb && \
     bundle lock && \
-    bundle update && \
+    bundle install && \
     adduser -D -h /app/ stringer && \
     chown -R stringer:stringer /app && \
-    apk del build-base curl git linux-headers
+    apk del build-base curl git gmp-dev linux-headers
 
 COPY database.yml /app/config/
 COPY cron.start /etc/s6/cron/run

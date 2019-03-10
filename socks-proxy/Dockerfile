@@ -2,12 +2,13 @@ FROM alpine
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
 ARG PUB_KEY
-ARG SSHD_USER
+ARG SSHD_USER=proxy
 
 # Install sshd
 RUN apk --no-cache --no-progress add openssh shadow && \
-    useradd --no-create-home --shell /sbin/nologin ${SSHD_USER:-proxy} && \
-    echo "$SSHD_USER:$(date|md5sum)" | chpasswd && \
+    useradd --no-create-home --shell /sbin/nologin ${SSHD_USER} && \
+    pass=$(date|md5sum) && \
+    echo -e "${pass}\n${pass}" | passwd ${SSHD_USER} && \
     sed -i 's/^\(#\)\?AllowTcpForwarding.*/AllowTcpForwarding yes/' /etc/ssh/sshd_config && \
     sed -i 's/^\(#\)\?PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config && \
     sed -i 's/^\(#\)\?PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/sshd_config && \

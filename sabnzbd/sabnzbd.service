@@ -7,7 +7,7 @@ Restart=always
 RestartSec=10
 ExecStartPre=-/usr/bin/docker rm sabnzbd_run
 ExecStart=/usr/bin/docker run \
---volumes-from sabnzbd_config \
+--mount type=volume,source=sabnzbd_config,target=/config \
 -v /mnt/downloads:/data \
 -p 8080:8080 \
 -v /etc/localtime:/etc/localtime:ro \

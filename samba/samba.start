@@ -1,11 +1,11 @@
 #!/bin/sh
 if [ -f "/config/users.txt" ]; then
     while read -r USERNAME USERID GROUP GRPID PASS; do
-        grep -q $GROUP /etc/group && groupmod -g $GRPID $GROUP
-        grep -q $GROUP /etc/group || groupadd -g $GRPID $GROUP
-        useradd -M -g $GRPID -u $USERID -s /sbin/nologin $USERNAME
-        echo "$USERNAME:$PASS" | chpasswd
-        printf "$PASS\n$PASS\n" | smbpasswd -s -a $USERNAME
+        grep -q "${GROUP}" /etc/group && groupmod -g "${GRPID}" "${GROUP}"
+        grep -q "${GROUP}" /etc/group || groupadd -g "${GRPID}" "${GROUP}"
+        useradd -M -g "${GRPID}" -u "${USERID}" -s /sbin/nologin "${USERNAME}"
+        printf "%s\n%s\n" "${PASS}" "${PASS}" | passwd "${USERNAME}"
+        printf "%s\n%s\n" "${PASS}" "${PASS}" | smbpasswd -s -a "${USERNAME}"
     done < /config/users.txt
 fi
 exec ionice -c 3 smbd -FS --configfile=/config/smb.conf --no-process-group < /dev/null

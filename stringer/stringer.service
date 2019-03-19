@@ -11,7 +11,7 @@ ExecStart=/usr/bin/docker run \
 -p 8080:8080 \
 --name stringer_run \
 -v /etc/localtime:/etc/localtime:ro \
---volumes-from stringer_data \
+--mount type=volume,source=stringer_data,target=/data \
 stringer
 ExecStop=/usr/bin/docker stop stringer_run
 

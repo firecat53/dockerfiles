@@ -36,7 +36,8 @@ RUN apk --no-cache add build-base \
     bundle lock && \
     bundle install && \
     adduser -D -h /app/ stringer && \
-    chown -R stringer:stringer /app && \
+    mkdir /data && \
+    chown -R stringer:stringer /app /data && \
     apk del build-base curl git gmp-dev linux-headers
 
 COPY database.yml /app/config/

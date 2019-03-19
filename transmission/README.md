@@ -19,8 +19,6 @@ To avoid permissions issues with shared volumes, use `--build-arg` to change the
 uid:gid of the image at build time.
 
     docker build --build-arg=uid=$(id -u) --build-arg=gid=$(id -g) -t transmission .
-    docker create -v /config --name transmission_config myscratch true
-    docker run --rm --volumes-from transmission_config --user root transmission chown -R transmission:users /config
 
 A bind-mounted volume can be used in place of the data-only volume for
 transmission_config.
@@ -32,7 +30,7 @@ openvpn container unless a reverse proxy will be used to conenct to the web UI.
 
     docker run -d \
                --net=container:openvpn_run \
-               --volumes-from transmission_config \
+               --mount type=volume,source=transmission_config,target=/config \
                -v pia_port:/var/run/pia \
                -v /mnt/downloads:/data \
                -v /etc/localtime:/etc/localtime:ro \

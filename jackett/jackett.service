@@ -8,7 +8,7 @@ RestartSec=10
 ExecStartPre=-/usr/bin/docker rm jackett_run
 ExecStart=/usr/bin/docker run \
 --net=container:openvpn-client-pia_run \
---volumes-from jackett_config \
+--mount type=volume,source=jackett_config,target=/config \
 -v /mnt/downloads:/data \
 -v /etc/localtime:/etc/localtime:ro \
 --name jackett_run \

@@ -7,7 +7,7 @@ Restart=always
 RestartSec=10
 ExecStartPre=-/usr/bin/docker rm sickrage_run
 ExecStart=/usr/bin/docker run \
---volumes-from sickrage_config \
+--mount type=volume,source=sickrage_config,target=/config \
 -p 8081:8081 \
 -v /etc/localtime:/etc/localtime:ro \
 --name sickrage_run \

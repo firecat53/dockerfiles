@@ -7,7 +7,7 @@ Restart=always
 RestartSec=10
 ExecStartPre=-/usr/bin/docker rm samba_run
 ExecStart=/usr/bin/docker run \
---volumes-from samba_config \
+--mount type=volume,source=samba_config,target=/config \
 -p 137:137/udp \
 -p 138:138/udp \
 -p 139:139 \

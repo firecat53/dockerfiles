@@ -6,12 +6,12 @@ This is a Dockerfile to set up a Samba 4 server.
 
     docker build -t samba .
 
-The initialize.sh script creates the data-only volume if necessary, adds the
-smb.conf file and a users.txt file if desired. Edit the smb.conf file as you
-like (make sure to add any shares). Make sure you accurately obtain the UID and
-GID (for the `users` group) for each user if they already exist on the host
-server, or you will have permissions problems later. The users.txt file should
-be formatted like::
+The initialize.sh script creates the data volume if necessary and adds the
+smb.conf file and a users.txt file. Edit the smb.conf file as you like (make
+sure to add any shares). Make sure you accurately obtain the UID and GID (for
+the `users` group) for each user if they already exist on the host server, or
+you will have permissions problems later. The users.txt file should be formatted
+like::
 
     user1 UID1 GID1 password1
     user2 UID2 GID2 password2
@@ -29,7 +29,7 @@ copied into the data-only volume as it contains passwords in plain text!
 Systemd service file is available if desired. Otherwise::
 
     docker run -d -p 445:445 -p 139:139 -p 138:138/udp -p 137:137/udp \
-        --volumes-from samba_config\
+        --mount type=volume,source=samba_config,target=/config \
         -h <your server hostname> \
         -v /etc/localtime:/etc/localtime:ro
         ## The next 3 lines are just examples of mounting different folders

@@ -7,7 +7,7 @@ Restart=always
 RestartSec=10
 ExecStartPre=-/usr/bin/docker rm sonarr_run
 ExecStart=/usr/bin/docker run \
---volumes-from sonarr_config \
+--mount type=volume,source=sonarr_config,target=/config \
 -v /mnt/downloads:/data \
 -p 8989:8989 \
 -v /etc/localtime:/etc/localtime:ro \

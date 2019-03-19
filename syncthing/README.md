@@ -3,9 +3,9 @@
 This is a Dockerfile to set up Syncthing.
 
 Mount any desired directories to sync using ``-v <host_dir>:<host_dir>`` when
-running the container. The config/logging directory will live in a data-only
-volume (/config). We have to run Syncthing using an external container manager
-like systemd to restart the container after Syncthing updates and/or restarts.
+running the container. The config/logging directory will live in a data volume
+(/config). We have to run Syncthing using an external container manager like
+systemd to restart the container after Syncthing updates and/or restarts.
 
 ## Build
 
@@ -16,11 +16,6 @@ gid of the user who will be running Syncthing.
 
     docker build --build-arg=uid=$(id -u) --build-arg=gid=$(id -g) -t syncthing .
 
-Create config volume and set permissions::
-
-    docker create -v /config --name syncthing_config myscratch true
-    docker run --rm --volumes-from syncthing_config --user root --entrypoint= syncthing chown -R syncthing:users /config
-
 ## Run
 
 Systemd service file available. Edit to enable or disable 'host' networking as
@@ -30,7 +25,7 @@ CMD is `-home=/config -gui-address=0.0.0.0:8384`
 
     docker run -d \
                -v /mnt/media:/mnt/media \
-               --volumes-from syncthing_config \
+               --mount type=volume,source=syncthing_config,target=/config \
                -p 22000:22000 \
                -p 8384:8384 \
                -p 21027:21027/udp \

@@ -9,7 +9,7 @@ ExecStart=/usr/bin/docker run \
 -v /mnt/media:/mnt/media \
 -v /srv:/srv \
 -v /home/syncthing:/home/syncthing \
---volumes-from syncthing_config \
+--mount type=volume,source=syncthing_config,target=/config \
 -p 22000:22000 \
 -p 8384:8384 \
 -p 21027:21027/udp \

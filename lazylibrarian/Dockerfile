@@ -16,7 +16,8 @@ RUN apk --no-cache add python3 \
     apk del unzip wget
 
 EXPOSE 5299
-VOLUME ["/config"]
 
 USER lazy
+VOLUME ["/config"]
+
 CMD ["python3", "LazyLibrarian-master/LazyLibrarian.py", "--datadir=/config"]

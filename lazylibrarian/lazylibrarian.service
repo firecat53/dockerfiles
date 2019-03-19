@@ -7,7 +7,7 @@ Restart=always
 RestartSec=10
 ExecStartPre=-/usr/bin/docker rm lazylibrarian_run
 ExecStart=/usr/bin/docker run \
---volumes-from lazylibrarian_config \
+--mount type=volume,source=lazylibrarian_config,target=/config \
 -p 5299:5299 \
 -v /etc/localtime:/etc/localtime:ro \
 --name lazylibrarian_run \

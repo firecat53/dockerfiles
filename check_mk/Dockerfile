@@ -17,4 +17,5 @@ RUN apt-get update -q && \
     rm -rf /var/lib/apt/lists
 
 COPY start.sh /usr/local/bin/start.sh
+VOLUME ["/config", "/opt/omd/sites"]
 CMD ["start.sh"]

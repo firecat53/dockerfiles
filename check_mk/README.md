@@ -13,16 +13,18 @@ be run with either `--privileged` or `--cap-add SYS_ADMIN` with `--security-opt 
 
         docker build -t check_mk .
 
-1. Create data-only volume. Check-MK site configurations will be auto-generated in
-/opt/omd/sites.
-
-        docker create -v /opt/omd/sites -v /config --name check_mk_config myscratch true
+1. Data volumes (check_mk_config and check_mk_data) will be created on first run
+   if they don't already exist. Check-MK site configurations will be
+   auto-generated in /opt/omd/sites.
 
 1. Edit the msmtprc and msmtp-aliases files with your email SMTP info. Default
-site/user is omd. Then:
+site/user is omd. Copy into the check_mk_config volume:
 
-        docker cp msmtprc check_mk_config:/config/
-        docker cp msmtp-aliases check_mk_config:/config/
+        docker run --rm \
+                   --mount type=volume,source=check_mk_config,target=/config \
+                   -v $(pwd):/mnt \
+                   ubuntu:18.04
+                   cp msmtprc msmtp-aliases /config/
 
 ## Run
 
@@ -31,7 +33,8 @@ to best manage the container shutdown process.
 
     docker run -d \
                --cap-add SYS_ADMIN \
-               --volumes-from check_mk_config \
+               --mount type=volume,source=check_mk_config,target=/config \
+               --mount type=volume,source=check_mk_data,target=/opt/omd/sites \
                -v /etc/localtime:/etc/localtime \
                -p 5000:5000 \
                --name check_mk_run \

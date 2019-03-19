@@ -9,7 +9,8 @@ ExecStartPre=-/usr/bin/docker rm check_mk_run
 ExecStart=/usr/bin/docker run \
 --cap-add SYS_ADMIN \
 --security-opt apparmor:unconfined \
---volumes-from check_mk_config \
+--mount type=volume,source=check_mk_config,target=/config \
+--mount type=volume,source=check_mk_data,target=/opt/omd/sites \
 -p 5000:5000 \
 -v /etc/localtime:/etc/localtime:ro \
 --name check_mk_run check_mk

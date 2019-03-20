@@ -29,15 +29,3 @@
   - **Transmission**
 
 * MIT License
-
-* I use data-only volumes frequently in place of regular volumes due to the
-  difficulty of changing ownership of a standard Docker volume. To generate the
-  empty `myscratch` image used to create data-only volumes, just use this
-  Dockerfile:
-
-        FROM scratch
-        LABEL "Maintainer"="<name> <email>"
-
-  Then:
-
-        docker build -t myscratch .

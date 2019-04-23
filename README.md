@@ -5,7 +5,6 @@
   someone else. The only exceptions are `official` images that are vetted by
   Docker and the Plex image.
 
-  - **Btrbk** (Btrfs backup tool)
   - **Check-MK** (Monitoring system based on Nagios.)
   - **Couchpotato**
   - **Deluge**

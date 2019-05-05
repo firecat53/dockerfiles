@@ -1,0 +1,23 @@
+[Unit]
+Description=Unifi Controller container
+After=docker.service
+
+[Service]
+Restart=always
+ExecStartPre=-/usr/bin/docker rm unifi_run
+ExecStart=/usr/bin/docker run \
+--init \
+--mount type=volume,source=unifi_config,target=/config \
+-p 3478:3478/udp \
+-p 6789:6789 \
+-p 8080:8080 \
+-p 8443:8443 \
+-p 8843:8843 \
+-p 8880:8880 \
+-p 10001:10001/udp \
+-v /etc/localtime:/etc/localtime:ro \
+--name unifi_run unifi
+ExecStop=/usr/bin/docker stop unifi_run
+
+[Install]
+WantedBy=multi-user.target

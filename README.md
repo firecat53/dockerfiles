@@ -26,5 +26,6 @@
   - **Syncthing Discovery server**
   - **Traefik** (Configuration notes for the official Traefik image.)
   - **Transmission**
+  - **Unifi Controller**
 
 * MIT License

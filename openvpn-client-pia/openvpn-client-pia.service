@@ -7,6 +7,7 @@ ExecStartPre=-/usr/bin/docker rm openvpn-client-pia_run
 ExecStart=/usr/bin/docker run \
 --cap-add=NET_ADMIN \
 --device=/dev/net/tun \
+-e LOCAL_NETWORK=192.168.0.0/24 \
 -p 2222:22 \
 -p 8112:8112 \
 -p 9091:9091 \

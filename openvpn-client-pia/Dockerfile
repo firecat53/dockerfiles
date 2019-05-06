@@ -14,14 +14,15 @@ HEALTHCHECK --interval=60s --timeout=15s --start-period=120s \
 
 VOLUME ["/config"]
 
-ENTRYPOINT ["openvpn", \
-            "--cd", "/config", \
-            "--config", "/config/pia.ovpn", \
-            "--inactive", "3600", \
-            "--keepalive", "10", "60", \
-            "--mssfix", "1460", \
-            "--route-delay", "2", \
-            "--route-up", "/sbin/ip route del default", \
-            "--script-security", "2", \
-            "--up", "/usr/local/bin/up.sh", \
-            "--up-delay"]
+ENTRYPOINT openvpn \
+                --cd /config \
+                --config /config/pia.ovpn \
+                --inactive 3600 \
+                --keepalive 10 60 \
+                --mssfix 1460 \
+                --route-delay 2 \
+                --route-up "/sbin/ip route del default" \
+                --script-security 2 \
+                --setenv LOCAL_NETWORK $LOCAL_NETWORK \
+                --up /usr/local/bin/up.sh \
+                --up-delay

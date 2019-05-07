@@ -6,7 +6,7 @@
   Docker and the Plex image.
 
   - **Check-MK** (Monitoring system based on Nagios.)
-  - **Couchpotato**
+  - Couchpotato
   - **Deluge**
   - **Gollum** personal Wiki
   - Headphones
@@ -15,6 +15,7 @@
   - **Media tools** (collection of common tools for working with media files)
   - **OpenVPN-client-pia** (OpenVPN for PIA with port forwarding)
   - **Plex** (Only using the official Plex Docker image now.)
+  - **Radarr**
   - **Rsync** (used for backing up Docker data-only volumes)
   - **Sabnzbd**
   - **Samba**

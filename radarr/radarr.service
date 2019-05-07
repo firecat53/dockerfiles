@@ -1,0 +1,20 @@
+[Unit]
+Description=Radarr container
+After=docker.service
+
+[Service]
+Restart=always
+RestartSec=10
+ExecStartPre=-/usr/bin/docker rm radarr_run
+ExecStart=/usr/bin/docker run \
+--init \
+--mount type=volume,source=radarr_config,target=/config \
+-v /mnt/downloads:/data \
+-p 7878:7878 \
+-v /etc/localtime:/etc/localtime:ro \
+--name radarr_run \
+radarr
+ExecStop=/usr/bin/docker stop radarr_run
+
+[Install]
+WantedBy=multi-user.target

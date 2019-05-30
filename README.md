@@ -28,5 +28,6 @@
   - **Traefik** (Configuration notes for the official Traefik image.)
   - **Transmission**
   - **Unifi Controller**
+  - **Yopass**
 
 * MIT License

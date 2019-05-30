@@ -1,0 +1,17 @@
+[Unit]
+Description=Memcached instance for Yopass
+After=yopass.service
+BindsTo=yopass.service
+
+[Service]
+Restart=always
+ExecStartPre=-/usr/bin/docker rm memcached_run
+ExecStart=/usr/bin/docker run \
+--network=container:yopass_run \
+--name memcached_run \
+memcached:alpine
+ExecStop=/usr/bin/docker stop memcached_run
+
+[Install]
+WantedBy=multi-user.target
+

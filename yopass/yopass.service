@@ -1,0 +1,15 @@
+[Unit]
+Description=Yopass
+After=docker.service
+Requires=memcached.service
+
+[Service]
+Restart=always
+ExecStartPre=-/usr/bin/docker rm yopass_run
+ExecStart=/usr/bin/docker run \
+-p 1337:1337 \
+--name yopass_run yopass
+ExecStop=/usr/bin/docker stop yopass_run
+
+[Install]
+WantedBy=multi-user.target

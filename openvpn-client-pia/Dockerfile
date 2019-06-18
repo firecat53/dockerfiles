@@ -23,6 +23,6 @@ ENTRYPOINT openvpn \
                 --route-delay 2 \
                 --route-up "/sbin/ip route del default" \
                 --script-security 2 \
-                --setenv LOCAL_NETWORK $LOCAL_NETWORK \
+                --setenv LOCAL_NETWORKS $LOCAL_NETWORKS \
                 --up /usr/local/bin/up.sh \
                 --up-delay

@@ -8,10 +8,12 @@ server, specifically for use by other containers.
 * Health check is included so container can be restarted on loss of connectivity.
 * Port forwarding is attempted and the forwarded port is stored in the named
   Docker volume `pia_port` as a text file also named `pia_port`.
-* If the environment variable `LOCAL_NETWORK` is set (e.g. `-e LOCAL_NETWORK=192.168.0.0/24`),
-  a route will be added to allow local access to the openvpn-client-pia network.
+* If the environment variable `LOCAL_NETWORKS` is set (e.g. `-e
+  LOCAL_NETWORKS=192.168.0.0/24`), a route will be added to allow local access
+  to the openvpn-client-pia network.  A comma separated list of networks is also
+  allowed.
 * Note: the shell form for ENTRYPOINT in the Dockerfile is used so the
-  LOCAL_NETWORK environment variable gets picked up if set.
+  LOCAL_NETWORKS environment variable gets picked up if set.
 
 ## Build/Configure
 
@@ -38,7 +40,7 @@ when the openvpn container is started (unless a reverse proxy is being used)._
     docker run -d \
                --cap-add=NET_ADMIN \
                --device=/dev/net/tun \
-               -e LOCAL_NETWORK=192.168.0.0/24 \
+               -e LOCAL_NETWORKS=192.168.0.0/24 \
                -v </path/to/config>:/config \
                -v pia_port:/var/run/pia/ \
                -p 2222:22 ## For SSHD container \

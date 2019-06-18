@@ -2,7 +2,7 @@
 #
 # Enable port forwarding when using Private Internet Access
 # Store forwarded port in /var/run/pia/pia_port
-# Enable local network connections to the container if LOCAL_NETWORK is set
+# Enable local network connections to the container if LOCAL_NETWORKS is set
 
 sleep 15  # Ensure tunnel creation is complete
 
@@ -17,7 +17,9 @@ else
 fi
 
 ### Allow Local Network connections
-if [ -n "${LOCAL_NETWORK}" ]; then
+if [ -n "${LOCAL_NETWORKS}" ]; then
     eval "$(ip r l | grep -v 'tun0\|kernel'|awk '{print "GW="$3"\nINT="$5}')"
-    ip route add "$LOCAL_NETWORK" via "$GW" dev "$INT"
+    for network in ${LOCAL_NETWORKS//,/ }; do
+        ip route add "$network" via "$GW" dev "$INT"
+    done
 fi

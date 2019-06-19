@@ -1,7 +1,8 @@
 # Deluge
 
-Simple deluge container. Designed to be run using the network stack from an
-OpenVPN container. Also contains p7zip and unrar for the extractor plugin.
+Simple deluge container. Installs latest version available from PyPI. Designed
+to be run using the network stack from an OpenVPN container. Also contains p7zip
+and unrar for the extractor plugin.
 
 #### Defaults:
 

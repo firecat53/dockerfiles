@@ -1,50 +1,39 @@
-FROM ubuntu
+FROM alpine
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
 ARG uid=1000
 ARG gid=100
 
-RUN apt-get update && \
-    apt-get install -y deluged \
-                       deluge-console \
-                       deluge-web \
-                       iproute2 \
-                       libssl1.0.0 \
-                       openssl \
-                       p7zip \
-                       unrar \
-                       unzip && \
-    apt-get install -y build-essential \
-                       libssl-dev \
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositories && \
+    echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
+    echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
+    apk --no-cache add build-base \
+                       ca-certificates \
                        libffi-dev \
-                       python-dev \
-                       python-pip && \
-    pip install --no-cache-dir -U crypto \
-                                  incremental \
-                                  mako \
-                                  markupsafe \
-                                  pyopenssl \
-                                  service_identity \
-                                  six \
-                                  twisted \
-                                  zope.interface && \
-    apt-get purge -y build-essential \
-                     libffi-dev \
-                     libssl-dev \
-                     python-dev \
-                     python-pip && \
-    apt-get --purge autoremove -y && \
-    apt-get clean && \
-    rm -rf /tmp/* \
-           /var/lib/apt/lists/* \
-           /var/tmp/* && \
+                       libjpeg-turbo-dev \
+                       linux-headers \
+                       p7zip \
+                       py3-libtorrent-rasterbar \
+                       py3-openssl \
+                       py3-pip \
+                       python3-dev \
+                       unrar \
+                       unzip \
+                       zlib-dev && \
+    pip3 --no-cache install deluge && \
     # Change `users` gid to match the passed in $gid
     [ $(getent group users | cut -d: -f3) == $gid ] || \
             sed -i "s/users:x:[0-9]\+:/users:x:$gid:/" /etc/group && \
-    useradd -m -d /config -g users -u $uid deluge && \
+    adduser -h /config -DG users -u $uid deluge && \
     echo "deluge:deluge" | chpasswd && \
     mkdir /data && \
-    chown -R deluge:users /config /data
+    chown -R deluge:users /config /data && \
+    apk del build-base \
+            libffi-dev \
+            libjpeg-turbo-dev \
+            linux-headers \
+            python3-dev \
+            zlib-dev
 
 COPY start.sh /usr/local/bin/
 

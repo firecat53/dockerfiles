@@ -1,4 +1,4 @@
-FROM ruby:2.3-alpine
+FROM ruby:2.4-alpine
 
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 

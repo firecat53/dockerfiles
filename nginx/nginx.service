@@ -1,0 +1,19 @@
+[Unit]
+Description=nginx container
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+ExecStartPre=-/usr/bin/docker rm nginx_run
+ExecStart=/usr/bin/docker run \
+--name nginx_run \
+-p 8080:8080 \
+--read-only \
+-v /etc/localtime:/etc/localtime:ro \
+-v privatebin-static:/var/www/privatebin:ro \
+nginx
+ExecStop=/usr/bin/docker stop nginx_run
+
+[Install]
+WantedBy=multi-user.target

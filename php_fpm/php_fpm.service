@@ -1,15 +1,19 @@
 [Unit]
 Description=php_fpm container
-After=docker.service
-Requires=docker.service
+After=nginx.service
+Requires=docker.service nginx.service
 
 [Service]
 Restart=always
 ExecStartPre=-/usr/bin/docker rm php_fpm_run
 ExecStart=/usr/bin/docker run \
+--name php_fpm_run \
+--net container:nginx_run \
+--read-only \
 -v /etc/localtime:/etc/localtime:ro \
--v /srv:/srv:ro \
---name php_fpm_run php_fpm
+-v privatebin-data:/srv/privatebin \
+-v privatebin-static:/var/www/privatebin:ro \
+php_fpm
 ExecStop=/usr/bin/docker stop php_fpm_run
 
 [Install]

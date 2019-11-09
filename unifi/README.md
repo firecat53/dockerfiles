@@ -42,16 +42,18 @@ Since the Unifi software responds only on https by default, Traefik labels need
 to be applied to handle https.
 
 1. Add `insecureSkipVerify = true` to traefik.toml. *Make sure the security implications of this are clear for your setup!*
-2. Add the following labels to the unifi.service file:
+2. Add the following labels to the unifi.service file (in addition to whatever
+   normal traefik labels are needed:
 
-        -l traefik.protocol=https \
-        -l traefik.frontend.passHostHeader=true \
-        -l traefik.frontend.headers.SSLRedirect=true \
-        -l traefik.frontend.headers.STSSeconds=315360000 \
-        -l traefik.frontend.headers.browserXSSFilter=true \
-        -l traefik.frontend.headers.contentTypeNosniff=true \
-        -l traefik.frontend.headers.forceSTSHeader=true \
-        -l traefik.frontend.headers.SSLHost=<your hostname.com> \
-        -l traefik.frontend.headers.STSIncludeSubdomains=true \
-        -l traefik.frontend.headers.STSPreload=true \
-        -l traefik.frontend.headers.frameDeny=true \
+        -l traefik.http.routers.unifi-run.middlewares=headers \
+        -l traefik.http.middlewares.headers.headers.browserxssfilter=true \
+        -l traefik.http.middlewares.headers.headers.contenttypenosniff=true  \
+        -l traefik.http.middlewares.headers.headers.forcestsheader=true \
+        -l traefik.http.middlewares.headers.headers.framedeny=true \
+        -l traefik.http.middlewares.headers.headers.sslhost=firecat53.net \
+        -l traefik.http.middlewares.headers.headers.sslredirect=true \
+        -l traefik.http.middlewares.headers.headers.stsincludesubdomains=true \
+        -l traefik.http.middlewares.headers.headers.stspreload=true \
+        -l traefik.http.middlewares.headers.headers.stsseconds=315360000 \
+        -l traefik.http.services.unifi-run.loadbalancer.server.scheme=https \
+        -l traefik.http.services.unifi-run.loadbalancer.passhostheader=true \

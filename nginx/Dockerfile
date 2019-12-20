@@ -15,7 +15,8 @@ RUN \
     rm /var/lib/nginx/logs && \
     mkdir -p /var/lib/nginx/logs && \
     ln -s /dev/stderr /var/lib/nginx/logs/error.log && \
-    chown -R nobody:www-data /var/lib/nginx/ /var/log/ /var/tmp/ && \
+    chown -R nobody:www-data /var/lib/nginx/ /var/log/ && \
+    chmod o+x /var/lib/nginx && \
 # Create folder where the user hook into our default configs
     mkdir -p /etc/nginx/server.d/ && \
     mkdir -p /etc/nginx/location.d/ && \
@@ -31,7 +32,7 @@ USER nobody
 
 VOLUME ["/run/nginx", \
         "/var/log/nginx", \
-        "/var/tmp"]
+        "/var/lib/nginx/tmp"]
 
 EXPOSE 8080
 

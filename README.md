@@ -11,7 +11,7 @@
   - **Gollum** personal Wiki
   - Headphones
   - **Jackett**
-  - **Lazy Librarian**
+  - Lazy Librarian
   - **Media tools** (collection of common tools for working with media files)
   - **Nginx** (works with php_fpm for serving PHP directories)
   - **OpenVPN-client-pia** (OpenVPN for PIA with port forwarding)

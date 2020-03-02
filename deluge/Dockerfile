@@ -28,6 +28,8 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositorie
     python3 setup.py install && \
     cd / && \
     rm -rf deluge-2.0.3* && \
+    # Fix version 2.0.3 bug #3327
+    sed -i "s/stack_info=False/*args, **kwargs/" /usr/lib/python3.8/site-packages/deluge-2.0.3-py3.8.egg/deluge/log.py && \
     # Change `users` gid to match the passed in $gid
     [ $(getent group users | cut -d: -f3) == $gid ] || \
             sed -i "s/users:x:[0-9]\+:/users:x:$gid:/" /etc/group && \

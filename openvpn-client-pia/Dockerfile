@@ -9,7 +9,7 @@ RUN apk --no-cache --no-progress add curl openvpn && \
 
 COPY port_forward.sh /usr/local/bin/port_forward.sh
 
-HEALTHCHECK --interval=60s --timeout=15s --start-period=120s \
+HEALTHCHECK --interval=90s --timeout=30s --start-period=120s \
              CMD curl -L 'https://api.ipify.org'
 
 VOLUME ["/config"]

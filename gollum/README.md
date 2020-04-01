@@ -26,8 +26,7 @@ as 'Anonymous')::
                -v /etc/localtime:/etc/localtime:ro \
                --name gollum_run \
                gollum \
-               --allow-uploads page \
-               --show-all
+               --allow-uploads page
 
 If you make changes to the wiki on the host machine, the changes won't
 be visible in Gollum until they are committed to the repository.

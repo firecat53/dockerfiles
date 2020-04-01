@@ -13,8 +13,7 @@ ExecStart=/usr/bin/docker run \
 -v /home/<user>/.gitconfig:/home/gollum/.gitconfig:ro \
 --name gollum_run \
 gollum \
---allow-uploads page \
---show-all
+--allow-uploads page
 ExecStop=/usr/bin/docker stop gollum_run
 
 [Install]

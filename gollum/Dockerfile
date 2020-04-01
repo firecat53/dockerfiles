@@ -7,9 +7,11 @@ ARG gid=100
 
 # Install dependencies (and RST support: python-docutils)
 RUN apk --no-cache add build-base \
+                       cmake \
                        git \
                        icu-dev \
-                       icu-libs && \
+                       icu-libs \
+                       openssl-dev && \
     # Change `users` gid to match the passed in $gid
     [ $(getent group users | cut -d: -f3) == $gid ] || \
             sed -i "s/users:x:[0-9]\+:/users:x:$gid:/" /etc/group && \
@@ -32,7 +34,7 @@ RUN apk --no-cache add build-base \
     # MediaWiki
     # gem install --no-document wikicloth && \
     # Cleanup
-    apk del build-base icu-dev
+    apk del build-base cmake icu-dev openssl-dev
 
 EXPOSE 4567
 

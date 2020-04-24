@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:18.04
 
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 

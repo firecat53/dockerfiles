@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu
 
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
@@ -14,7 +14,7 @@ RUN apt-get update && \
         ca-certificates \
         locales \
         par2-tbb \
-        python-sabyenc \
+        # python-sabyenc \
         sabnzbdplus \
         unrar \
         unzip && \

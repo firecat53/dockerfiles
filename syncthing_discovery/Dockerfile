@@ -1,4 +1,4 @@
-FROM alpine
+FROM alpine:3.11
 # Dockerfile to run a self-hosted Syncthing discovery server (latest build).
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 

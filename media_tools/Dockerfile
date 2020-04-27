@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:20.04
 
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 ARG uid=1000

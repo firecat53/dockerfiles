@@ -1,7 +1,7 @@
-FROM alpine:3.11
+FROM alpine:3.12
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
-RUN apk --no-cache add python \
+RUN apk --no-cache add python2 \
                        unzip \
                        wget && \
     wget -q https://github.com/rembo10/headphones/archive/master.zip -O /master.zip && \
@@ -15,4 +15,4 @@ RUN apk --no-cache add python \
 EXPOSE 8181
 
 USER headphones
-CMD ["python", "headphones-master/Headphones.py", "--datadir", "/config", "--host", "0.0.0.0"]
+CMD ["python2", "headphones-master/Headphones.py", "--datadir", "/config", "--host", "0.0.0.0"]

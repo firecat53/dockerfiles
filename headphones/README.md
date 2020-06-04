@@ -18,6 +18,7 @@ Systemd service file available.
     docker run -d \
                --mount type=volume,source=headphones_config,target=/config \
                -p 8181:8181 \
+               -v /etc/localtime:/etc/localtime:ro \
                --name headphones_run \
                headphones
 

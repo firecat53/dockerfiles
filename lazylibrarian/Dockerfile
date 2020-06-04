@@ -1,11 +1,11 @@
-FROM alpine:3.11
+FROM alpine:3.12
 
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
 RUN apk --no-cache add python3 \
                        unzip \
                        wget && \
-    wget -q https://github.com/dobytang/LazyLibrarian/archive/master.zip -O /master.zip && \
+    wget -q https://gitlab.com/LazyLibrarian/LazyLibrarian/-/archive/master/LazyLibrarian-master.zip -O /master.zip && \
     unzip master.zip && \
     rm master.zip && \
     # Prevents attempts at updating or checking git version

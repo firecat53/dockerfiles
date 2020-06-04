@@ -22,7 +22,6 @@
   - **Rsync** (used for backing up Docker data-only volumes)
   - **Sabnzbd**
   - **Samba**
-  - Sickrage
   - **Socks-proxy** (ssh server for use as a SOCKS proxy to the OpenVPN-client-pia container)
   - **Sonarr**
   - **Stringer** (Web-based RSS Reader)

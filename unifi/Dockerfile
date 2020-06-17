@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -qy gnupg && \
             curl \
             jsvc \
             libcap2 \
+            logrotate \
             mongodb-org=3.4.20 \
             mongodb-org-mongos=3.4.20 \
             mongodb-org-server=3.4.20 \

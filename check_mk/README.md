@@ -1,7 +1,7 @@
 # Docker Check-MK Monitoring
 
-This is a Dockerfile to set up [Check-MK Monitoring][1] along with
-Msmtp send-only mail (using Gmail, Mandrill, etc.) for notifications.
+This is a Dockerfile to set up [Check-MK Monitoring][1] (Checkmk Raw edition)
+along with Msmtp send-only mail (using Gmail, Mandrill, etc.) for notifications.
 
 ## Build
 
@@ -68,7 +68,7 @@ site:
 
       $ docker exec -it check_mk_run /bin/bash
       # export VERSION=1.4.0p34
-      # curl -o new_version.deb https://mathias-kettner.de/support/$VERSION/check-mk-raw-${VERSION}_0.bionic_amd64.deb
+      # curl -o new_version.deb https://checkmk.com/support/$VERSION/check-mk-raw-${VERSION}_0.focal_amd64.deb
       # dpkg -i new_version.deb
       # omd stop <site name>
       # omd update <site name>
@@ -76,5 +76,5 @@ site:
 * Now update the Dockerfile and rebuild the image with the new version and
   restart check_mk.
 
-[1]: http://mathias-kettner.com/check_mk.html  "Check-MK Monitoring"
-[2]: http://mathias-kettner.com/check_mk_download.php?HTML=yes "downloads page" 
+[1]: https://checkmk.com  "Check-MK Monitoring"
+[2]: http://checkmk.com/check_mk_download.php?HTML=yes "downloads page" 

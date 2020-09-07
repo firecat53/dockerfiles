@@ -1,0 +1,21 @@
+[Unit]
+Description=Bitwarden_rs container
+After=docker.service
+
+[Service]
+Restart=always
+RestartSec=10
+ExecStartPre=-/usr/bin/docker rm bitwarden_run
+ExecStart=/usr/bin/docker run \
+-e ROCKET_PORT=8080 \
+--mount type=volume,source=bitwarden_data,target=/data \
+-u 1000:100 \
+-v /etc/localtime:/etc/localtime:ro \
+--name bitwarden_run \
+--no-healthcheck \
+--init \
+bitwardenrs/server:alpine
+ExecStop=/usr/bin/docker stop bitwarden_run
+
+[Install]
+WantedBy=multi-user.target

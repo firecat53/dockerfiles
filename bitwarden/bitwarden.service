@@ -12,7 +12,6 @@ ExecStart=/usr/bin/docker run \
 -u 1000:100 \
 -v /etc/localtime:/etc/localtime:ro \
 --name bitwarden_run \
---no-healthcheck \
 --init \
 bitwardenrs/server:alpine
 ExecStop=/usr/bin/docker stop bitwarden_run

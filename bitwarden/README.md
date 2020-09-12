@@ -27,9 +27,5 @@ why.
                -e ROCKET_PORT=8080 \
                -p 8080:8080 \
                --name bitwarden_run \
-               --no-healthcheck \
                --init \
                bitwardenrs/server:alpine
-               
-NOTE: Run with `--no-healthcheck` option if using Archlinux and containered
-1.4.0. See [bug report](https://github.com/containerd/containerd/issues/4509)

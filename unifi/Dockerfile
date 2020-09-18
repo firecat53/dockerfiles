@@ -1,40 +1,20 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
-ARG UNIFI_BRANCH="stable"
-ARG UNIFI_VERSION
 ARG DEBIAN_FRONTEND="noninteractive"
 
-RUN apt-get update && apt-get install -qy gnupg && \
-    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6 && \
-    echo "deb [ arch=amd64,arm64 ] http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.4 multiverse" > /etc/apt/sources.list.d/mongo.list && \
+RUN apt-get update && apt-get install -qy wget && \
+    echo 'deb https://www.ui.com/downloads/unifi/debian stable ubiquiti' | tee /etc/apt/sources.list.d/100-ubnt-unifi.list && \
+    wget -O /etc/apt/trusted.gpg.d/unifi-repo.gpg https://dl.ui.com/unifi/unifi-repo.gpg && \
     apt-get update && \
     apt-get install -qy \
-	        binutils \
-            curl \
-            jsvc \
-            libcap2 \
-            logrotate \
-            mongodb-org=3.4.20 \
-            mongodb-org-mongos=3.4.20 \
-            mongodb-org-server=3.4.20 \
-            mongodb-org-shell=3.4.20 \
-            mongodb-org-tools=3.4.20 \
-            openjdk-8-jre-headless \
-            wget && \
-    if [ -z ${UNIFI_VERSION+x} ]; then \
-        UNIFI_VERSION=$(curl -sX GET http://dl-origin.ubnt.com/unifi/debian/dists/${UNIFI_BRANCH}/ubiquiti/binary-amd64/Packages \
-        |grep -A 7 -m 1 'Package: unifi' \
-        | awk -F ': ' '/Version/{print $2;exit}' \
-        | awk -F '-' '{print $1}'); \
-    fi && \
-    curl -o /tmp/unifi.deb -L "http://dl.ubnt.com/unifi/${UNIFI_VERSION}/unifi_sysvinit_all.deb" && \
-    dpkg -i /tmp/unifi.deb && \
+	        openjdk-8-jre-headless \
+            unifi && \
     bash -c 'mkdir -p /config/{data,logs,run}' && \
     bash -c 'ln -s /config/* /usr/lib/unifi/' && \
     chown -R unifi:unifi /config /usr/lib/unifi && \
-    apt-get autoremove -qy gnupg && \
+    apt-get autoremove -qy wget && \
     apt-get clean && \
     rm -rf /tmp/* \
            /var/lib/apt/lists/* \

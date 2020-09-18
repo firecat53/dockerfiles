@@ -1,20 +1,15 @@
 # Unifi-controller
 
-https://www.ui.com/download/unifi
+https://help.ui.com/hc/en-us/articles/220066768-UniFi-How-to-Install-and-Update-via-APT-on-Debian-or-Ubuntu
 
-This Dockerfile builds an image to run the Unifi Controller software. Mongodb is
-bundled in the image for simplicity. The Unifi .deb only supports Mongodb 3.4,
-so version 3.4.20 is currently used.
+This Dockerfile builds an image to run the latest _stable_ Unifi Controller
+software.
 
 Logs and configuration are stored in a Docker volume `unifi_config`.
 
 ## Build
 
-Different versions of the controller software can be built using the
-`UNIFI_BRANCH` (`stable` by default) and `UNIFI_VERSION` (uses latest available
-by default from [this page](http://dl-origin.ubnt.com/unifi/debian/dists/stable/ubiquiti/binary-amd64/Packages)).
-
-    docker build --build-arg=UNIFI_VERSION=5.10.23 -t unifi .
+    docker build -t unifi .
 
 ## Run
 

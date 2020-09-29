@@ -13,6 +13,7 @@
   - **Jackett**
   - Lazy Librarian
   - **Media tools** (collection of common tools for working with media files)
+  - **Miniflux** (Web-based RSS Reader)
   - **Nginx** (works with php_fpm for serving PHP directories)
   - **OpenVPN-client-pia** (OpenVPN for PIA with port forwarding)
   - **PHP-FPM** (works with Nginx)
@@ -24,7 +25,7 @@
   - **Samba**
   - **Socks-proxy** (ssh server for use as a SOCKS proxy to the OpenVPN-client-pia container)
   - **Sonarr**
-  - **Stringer** (Web-based RSS Reader)
+  - Stringer (Web-based RSS Reader)
   - **Syncthing**
   - **Syncthing Discovery server**
   - **Traefik** (Configuration notes for the official Traefik image.)

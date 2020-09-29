@@ -1,0 +1,18 @@
+[Unit]
+Description=miniflux container
+After=docker.service postgres.service
+
+[Service]
+Restart=on-failure
+ExecStartPre=-/usr/bin/docker rm miniflux_run
+ExecStart=/usr/bin/docker run \
+-e DATABASE_URL="user=miniflux password=miniflux dbname=miniflux sslmode=disable host=postgres_run" \
+--name miniflux_run \
+--network miniflux \
+-p 8080:8080 \
+-v /etc/localtime:/etc/localtime:ro \
+miniflux
+ExecStop=/usr/bin/docker stop miniflux_run
+
+[Install]
+WantedBy=multi-user.target

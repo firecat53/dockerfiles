@@ -1,0 +1,20 @@
+[Unit]
+Description=postgres container
+After=docker.service
+Before=miniflux.service
+
+[Service]
+Restart=always
+ExecStartPre=-/usr/bin/docker rm postgres_run
+ExecStart=/usr/bin/docker run \
+--name postgres_run \
+--network miniflux \
+--name postgres_run \
+--user postgres:postgres \
+-v /etc/localtime:/etc/localtime:ro \
+-v miniflux_data:/var/lib/postgresql/data \
+postgres:alpine
+ExecStop=/usr/bin/docker stop postgres_run
+
+[Install]
+WantedBy=multi-user.target

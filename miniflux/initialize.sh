@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Exit if miniflux_data already exists
+[ "$(docker volume ls -qf name=miniflux_data)" ] && exit 0
+
 # Create data volume and miniflux network
 docker volume create miniflux_data
 docker network create miniflux
@@ -16,7 +19,7 @@ docker run --rm \
            -e POSTGRES_PASSWORD=miniflux \
            postgres:alpine
 
-## Run database migration and create initial admin user 
+## Run database migration and create initial admin user
 sleep 20
 echo "Running migrations"
 docker run --rm \

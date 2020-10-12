@@ -29,3 +29,20 @@ why.
                --name bitwarden_run \
                --init \
                bitwardenrs/server:alpine
+               
+## Backups
+
+Build an image containing sqlite:
+
+    docker build -f Dockerfile.backup -t bwbackup .
+
+This command creates a backup file 'db.sqlite3' in <path/to/local/backups> using
+the sqlite built-in `.backup` command to ensure database consistency. Add a
+`--user` directive if desired. The command below assumes data is stored in the
+`bitwarden_data` volume. 
+
+    docker run --user $(id -u):$(id -g) \
+               -v bitwarden_data:/data \
+               -v <path/to/local/backups>:/mnt \
+               bwbackup \
+               sqlite3 /data/db.sqlite3 ".backup /mnt/db.sqlite3"

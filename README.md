@@ -5,6 +5,7 @@
   someone else. The only exceptions are `official` images that are vetted by
   Docker and the Plex image.
 
+  - **Bitwarden_rs** (placeholder and instructions for bitwardenrs/server)
   - **Check-MK** (Monitoring system based on Nagios.)
   - Couchpotato
   - **Deluge**

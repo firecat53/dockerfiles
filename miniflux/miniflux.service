@@ -7,6 +7,7 @@ Restart=on-failure
 ExecStartPre=-/usr/bin/docker rm miniflux_run
 ExecStart=/usr/bin/docker run \
 -e DATABASE_URL="user=miniflux password=miniflux dbname=miniflux sslmode=disable host=postgres_run" \
+-e RUN_MIGRATIONS=1 \
 --name miniflux_run \
 --network miniflux \
 -p 8080:8080 \

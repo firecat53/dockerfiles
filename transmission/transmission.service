@@ -2,6 +2,7 @@
 Description=Transmission container
 BindsTo=openvpn-client-pia.service
 After=docker.service openvpn-client-pia.service
+Requires=docker.service openvpn-client-pia.service
 
 [Service]
 ExecStartPre=-/usr/bin/docker rm transmission_run

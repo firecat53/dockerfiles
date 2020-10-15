@@ -2,6 +2,7 @@
 Description=Deluge container
 BindsTo=openvpn-client-pia.service
 After=docker.service openvpn-client-pia.service
+Requires=docker.service
 
 [Service]
 ExecStartPre=-/usr/bin/docker rm deluge_run

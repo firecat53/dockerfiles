@@ -1,6 +1,7 @@
 [Unit]
 Description=Stringer RSS container
 After=docker.service
+Requires=docker.service
 
 [Service]
 Restart=always

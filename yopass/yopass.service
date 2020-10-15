@@ -1,7 +1,7 @@
 [Unit]
 Description=Yopass
 After=docker.service
-Requires=memcached.service
+Requires=memcached.service docker.service
 
 [Service]
 Restart=always

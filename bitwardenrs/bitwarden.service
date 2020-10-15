@@ -1,6 +1,7 @@
 [Unit]
 Description=Bitwarden_rs container
 After=docker.service
+Requires=docker.service
 
 [Service]
 Restart=always

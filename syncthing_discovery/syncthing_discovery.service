@@ -1,6 +1,7 @@
 [Unit]
 Description=Syncthing Discovery server
 After=docker.service
+Requires=docker.service
 
 [Service]
 Restart=always

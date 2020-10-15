@@ -1,6 +1,7 @@
 [Unit]
 Description=miniflux container
 After=docker.service postgres.service
+Requires=docker.service postgres.service
 
 [Service]
 Restart=on-failure

@@ -1,6 +1,7 @@
 [Unit]
 Description=OpenVPN PIA client
 After=docker.service
+Requires=docker.service
 
 [Service]
 ExecStartPre=-/usr/bin/docker rm openvpn-client-pia_run

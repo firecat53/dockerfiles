@@ -1,6 +1,7 @@
 [Unit]
 Description=Syncthing container
 After=docker.service
+Requires=docker.service
 
 [Service]
 Restart=always

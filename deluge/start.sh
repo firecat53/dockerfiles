@@ -1,8 +1,7 @@
 #!/bin/sh
 
 umask 002
-sleep 10 && \
-    deluge-console -c /config \
-        "config --set listen_interface $(ip route get 1 | awk '{print $5;exit}')" && \
+listen_ip="$(ip route get 1 | awk '{print $5;exit}')"
+sed -ie "s|\(\"listen_interface\": \).*|\"listen_interface\": \"'$listen_ip'\",|" /config/core.conf
 deluge-web -L info --config /config
 deluged -d -L info --config /config

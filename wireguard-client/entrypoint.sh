@@ -2,7 +2,7 @@
 
 set -e
 
-[ -e /etc/wireguard/wg.conf ] || (echo "No configuration files found in /etc/wireguard" && exit 1)
+[ -e /etc/wireguard/wg0.conf ] || (echo "No configuration files found in /etc/wireguard" && exit 1)
 
 interface="wg0"
 

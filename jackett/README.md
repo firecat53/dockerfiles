@@ -14,7 +14,7 @@ The docker run statement below creates a data volume named `jackett_config`.
 ## Run
 
 <b>NOTE:</b> The port publishing (`-p 9117:9117`) needs to be done on the
-openvpn container.
+VPN container.
 
 Systemd service file is also available. Make sure to use the --init flag for
 cleaner and quicker container shutdowns.

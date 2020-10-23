@@ -23,7 +23,7 @@ skipped if desired.
 
 ## Run
 
-    docker run -d --net container:openvpn_run --name socks-proxy_run socks-proxy
+    docker run -d --net container:wireguard-client_run --name socks-proxy_run socks-proxy
 
 ## Example Usage
 

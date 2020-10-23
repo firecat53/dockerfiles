@@ -1,7 +1,7 @@
 # Transmission
 
 Simple transmission container. Designed to be run using the network stack from
-an OpenVPN container.
+a VPN container.
 
 #### Defaults:
 
@@ -26,12 +26,11 @@ transmission_config.
 ## Run
 
 <b>NOTE:</b> The port publishing (`-p 9091:9091`) needs to be done on the
-openvpn container unless a reverse proxy will be used to conenct to the web UI.
+VPN container unless a reverse proxy will be used to connect to the web UI.
 
     docker run -d \
-               --net=container:openvpn_run \
+               --net=container:wireguard-client_run \
                --mount type=volume,source=transmission_config,target=/config \
-               -v pia_port:/var/run/pia \
                -v /mnt/downloads:/data \
                -v /etc/localtime:/etc/localtime:ro \
                --name transmission_run \

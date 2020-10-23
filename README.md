@@ -16,7 +16,7 @@
   - **Media tools** (collection of common tools for working with media files)
   - **Miniflux** (Web-based RSS Reader)
   - **Nginx** (works with php_fpm for serving PHP directories)
-  - **OpenVPN-client-pia** (OpenVPN for PIA with port forwarding)
+  - OpenVPN-client-pia (OpenVPN for PIA with port forwarding)
   - **PHP-FPM** (works with Nginx)
   - **Plex** (Only using the official Plex Docker image now.)
   - **Privatebin**
@@ -32,6 +32,7 @@
   - **Traefik** (Configuration notes for the official Traefik image.)
   - **Transmission**
   - **Unifi Controller**
+  - **Wireguard-client** (Wireguard client to be used by other containers)
   - Yopass
 
 * MIT License

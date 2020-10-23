@@ -5,7 +5,8 @@ Create a simple Wireguard client container configured with a standard wireguard
 the inspiration and script!
 
 * The Wireguard kernel modules must be installed on the host system.
-* Killswitch is set using iptables in the entrypoint script.
+* If you want a killswitch, use the PreUp and PostDown directives in the
+  wireguard config.
 * Health check is included.
 * If the environment variable `LOCAL_NETWORKS` is set (e.g. `-e
   LOCAL_NETWORKS=192.168.0.0/24`), a route will be added to allow local access

@@ -2,14 +2,9 @@
 
 set -e
 
-configs="$(find /etc/wireguard -type f)"
-if [ -z "$configs" ]; then
-    echo "No configuration files found in /etc/wireguard" >&2
-    exit 1
-fi
+[ -e /etc/wireguard/wg.conf ] || (echo "No configuration files found in /etc/wireguard" && exit 1)
 
-config="$(echo "$configs" | head -n 1)"
-interface="$(basename "$config" .conf)"
+interface="wg0"
 
 if [ "$(cat /proc/sys/net/ipv4/conf/all/src_valid_mark)" != "1" ]; then
     echo "sysctl net.ipv4.conf.all.src_valid_mark=1 is not set" >&2
@@ -17,7 +12,7 @@ if [ "$(cat /proc/sys/net/ipv4/conf/all/src_valid_mark)" != "1" ]; then
 fi
 
 sed -i "s:sysctl -q net.ipv4.conf.all.src_valid_mark=1:echo skipping setting net.ipv4.conf.all.src_valid_mark:" /usr/bin/wg-quick
-wg-quick up "$config"
+wg-quick up "$interface"
 
 ## Kill switch iptables rules
 docker_network="$(ip -o addr show dev eth0 | awk '$3 == "inet" {print $4}')"
@@ -30,6 +25,14 @@ if [ -z "$docker6_network" ]; then
 else
     docker6_network_rule="$([ -n "$docker6_network" ] && echo "! -d $docker6_network" || echo "")"
     ip6tables -I OUTPUT ! -o "$interface" -m mark ! --mark "$(wg show "$interface" fwmark)" -m addrtype ! --dst-type LOCAL $docker6_network_rule -j REJECT
+fi
+
+### Allow Local Network connections
+if [ -n "${LOCAL_NETWORKS}" ]; then
+    eval "$(ip r l | grep -v "$interface\|kernel"|awk '{print "GW="$3"\nINT="$5}')"
+    for network in ${LOCAL_NETWORKS//,/ }; do
+        ip route add "$network" via "$GW" dev "$INT"
+    done
 fi
 
 shutdown () {

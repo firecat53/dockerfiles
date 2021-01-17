@@ -16,6 +16,7 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositorie
                        py3-libtorrent-rasterbar \
                        py3-openssl \
                        py3-pip \
+                       py3-wheel \
                        python3-dev \
                        unrar \
                        unzip \
@@ -41,6 +42,7 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositorie
             libffi-dev \
             libjpeg-turbo-dev \
             linux-headers \
+            py3-wheel \
             python3-dev \
             zlib-dev
 

@@ -8,7 +8,7 @@ RUN apt-get update -q && \
     apt-get install -qy msmtp \
                         msmtp-mta \
                         wget && \
-    wget -q https://checkmk.com/support/$VERSION/check-mk-raw-${VERSION}_0.focal_amd64.deb && \
+    wget -q https://download.checkmk.com/checkmk/$VERSION/check-mk-raw-${VERSION}_0.focal_amd64.deb && \
     dpkg --unpack check-mk-raw-${VERSION}_0.focal_amd64.deb && \
     sed -i 's/systemctl/#systemctl/' /var/lib/dpkg/info/check-mk-raw-${VERSION}.postinst && \
     apt-get -qyf install && \

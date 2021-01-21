@@ -68,7 +68,7 @@ site:
 
       $ docker exec -it check_mk_run /bin/bash
       # export VERSION=1.4.0p34
-      # curl -o new_version.deb https://checkmk.com/support/$VERSION/check-mk-raw-${VERSION}_0.focal_amd64.deb
+      # curl -o new_version.deb https://download.checkmk.com/checkmk/$VERSION/check-mk-raw-${VERSION}_0.focal_amd64.deb
       # dpkg -i new_version.deb
       # omd stop <site name>
       # omd update <site name>

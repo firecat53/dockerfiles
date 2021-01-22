@@ -7,12 +7,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 ENV XDG_CONFIG_HOME=/config
 
 RUN apt-get update && \
-    apt-get install -qy curl software-properties-common && \
-    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF && \
-    echo "deb http://download.mono-project.com/repo/ubuntu stable-bionic main" | \
-        tee /etc/apt/sources.list.d/mono.list && \
-    apt-get update && \
-    apt-get install -qy mono-devel libcurl4-openssl-dev ca-certificates-mono && \
+    apt-get install -y --no-install-recommends ca-certificates curl libicu66 libssl1.1 && \
     # Change `users` gid to match the passed in $gid
     [ $(getent group users | cut -d: -f3) == $gid ] || \
             sed -i "s/users:x:[0-9]\+:/users:x:$gid:/" /etc/group && \
@@ -22,10 +17,10 @@ RUN apt-get update && \
         | awk '/tag_name/{print $4;exit}' FS='[""]') && \
     curl -o \
         /tmp/jacket.tar.gz -L \
-        https://github.com/Jackett/Jackett/releases/download/$tag/Jackett.Binaries.Mono.tar.gz && \
+        https://github.com/Jackett/Jackett/releases/download/$tag/Jackett.Binaries.LinuxAMDx64.tar.gz && \
     tar xf /tmp/jacket.tar.gz -C /opt/Jackett --strip-components=1 && \
     chown -R jackett:users /opt/Jackett /config && \
-    apt-get autoremove -qy curl gcc software-properties-common && \
+    apt-get autoremove -qy curl && \
     rm -rf /var/lib/apt/lists
 
 EXPOSE 9117
@@ -33,4 +28,4 @@ USER jackett
 VOLUME ["/config", "/data/"]
 WORKDIR /config
 
-CMD ["mono", "/opt/Jackett/JackettConsole.exe", "--NoUpdates"]
+CMD ["/opt/Jackett/jackett"]

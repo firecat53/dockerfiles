@@ -1,7 +1,7 @@
 # Docker Sonarr
 
-This is a Dockerfile to set up Sonarr from their PPA. Configuration stored in a
-data volume named `sonarr_config`.
+This is a Dockerfile to set up Sonarr v3 from their PPA. Configuration stored in
+a data volume named `sonarr_config`.
 
 ## Build
 

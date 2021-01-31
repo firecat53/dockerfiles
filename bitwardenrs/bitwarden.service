@@ -14,7 +14,7 @@ ExecStart=/usr/bin/docker run \
 -v /etc/localtime:/etc/localtime:ro \
 --name bitwarden_run \
 --init \
-bitwardenrs/server:alpine
+bitwarden:latest
 ExecStop=/usr/bin/docker stop bitwarden_run
 
 [Install]

@@ -1,10 +1,9 @@
 An assorted collection of Dockerfiles, mostly designed for home server/lab use.
 Build/run instructions are in each subdirectory. I prefer when possible to build
 my own Docker images rather than pull images build by someone else. The only
-exceptions are `official` images that are vetted by Docker, the Plex image and
-the Bitwarden_rs image.
+exceptions are `official` images that are vetted by Docker and the Plex image.
 
-  - Bitwarden_rs (placeholder and instructions for bitwardenrs/server)
+  - Bitwarden_rs (Instructions for building bitwardenrs/server)
   - Check-MK (Monitoring system based on Nagios.)
   - Deluge
   - Gollum personal Wiki

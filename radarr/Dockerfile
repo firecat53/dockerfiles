@@ -15,8 +15,8 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends dotnet-runtime-5.0 && \
     cd /opt && \
     curl -L -O $(curl -s https://api.github.com/repos/Radarr/Radarr/releases | \
-        grep linux-core-$arch.tar.gz | grep browser_download_url | head -1 | cut -d \" -f 4) && \
-    tar -xvzf Radarr.develop.*.linux-core-$arch.tar.gz && \
+        grep master.*.linux-core-$arch.tar.gz | grep browser_download_url | head -1 | cut -d \" -f 4) && \
+    tar -xvzf Radarr.master.*.linux-core-$arch.tar.gz && \
     rm Radarr.*gz && \
     # Change `users` gid to match the passed in $gid
     [ $(getent group users | cut -d: -f3) == $gid ] || \

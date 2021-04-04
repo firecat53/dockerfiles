@@ -28,4 +28,4 @@ USER jackett
 VOLUME ["/config", "/data/"]
 WORKDIR /config
 
-CMD ["/opt/Jackett/jackett"]
+CMD ["/opt/Jackett/jackett", "--NoUpdates"]

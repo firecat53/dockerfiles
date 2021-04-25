@@ -1,7 +1,7 @@
 FROM ubuntu:20.04
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
-ENV VERSION 2.0.0p2
+ENV VERSION 2.0.0p3
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update -q && \

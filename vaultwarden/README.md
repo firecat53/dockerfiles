@@ -1,7 +1,7 @@
-# Bitwarden_RS
+# Vaultwarden
 
-Instructions for building the bitwarden_rs web vault and bitwarden_rs server
-From the Dockerfiles in https://github.com/dani-garcia/bw_web_builds and https://github.com/dani-garcia/bitwarden_rs. 
+Instructions for building the vaultwarden web vault and vaultwarden server
+From the Dockerfiles in https://github.com/dani-garcia/bw_web_builds and https://github.com/dani-garcia/vaultwarden. 
 
 ## Build
 
@@ -12,12 +12,12 @@ From the Dockerfiles in https://github.com/dani-garcia/bw_web_builds and https:/
         sed -i 's/^FROM node:.*/FROM node:14-buster as build/' Dockerfile
         docker build -t bw_vault .
 
-3. In bitwarden_rs/Dockerfile (adjust the symlink for your build architechture),
+3. In vaultwarden/Dockerfile (adjust the symlink for your build architechture),
    change the web vault image to your locally built image:
   
-        cd bitwarden_rs
-        sed -i 's/^FROM bitwardenrs\/web-vault.*/FROM bw_vault:latest as vault' Dockerfile
-        docker build -t bitwarden .
+        cd vaultwarden
+        sed -i 's/^FROM vaultwarden\/web-vault.*/FROM bw_vault:latest as vault' Dockerfile
+        docker build -t vaultwarden .
 
 ## Configure
 
@@ -27,9 +27,10 @@ user performed before the container can be run as user. This doesn't seem to
 work the same as the other containers I run using data volumes and I don't know
 why.
 
-    docker run --name bitwarden_run --mount type=volume,source=bitwarden_data,target=/data --init --rm -d bitwarden
-    docker exec -it bitwarden_run chown -R 1000:100 /data
-    docker stop bitwarden_run
+    docker run --name vaultwarden_run --mount
+    type=volume,source=bitwarden_data,target=/data --init --rm -d vaultwarden
+    docker exec -it vaultwarden_run chown -R 1000:100 /data
+    docker stop vaultwarden_run
     
 ## Run
 
@@ -39,9 +40,9 @@ why.
                --mount type=volume,source=bitwarden_data,target=/data \
                -e ROCKET_PORT=8080 \
                -p 8080:8080 \
-               --name bitwarden_run \
+               --name vaultwarden_run \
                --init \
-               bitwarden
+               vaultwarden
                
 ## Sqlite Backups
 

@@ -1,21 +1,21 @@
 [Unit]
-Description=Bitwarden_rs container
+Description=Vaultwarden container
 After=docker.service
 Requires=docker.service
 
 [Service]
 Restart=always
 RestartSec=10
-ExecStartPre=-/usr/bin/docker rm bitwarden_run
+ExecStartPre=-/usr/bin/docker rm vaultwarden_run
 ExecStart=/usr/bin/docker run \
 -e ROCKET_PORT=8080 \
 --mount type=volume,source=bitwarden_data,target=/data \
 -u 1000:100 \
 -v /etc/localtime:/etc/localtime:ro \
---name bitwarden_run \
+--name vaultwarden_run \
 --init \
-bitwarden:latest
-ExecStop=/usr/bin/docker stop bitwarden_run
+vaultwarden:latest
+ExecStop=/usr/bin/docker stop vaultwarden_run
 
 [Install]
 WantedBy=multi-user.target

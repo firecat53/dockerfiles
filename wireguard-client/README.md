@@ -32,6 +32,7 @@ you get the error `Read-only file system`:
     - Use `--privileged` or `--sysctl net.ipv4.conf.all.src_valid_mark=1`  
 * If you get the error `RTNETLINK answers: Permission denied`:
     - Use `--sysctl net.ipv6.conf.all.disable_ipv6=0`
+    - Ensure `ip6_tables` module is loaded on the host.
 
             docker run -d \
                        --cap-add=NET_ADMIN \

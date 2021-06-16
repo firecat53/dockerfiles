@@ -1,4 +1,4 @@
-FROM alpine:3.13
+FROM alpine:3.14
 
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 

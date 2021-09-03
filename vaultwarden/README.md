@@ -1,7 +1,7 @@
 # Vaultwarden
 
 Instructions for building the vaultwarden web vault and vaultwarden server
-From the Dockerfiles in https://github.com/dani-garcia/bw_web_builds and https://github.com/dani-garcia/vaultwarden. 
+From the Dockerfiles in https://github.com/dani-garcia/bw_web_builds and https://github.com/dani-garcia/vaultwarden/blob/main/docker/amd64/Dockerfile 
 
 ## Build
 

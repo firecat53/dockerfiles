@@ -1,27 +1,35 @@
-FROM ubuntu:20.04
+FROM alpine:3.15
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
 ARG uid=1000
 ARG gid=100
 
-RUN apt-get update && \
-    apt-get install -y deluged \
-                       deluge-console \
-                       deluge-web \
-                       iproute2 \
-                       p7zip \
-                       unrar \
-                       unzip && \
+RUN apk --no-cache add build-base \
+                       libffi-dev \
+                       py3-cryptography \
+                       py3-libtorrent-rasterbar \
+                       py3-pillow \
+                       py3-pip \
+                       py3-setuptools \
+                       py3-wheel \
+                       python3-dev \
+                       zlib-dev && \
+    pip install deluge && \
     # Fix version 2.0.3 bug #3327
-    sed -i "s/stack_info=False/*args, **kwargs/" /usr/lib/python3/dist-packages/deluge/log.py && \
+    sed -i "s/stack_info=False/*args, **kwargs/" /usr/lib/python3.9/site-packages/deluge/log.py && \
     # Change `users` gid to match the passed in $gid
     [ $(getent group users | cut -d: -f3) == $gid ] || \
             sed -i "s/users:x:[0-9]\+:/users:x:$gid:/" /etc/group && \
-    useradd -m -d /config -g users -u $uid deluge && \
+    adduser -Dh /config -G users -u $uid deluge && \
     echo "deluge:deluge" | chpasswd && \
     mkdir /data && \
-    chown -R deluge:users /config /data
-
+    chown -R deluge:users /config /data && \
+    apk del build-base \
+            libffi-dev \
+            py3-pip \
+            py3-wheel \
+            zlib-dev
+            
 COPY start.sh /usr/local/bin/
 
 USER deluge

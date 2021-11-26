@@ -8,4 +8,4 @@ if [ -f "/config/users.txt" ]; then
         printf "%s\n%s\n" "${PASS}" "${PASS}" | smbpasswd -s -a "${USERNAME}"
     done < /config/users.txt
 fi
-exec ionice -c 3 smbd -FS --configfile=/config/smb.conf --no-process-group < /dev/null
+exec ionice -c 3 smbd -F --debug-stdout --configfile=/config/smb.conf --no-process-group < /dev/null

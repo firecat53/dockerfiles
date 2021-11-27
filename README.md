@@ -13,6 +13,7 @@ exceptions are `official` images that are vetted by Docker and the Plex image.
   - PHP-FPM (works with Nginx)
   - Plex (Only using the official Plex Docker image now.)
   - Privatebin
+  - QBittorrent
   - Radarr
   - Rsync (used for backing up Docker data-only volumes)
   - Sabnzbd

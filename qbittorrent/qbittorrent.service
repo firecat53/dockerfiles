@@ -1,0 +1,20 @@
+[Unit]
+Description=qbittorrent container
+BindsTo=wireguard-client.service
+After=docker.service wireguard-client.service
+Requires=docker.service
+
+[Service]
+ExecStartPre=-/usr/bin/docker rm qbittorrent_run
+ExecStart=/usr/bin/docker run \
+--net=container:wireguard-client_run \
+--mount type=volume,source=qbittorrent_config,target=/config \
+-v /mnt/downloads:/data \
+-v /etc/localtime:/etc/localtime:ro \
+--init \
+--name qbittorrent_run \
+qbittorrent
+ExecStop=/usr/bin/docker stop qbittorrent_run
+
+[Install]
+WantedBy=multi-user.target

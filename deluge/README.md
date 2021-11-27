@@ -1,8 +1,8 @@
 # Deluge
 
-Simple deluge container. Installs latest source version available from the
-Deluge website. Designed to be run using the network stack from a VPN
-container.  Also contains p7zip and unrar for the extractor plugin.
+Simple deluge container. Installs latest version available from pypi. Designed
+to be run using the network stack from a VPN container.  Also contains p7zip and
+unrar for the extractor plugin.
 
 #### Defaults:
 

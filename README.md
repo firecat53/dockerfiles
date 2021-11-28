@@ -4,7 +4,6 @@ my own Docker images rather than pull images build by someone else. The only
 exceptions are `official` images that are vetted by Docker and the Plex image.
 
   - Check-MK (Monitoring system based on Nagios.)
-  - Deluge
   - Gollum personal Wiki
   - Jackett
   - Media tools (collection of common tools for working with media files)
@@ -30,7 +29,9 @@ exceptions are `official` images that are vetted by Docker and the Plex image.
 
 Archived and not tested anymore:
 
+  - Check_mk
   - Couchpotato
+  - Deluge
   - Headphones
   - Lazy Librarian
   - OpenVPN-client-pia (OpenVPN for PIA with port forwarding. Not working after

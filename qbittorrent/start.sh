@@ -4,7 +4,7 @@ CONF="$HOME/qBittorrent/qBittorrent.conf"
 umask 002
 listen_int="$(ip route get 1 | awk '{print $3;exit}')"
 listen_ip="$(ip route get 1 | awk '{print $5;exit}')"
-[ -f "$CONF" ] && (mkdir -p "$HOME/qBittorrent" && cp /usr/local/share/qBittorrent/qBittorrent.conf "$CONF")
+[ ! -f "$CONF" ] && (mkdir -p "$HOME/qBittorrent" && cp /usr/local/share/qBittorrent/qBittorrent.conf "$CONF")
 if grep -q 'Connection\\Interface=' "$CONF"; then
     sed -i "s/^Connection\\\Interface=.*/Connection\\\Interface=$listen_int/" "$CONF";
 else

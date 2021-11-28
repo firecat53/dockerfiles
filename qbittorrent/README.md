@@ -1,8 +1,8 @@
 # Qbittorrent
 
-Compiles and installs latest stable qBittorrent-nox without the GUI components.
-Designed to be run headless (Web UI only) using the network stack from a VPN
-container.
+Compiles and installs latest stable (non-beta or RC tag) qBittorrent-nox without
+the GUI components.  Designed to be run headless (Web UI only) using the network
+stack from a VPN container.
 
 #### Defaults:
 

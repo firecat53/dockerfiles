@@ -5,7 +5,11 @@ RUN apk --no-cache add --virtual run-required \
             ca-certificates \
             libxml2 \
             libxslt \
-            python3 && \
+            python3 \
+            py3-certifi \
+            py3-charset-normalizer \
+            py3-idna \
+            py3-six && \
     apk --no-cache add --virtual build \
            build-base \
            git \

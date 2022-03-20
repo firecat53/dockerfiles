@@ -1,0 +1,18 @@
+[Unit]
+Description=Searx container
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+ExecStartPre=-/usr/bin/docker rm searx_run
+ExecStart=/usr/bin/docker run \
+--init \
+--mount type=volume,source=searx_config,target=/config \
+--name searx_run searx
+-p 8888:8888 \
+-v /etc/localtime:/etc/localtime:ro \
+ExecStop=/usr/bin/docker stop searx_run
+
+[Install]
+WantedBy=multi-user.target

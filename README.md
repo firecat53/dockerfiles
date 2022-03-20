@@ -16,6 +16,7 @@ exceptions are `official` images that are vetted by Docker and the Plex image.
   - Rsync (used for backing up Docker data-only volumes)
   - Sabnzbd
   - Samba
+  - Searx (simplified version only for intranet or local use)
   - Socks-proxy (ssh server for use as a SOCKS proxy to the Wireguard-client container)
   - Sonarr
   - Syncthing

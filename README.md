@@ -3,7 +3,6 @@ Build/run instructions are in each subdirectory. I prefer when possible to build
 my own Docker images rather than pull images build by someone else. The only
 exceptions are `official` images that are vetted by Docker and the Plex image.
 
-  - Check-MK (Monitoring system based on Nagios.)
   - Gollum personal Wiki
   - Jackett
   - Media tools (collection of common tools for working with media files)

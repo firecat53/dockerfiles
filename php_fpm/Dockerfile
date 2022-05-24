@@ -2,7 +2,7 @@ FROM alpine:3.16
 
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
-RUN apk add --no-cache php7-fpm php7-gd php7-iconv php7-json php7-opcache
+RUN apk add --no-cache php8-fpm php8-gd php8-iconv php8-json php8-opcache
 
 WORKDIR /var/www
 

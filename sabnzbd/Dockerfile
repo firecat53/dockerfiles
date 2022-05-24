@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
@@ -13,8 +13,6 @@ RUN apt-get update && \
     apt-get install -qy \
         ca-certificates \
         locales \
-        par2-tbb \
-        # python-sabyenc \
         sabnzbdplus \
         unrar \
         unzip && \

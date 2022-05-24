@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
 
 ARG uid=1000
@@ -7,7 +7,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 ENV XDG_CONFIG_HOME=/config
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends ca-certificates curl libicu66 libssl1.1 && \
+    apt-get install -y --no-install-recommends ca-certificates curl libicu70 && \
     # Change `users` gid to match the passed in $gid
     [ $(getent group users | cut -d: -f3) == $gid ] || \
             sed -i "s/users:x:[0-9]\+:/users:x:$gid:/" /etc/group && \

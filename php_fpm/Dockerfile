@@ -13,4 +13,4 @@ USER nobody
 # mark dirs as volumes that need to be writable, allows running the container --read-only
 VOLUME ["/tmp"]
 
-ENTRYPOINT ["/usr/sbin/php-fpm7"]
+ENTRYPOINT ["/usr/sbin/php-fpm8"]

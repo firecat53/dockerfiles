@@ -7,8 +7,7 @@ ARG gid=100
 COPY settings.json /var/lib/transmission/
 COPY start.sh /usr/local/bin/start.sh
 
-RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
-    apk --no-cache add curl \
+RUN apk --no-cache add curl \
                        transmission-cli \
                        transmission-daemon && \
     sed -i "s/transmission:x:[0-9]\+:/transmission:x:$uid:/" /etc/passwd && \

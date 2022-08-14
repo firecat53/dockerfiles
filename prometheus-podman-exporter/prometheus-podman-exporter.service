@@ -1,0 +1,18 @@
+[Unit]
+Description=prometheus-podman-exporter container
+
+[Service]
+Restart=always
+ExecStartPre=-/usr/bin/podman rm prometheus-podman-exporter_run
+ExecStart=/usr/bin/podman run \
+--network monitoring \
+-e CONTAINER_HOST=unix:///run/podman/podman.sock \
+-v %t/podman/podman.sock:/run/podman/podman.sock:Z \
+--userns=keep-id \
+--security-opt label=disable \
+--name prometheus-podman-exporter_run \
+ppe
+ExecStop=/usr/bin/podman stop prometheus-podman-exporter_run
+
+[Install]
+WantedBy=default.target

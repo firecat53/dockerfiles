@@ -12,8 +12,11 @@ RUN apt-get update && apt-get install -qy wget && \
 	        openjdk-8-jre-headless \
             unifi && \
     bash -c 'mkdir -p /config/{data,logs,run}' && \
-    bash -c 'ln -s /config/* /usr/lib/unifi/' && \
-    chown -R unifi:unifi /config /usr/lib/unifi && \
+    bash -c 'rmdir /var/lib/unifi /var/log/unifi /var/run/unifi' && \
+    bash -c 'ln -s /config/data /var/lib/unifi' && \
+    bash -c 'ln -s /config/logs /var/log/unifi' && \
+    bash -c 'ln -s /config/run /var/run/unifi' && \
+    chown -R unifi:unifi /config /usr/lib/unifi /var/lib/unifi /var/log/unifi /var/run/unifi && \
     apt-get autoremove -qy wget && \
     apt-get clean && \
     rm -rf /tmp/* \

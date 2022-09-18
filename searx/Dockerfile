@@ -1,5 +1,5 @@
 FROM alpine:3.16
-LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
+LABEL "Maintainer"="Scott Hansen <tech@firecat53.net>"
 
 RUN apk --no-cache add --virtual run-required \
             ca-certificates \

@@ -1,5 +1,5 @@
 FROM alpine:3.16
-LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
+LABEL "Maintainer"="Scott Hansen <tech@firecat53.net>"
 
 ARG PUB_KEY
 ARG SSHD_USER=proxy

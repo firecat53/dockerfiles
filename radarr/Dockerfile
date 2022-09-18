@@ -1,5 +1,5 @@
 FROM ubuntu:22.04
-LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
+LABEL "Maintainer"="Scott Hansen <tech@firecat53.net>"
 
 ARG arch=x64
 ARG uid=1000

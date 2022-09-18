@@ -1,6 +1,6 @@
 FROM alpine:3.11
 # Dockerfile to run a self-hosted Syncthing discovery server (latest build).
-LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
+LABEL "Maintainer"="Scott Hansen <tech@firecat53.net>"
 
 RUN apk --no-cache add wget && \
     wget --quiet \

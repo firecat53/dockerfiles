@@ -1,5 +1,5 @@
 FROM ubuntu:20.04
-LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
+LABEL "Maintainer"="Scott Hansen <tech@firecat53.net>"
 
 ENV VERSION 2.0.0p3
 ENV DEBIAN_FRONTEND noninteractive

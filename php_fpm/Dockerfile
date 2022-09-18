@@ -1,6 +1,6 @@
 FROM alpine:3.16
 
-LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
+LABEL "Maintainer"="Scott Hansen <tech@firecat53.net>"
 
 RUN apk add --no-cache php8-fpm php8-gd php8-iconv php8-json php8-opcache
 

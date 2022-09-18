@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 
-LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
+LABEL "Maintainer"="Scott Hansen <tech@firecat53.net>"
 
 ARG DEBIAN_FRONTEND="noninteractive"
 

@@ -1,5 +1,5 @@
 FROM alpine:3.15
-LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
+LABEL "Maintainer"="Scott Hansen <tech@firecat53.net>"
 
 ARG uid=1000
 ARG gid=100

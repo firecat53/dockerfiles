@@ -1,6 +1,6 @@
 FROM ruby:2.6-alpine3.12
 
-LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
+LABEL "Maintainer"="Scott Hansen <tech@firecat53.net>"
 
 ENV RACK_ENV=production
 ENV PORT=8080

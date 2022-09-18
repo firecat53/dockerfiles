@@ -1,5 +1,5 @@
 FROM alpine:3.12
-LABEL "Maintainer"="Scott Hansen <firecat4153@gmail.com>"
+LABEL "Maintainer"="Scott Hansen <tech@firecat53.net>"
 
 RUN apk --no-cache add python2 \
                        unzip \

@@ -1,4 +1,4 @@
-FROM alpine:3.16
+FROM alpine:3.17
 LABEL "Maintainer"="Scott Hansen <tech@firecat53.net>"
 
 RUN apk --no-cache add --virtual run-required \

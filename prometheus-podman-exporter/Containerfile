@@ -1,4 +1,4 @@
-ARG ALPINE_LINUX_VERSION="3.16"
+ARG ALPINE_LINUX_VERSION="3.17"
 
 FROM docker.io/library/golang:1-alpine${ALPINE_LINUX_VERSION} as build
 WORKDIR /go/src/

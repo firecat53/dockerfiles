@@ -2,7 +2,7 @@ FROM alpine:3.17
 
 LABEL "Maintainer"="Scott Hansen <tech@firecat53.net>"
 
-RUN apk add --no-cache php8-fpm php8-gd php8-iconv php8-json php8-opcache
+RUN apk add --no-cache php81-fpm php81-gd php81-iconv php81-json php81-opcache
 
 WORKDIR /var/www
 
@@ -13,4 +13,4 @@ USER nobody
 # mark dirs as volumes that need to be writable, allows running the container --read-only
 VOLUME ["/tmp"]
 
-ENTRYPOINT ["/usr/sbin/php-fpm8"]
+ENTRYPOINT ["/usr/sbin/php-fpm81"]

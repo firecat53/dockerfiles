@@ -9,7 +9,6 @@ ENV HOME="/config" XDG_CONFIG_HOME="/config" XDG_DATA_HOME="/config"
 
 RUN apk --no-cache add --virtual run-required \
                        geoip \
-                       libexecinfo \
                        libtorrent-rasterbar \
                        p7zip \
                        qt5-qtbase \
@@ -24,7 +23,6 @@ RUN apk --no-cache add --virtual run-required \
                        curl \
                        git \
                        icu-dev \
-                       libexecinfo-dev \
                        libtool \
                        libtorrent-rasterbar-dev \
                        linux-headers \
@@ -54,8 +52,8 @@ RUN apk --no-cache add --virtual run-required \
 	cmake -Wno-dev -G Ninja -B build \
 		-D CMAKE_BUILD_TYPE="release" \
 		-D CMAKE_CXX_STANDARD=17 \
-		-D CMAKE_CXX_STANDARD_LIBRARIES="/usr/lib/libexecinfo.so" \
 		-D CMAKE_INSTALL_PREFIX="/usr/local" \
+        -D STACKTRACE=off \
 		-D GUI=off && \
 	cmake --build build && \
 	cmake --install build && \

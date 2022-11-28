@@ -3,7 +3,7 @@ LABEL "Maintainer"="Scott Hansen <tech@firecat53.net>"
 
 ARG uid=1000
 ARG gid=100
-ARG UNRAR_VERSION=6.1.4
+ARG UNRAR_VERSION=6.2.2
 
 ENV HOME="/config" XDG_CONFIG_HOME="/config" XDG_DATA_HOME="/config"
 

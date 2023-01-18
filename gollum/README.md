@@ -4,6 +4,8 @@ This is a Dockerfile to set up the [Gollum][1] personal wiki.
 
 ## Build
 
+### Note: Ruby version locked at 3.1 pending resolution of https://github.com/gollum/gollum/issues/1928
+
 Uncomment lines for any additional desired markup flavors to support in the
 Dockerfile.
 

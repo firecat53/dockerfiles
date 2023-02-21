@@ -21,7 +21,7 @@ the inspiration and script!
  
 ## Run
 
-Bind mount the wireguard config file to `/etc/wireguard/wg0.conf`.
+Bind mount the wireguard config file to `/etc/wireguard/wireguard0.conf`.
 
 Note that because this container controls networking for other containers, _any_
 ports published that will be needed by other containers need to be published
@@ -41,7 +41,7 @@ you get the error `Read-only file system`:
                        -p 9091:9091 ## For Transmission container \
                        --sysctl net.ipv6.conf.all.disable_ipv6=0 \
                        --sysctl net.ipv4.conf.all.src_valid_mark=1 \
-                       -v </path/to/wireguard conf file>:/etc/wireguard/wg0.conf \
+                       -v </path/to/wireguard conf file>:/etc/wireguard/wireguard0.conf \
                        --name=wireguard_run \
                        wireguard-client
 

@@ -2,9 +2,9 @@
 
 set -e
 
-[ -e /etc/wireguard/wg0.conf ] || (echo "No configuration files found in /etc/wireguard" && exit 1)
+interface="wireguard0"
 
-interface="wg0"
+[ -e /etc/wireguard/${interface}.conf ] || (echo "No configuration files found in /etc/wireguard" && exit 1)
 
 if [ "$(cat /proc/sys/net/ipv4/conf/all/src_valid_mark)" != "1" ]; then
     echo "sysctl net.ipv4.conf.all.src_valid_mark=1 is not set" >&2

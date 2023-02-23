@@ -7,7 +7,14 @@ RUN apk add --no-cache --update btrfs-progs-dev build-base curl device-mapper-li
     make binary
 
 FROM docker.io/library/alpine:${ALPINE_LINUX_VERSION}
-RUN apk --no-cache add gpgme lvm2
+ARG uid=1000
+ARG gid=1000
+RUN apk --no-cache add gpgme lvm2 && \
+    # Change `users` gid to match the passed in $gid
+    [ $(getent group users | cut -d: -f3) == $gid ] || \
+            sed -i "s/users:x:[0-9]\+:/users:x:$gid:/" /etc/group && \
+    adduser -h /home/ppe -DG users -u $uid ppe
 COPY --from=build /go/src/bin/prometheus-podman-exporter /usr/local/bin/prometheus-podman-exporter
 EXPOSE 9882
+USER ppe
 CMD ["prometheus-podman-exporter", "--collector.enable-all"]

@@ -22,6 +22,7 @@ RUN apt-get update && \
             sed -i "s/users:x:[0-9]\+:/users:x:$gid:/" /etc/group && \
     mkdir /config && \
     chown -R sonarr:users /config && \
+    cert-sync /etc/ssl/certs/ca-certificates.crt && \
     apt-get autoremove -qy gnupg software-properties-common wget && \
     rm -rf /var/lib/apt/lists
 

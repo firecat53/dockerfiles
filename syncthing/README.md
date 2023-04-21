@@ -16,6 +16,11 @@ gid of the user who will be running Syncthing.
 
     docker build --build-arg=uid=$(id -u) --build-arg=gid=$(id -g) -t syncthing .
 
+You can also pass the user name if desired, although this isn't typically
+necessary. A root user container can be built like:
+
+    docker build --build-arg=uid=0 --build-arg=gid=0 --build-arg=user=root -t syncthing .
+
 ## Run
 
 Systemd service file available. Edit to enable or disable 'host' networking as

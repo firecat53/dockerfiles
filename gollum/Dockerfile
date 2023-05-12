@@ -1,4 +1,4 @@
-FROM ruby:3.1-alpine3.17
+FROM ruby:3.1-alpine3.18
 
 LABEL "Maintainer"="Scott Hansen <tech@firecat53.net>"
 

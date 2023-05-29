@@ -47,8 +47,8 @@ RUN apk --no-cache add --virtual run-required \
 	# Compile qbittorrent
 	git clone --shallow-submodules --recurse-submodules https://github.com/qbittorrent/qBittorrent.git ~/qbittorrent && \
 	cd ~/qbittorrent && \
-    # Checkout latest non-beta or rc version
-    git checkout "$(git tag -l --sort=-v:refname | grep -v 'rc\|beta' | head -n1)" && \
+    # Checkout latest non-beta/alpha or rc version
+    git checkout "$(git tag -l --sort=-v:refname | grep -v 'rc\|beta\|alpha' | head -n1)" && \
 	cmake -Wno-dev -G Ninja -B build \
 		-D CMAKE_BUILD_TYPE="release" \
 		-D CMAKE_CXX_STANDARD=17 \

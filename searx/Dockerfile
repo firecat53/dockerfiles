@@ -9,7 +9,8 @@ RUN apk --no-cache add --virtual run-required \
             py3-certifi \
             py3-charset-normalizer \
             py3-idna \
-            py3-six && \
+            py3-six \
+            py3-yaml && \
     apk --no-cache add --virtual build \
            build-base \
            git \

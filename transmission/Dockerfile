@@ -4,7 +4,7 @@ LABEL "Maintainer"="Scott Hansen <tech@firecat53.net>"
 ARG uid=1000
 ARG gid=100
 
-ENV CURL_CA_BUNDLE=/etc/ca-certificates
+ENV CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
 
 COPY settings.json /var/lib/transmission/
 COPY start.sh /usr/local/bin/start.sh

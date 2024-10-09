@@ -11,7 +11,7 @@ RUN apk --no-cache add --virtual run-required \
                        geoip \
                        libtorrent-rasterbar \
                        p7zip \
-                       qt5-qtbase \
+                       qt6-qtbase \
                        python3 \
                        unzip && \
     apk --no-cache add --virtual build \
@@ -30,9 +30,9 @@ RUN apk --no-cache add --virtual run-required \
                        perl \
                        pkgconf \
                        python3-dev \
-                       qt5-qtbase-dev \
-                       qt5-qtsvg-dev \
-                       qt5-qttools-dev \
+                       qt6-qtbase-dev \
+                       qt6-qtsvg-dev \
+                       qt6-qttools-dev \
                        re2c \
                        zlib-dev && \
     # Compile Ninja

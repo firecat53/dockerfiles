@@ -4,6 +4,7 @@ LABEL "Maintainer"="Scott Hansen <tech@firecat53.net>"
 ARG uid=1000
 ARG gid=100
 ARG UNRAR_VERSION=6.2.2
+ARG QBT_VERSION=release-5.1.0
 
 ENV HOME="/config" XDG_CONFIG_HOME="/config" XDG_DATA_HOME="/config"
 
@@ -31,6 +32,7 @@ RUN apk --no-cache add --virtual run-required \
                        pkgconf \
                        python3-dev \
                        qt6-qtbase-dev \
+                       qt6-qtbase-private-dev \
                        qt6-qtsvg-dev \
                        qt6-qttools-dev \
                        re2c \
@@ -40,18 +42,18 @@ RUN apk --no-cache add --virtual run-required \
 	cd ~/ninja && \
 	git checkout "$(git tag -l --sort=-v:refname "v*" | head -n 1)" && \
 	cmake -Wno-dev -B build \
-		-D CMAKE_CXX_STANDARD=17 \
+		-D CMAKE_CXX_STANDARD=20 \
 		-D CMAKE_INSTALL_PREFIX="/usr/local" && \
 	cmake --build build && \
 	cmake --install build && \
 	# Compile qbittorrent
 	git clone --shallow-submodules --recurse-submodules https://github.com/qbittorrent/qBittorrent.git ~/qbittorrent && \
 	cd ~/qbittorrent && \
-    # Checkout latest non-beta/alpha or rc version
-    git checkout "$(git tag -l --sort=-v:refname | grep -v 'rc\|beta\|alpha' | head -n1)" && \
+    # Checkout QBT_VERSION
+    git checkout "$QBT_VERSION" && \
 	cmake -Wno-dev -G Ninja -B build \
 		-D CMAKE_BUILD_TYPE="release" \
-		-D CMAKE_CXX_STANDARD=17 \
+		-D CMAKE_CXX_STANDARD=20 \
 		-D CMAKE_INSTALL_PREFIX="/usr/local" \
         -D STACKTRACE=off \
 		-D GUI=off && \

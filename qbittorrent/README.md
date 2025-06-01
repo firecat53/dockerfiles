@@ -1,8 +1,8 @@
 # Qbittorrent
 
-Compiles and installs latest stable (non-beta or RC tag) qBittorrent-nox without
-the GUI components.  Designed to be run headless (Web UI only) using the network
-stack from a VPN container.
+Compiles and installs the given git tag for qBittorrent-nox (without
+the GUI components).  Designed to be run headless (Web UI only) using the
+network stack from a VPN container.
 
 #### Defaults:
 
@@ -19,6 +19,11 @@ stack from a VPN container.
 libboost-dev and libtorrent-rasterbar-dev need to be available in the Alpine
 repositories. If not, then compilation for them will need to be added to the
 Dockerfile per the instructions [here][1].
+
+To use a different versions for qBittorrent and unrar than the defaults in the
+Dockerfile, pass using `--build-arg QBT_VERSION=release-x.x.x --build-arg
+UNRAR_VERSION=x.x.x`. No guarantee as to backward compatibility. I typically
+will keep versions close to the latest tags.
 
 To avoid permissions issues with shared volumes, use `--build-arg` to change the
 uid:gid of the image at build time.

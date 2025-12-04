@@ -1,4 +1,4 @@
-FROM alpine:3.22
+FROM alpine:3.23
 LABEL "Maintainer"="Scott Hansen <tech@firecat53.net>"
 
 ARG PUB_KEY

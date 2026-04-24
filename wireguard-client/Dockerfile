@@ -1,6 +1,8 @@
 FROM alpine:3.23
 
-RUN apk --no-cache add wireguard-tools iptables ip6tables
+RUN apk --no-cache add wireguard-tools iptables ip6tables \
+ && printf '#!/bin/sh\nif [ "$1" = "-a" ]; then\n  cat > /etc/resolv.conf\nfi\nexit 0\n' > /usr/bin/resolvconf \
+ && chmod +x /usr/bin/resolvconf
 
 COPY entrypoint.sh /usr/local/bin/
 

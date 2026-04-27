@@ -17,7 +17,8 @@ RUN apk --no-cache --no-progress add openssh shadow && \
     sed -i 's/^\(#\)\?ClientAliveInterval.*/ClientAliveInterval 30/' /etc/ssh/sshd_config && \
     sed -i 's/^\(#\)\?ClientAliveCountMax.*/ClientAliveCountMax 1000/' /etc/ssh/sshd_config && \
     ssh-keygen -A && \
-    echo "$PUB_KEY" > /etc/ssh/$SSHD_USER && \
+    echo -n 'command="/bin/false",no-pty,no-X11-forwarding,no-agent-forwarding,no-user-rc ' > /etc/ssh/$SSHD_USER && \
+    echo "$PUB_KEY" >> /etc/ssh/$SSHD_USER && \
     chown $SSHD_USER: /etc/ssh/$SSHD_USER && \
     chmod 600 /etc/ssh/$SSHD_USER && \
     rm -rf /tmp/*
